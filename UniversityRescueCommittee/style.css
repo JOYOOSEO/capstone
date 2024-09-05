@@ -1,11 +1,6 @@
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var,
+b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
 article, aside, canvas, details, embed, 
 figure, figcaption, footer, header, hgroup, 
@@ -28,6 +23,9 @@ time, mark, audio, video {
 	bottom:0px;
 	overflow:hidden;
 }
+
+
+/* sectionLeft */
 #sectionLeft {
 	position:absolute;
 	left:0px;
@@ -37,6 +35,77 @@ time, mark, audio, video {
 	min-width:100px;
 	/*overflow:hidden;*/
 }
+#peopleBundle {
+	font-size: 30px;
+	text-align:center;
+	text-shadow:1px 0px 0px #000,-1px 0px 0px #000,0px 1px 0px #000,0px -1px 0px #000,0px 1px 4px #000;
+	position:absolute;
+	left:0px;
+	top:10%;
+	width:100%;
+	border-radius: 5px;
+	z-index:200;
+	background:rgba(0,0,0,0.4);
+	padding:2px 0px;
+	pointer-events:none;
+	color: white;
+}
+#peopleBundle #getPeople {
+	font-size: 100%;
+}
+#peopleBundle #perSecondPeople {
+	font-size:60%;
+}
+#nameBundle {
+	position:absolute;
+	left:0px;
+	top:10%;
+	width:100%;
+	z-index:200;
+	font-size:25px;
+}
+#nameBundle #universityName {
+	font-size: 100%;
+	text-align:center;
+	color:rgba(255,255,255,0.8);
+	position:absolute;
+	bottom:8px;
+	left:10%;
+	width:75%;
+	background:rgba(0,0,0,0.4);
+	border-radius:12px;
+	padding:4px 0px;
+	cursor:pointer;
+}
+#nameBundle #universityName:hover {
+	color: #fff;
+	text-shadow: 0px 0px 8px #fff;
+}
+
+#logoBundle
+{
+	position:absolute;
+	left:50%;
+	top:40%;
+}
+#logoBundle #universityLogo {
+	position:absolute;
+	width:256px;
+	height:256px;
+	left:-128px;
+	top:-128px;
+	z-index:10000;
+	border-radius:128px;
+	border:none;
+	overflow:hidden;
+	outline:none;
+	cursor:pointer;
+	background: url(img/icon_school.png);
+	object-fit: cover;
+}
+
+
+/* sectionMiddle */
 #sectionMiddle {
 	position:absolute;
 	left:30%;
@@ -48,6 +117,10 @@ time, mark, audio, video {
 	min-width:100px;
 	overflow:hidden;
 }
+
+
+
+/* sectionRight */
 #sectionRight {
 	height:100%;
 	position:absolute;
@@ -89,7 +162,7 @@ time, mark, audio, video {
 	height:64px;
 	cursor:pointer;
 	opacity:0.6;
-	background:url(img/store.png);
+	background:url(img/productBackground.png);
 	position:relative;
 	text-align:left;
 	line-height:inherit;
@@ -102,36 +175,15 @@ time, mark, audio, video {
 .disabled {
 	display: none;
 }
-#universityName {
-	position:absolute;
-	left:0px;
-	bottom:8px;
-	left:12.5%;
-	width:75%;
-	text-align:center;
-	font-size:20px;
-	background:#000;
-	background:rgba(0,0,0,0.4);
-	border-radius:12px;
-	padding:4px 0px;
-	cursor:pointer;
-	color:rgba(255,255,255,0.8);
-}
-#universityName:hover {
-	color: #fff;
-	text-shadow: 0px 0px 8px #fff;
-}
 
-#universityLogo {
-	width:256px;
-	height:256px;
-	position:absolute;
-	left:-128px;
-	top:-128px;
-	cursor:pointer;
-	z-index:10000;
-	border-radius:128px;
-	border:none;
-	overflow:hidden;
-	outline:none;
+.separatorLeft, .separatorRight
+{
+   width:16px;
+   height:100%;
+   background:url(img/store.png) repeat-y;
+   background:url(img/store.png) no-repeat top left,url(img/store.png) no-repeat bottom left,url(img/store.png?v=2) repeat-y;
+   position:absolute;
+   top:0px;
+   bottom:0px;
+   z-index:100;
 }
