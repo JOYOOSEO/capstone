@@ -14,7 +14,13 @@ time, mark, audio, video {
 	vertical-align: baseline;
 }
 
-
+body {
+	font-family: "Do Hyeon", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+	user-select: none;
+  }
+  
 #game {
 	position:absolute;
 	left:0px;
@@ -33,9 +39,15 @@ time, mark, audio, video {
 	width:30%;
 	bottom:0px;
 	min-width:100px;
-	/*overflow:hidden;*/
+	background:url(img/sectionLeftBackground.png)
 }
-#peopleBundle {
+#sectionLeft #gradient {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 100%);
+}
+#sectionLeft #studentBundle {
 	font-size: 30px;
 	text-align:center;
 	text-shadow:1px 0px 0px #000,-1px 0px 0px #000,0px 1px 0px #000,0px -1px 0px #000,0px 1px 4px #000;
@@ -50,13 +62,13 @@ time, mark, audio, video {
 	pointer-events:none;
 	color: white;
 }
-#peopleBundle #getPeople {
+#sectionLeft #studentBundle #getPeople {
 	font-size: 100%;
 }
-#peopleBundle #perSecondPeople {
-	font-size:60%;
+#sectionLeft #studentBundle #perSecondPeople {
+	font-size:70%;
 }
-#nameBundle {
+#sectionLeft #nameBundle {
 	position:absolute;
 	left:0px;
 	top:10%;
@@ -64,7 +76,7 @@ time, mark, audio, video {
 	z-index:200;
 	font-size:25px;
 }
-#nameBundle #universityName {
+#sectionLeft #nameBundle #universityName {
 	font-size: 100%;
 	text-align:center;
 	color:rgba(255,255,255,0.8);
@@ -77,18 +89,18 @@ time, mark, audio, video {
 	padding:4px 0px;
 	cursor:pointer;
 }
-#nameBundle #universityName:hover {
+#sectionLeft #nameBundle #universityName:hover {
 	color: #fff;
 	text-shadow: 0px 0px 8px #fff;
 }
 
-#logoBundle
+#sectionLeft #logoBundle
 {
 	position:absolute;
 	left:50%;
 	top:40%;
 }
-#logoBundle #universityLogo {
+#sectionLeft #logoBundle #universityLogo {
 	position:absolute;
 	width:256px;
 	height:256px;
@@ -103,8 +115,26 @@ time, mark, audio, video {
 	background: url(img/icon_school.png);
 	object-fit: cover;
 }
+#sectionLeft #logoBundle #universityLogo:hover {
+	transform: scale(1.15);
+	transition: transform 0.15s;
+}
 
+#sectionLeft #version {
+	font-size: 25px;
+	color: white;
+	position: absolute;
+	bottom: 0px;
+	margin: 0px 0px 0px 5px;
+}
 
+#sectionLeft #debugDiv {
+	font-size: 20px;
+	color: white;
+	position: absolute;
+	bottom: 50px;
+	margin: 0px 0px 0px 5px;
+}
 /* sectionMiddle */
 #sectionMiddle {
 	position:absolute;
@@ -141,7 +171,7 @@ time, mark, audio, video {
 	margin: 5px;
 	background-color: #999;
 	display: inline-block;
-	border: #000 5px solid;
+	border: #000 1px solid;
 	border-radius: 15px;
 }
 #gameMenu .button:hover {
@@ -158,26 +188,64 @@ time, mark, audio, video {
 	min-height:60px;
 }
 .product {
-	width:300px;
-	height:64px;
-	cursor:pointer;
-	opacity:0.6;
-	background:url(img/productBackground.png);
-	position:relative;
-	text-align:left;
-	line-height:inherit;
-	margin-bottom: 5px;
+	position: relative;
+	width: 100%;
+	height: 64px;
+	background: url(img/purchaseTile.png) 0 -64px;
+	cursor: pointer;
+	display: flex;
+	margin-bottom: 2.5px;
 }
 .product:hover {
-	transition-duration: 0.2s;
+	transition-duration: 0.1s;
 	filter: brightness(115%);
+}
+
+.product .icon {
+    width: 64px;
+    height: 64px;
+	background: url(img/game_menu_setting.png);
+	opacity: 1;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.product .info {
+	position: relative;
+	flex: 1;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.product .info .name {
+	font-size: 28px;
+	color: #fff;
+	text-shadow:0px 0px 8px #fff;
+	position: absolute;
+	top: 8px;
+	left: 8px;
+}
+.product .info .price {
+	text-shadow: 0px 0px 8px #000;
+	position: absolute;
+	top: 40px;
+	left: 8px;
+	font-weight: bold;
+	color: #ff0000;
+}
+.product .info .getCount {
+	text-shadow:0px 0px 8px #fff;
+	position: absolute;
+	right: 8px;
+	font-size:40px;
+	opacity:0.9;
+	color:#000;
 }
 .disabled {
 	display: none;
 }
 
-.separatorLeft, .separatorRight
-{
+#divisionLeft, #divisionRight {
    width:16px;
    height:100%;
    background:url(img/store.png) repeat-y;
@@ -185,5 +253,51 @@ time, mark, audio, video {
    position:absolute;
    top:0px;
    bottom:0px;
-   z-index:100;
+   z-index:50;
+}
+#divisionLeft {
+	left: 30%;
+}
+#divisionRight {
+	right: 317px;
+}
+
+.tooltip {
+    color: white;
+    position: absolute;
+    width: 300px; /* 너비 설정 */
+    right: 320px; /* .product 왼쪽 바깥으로 이동 */
+    height: auto; /* 높이 자동 조정 */
+    background-color: purple; /* 배경색 설정 */
+    border: 1px solid black; /* 검은색 선 설정 */
+    z-index: 99; /* .product 요소 위에 보이도록 설정 */
+    padding: 10px;
+    display: block;
+}
+
+.tooltip .line {
+	width: 95%;
+	height: 1px;
+	background-color: #FFFFFF;
+	border: 0px;
+}
+.tooltip .description {
+	font-size: 12px;
+	color: gray;
+	text-align: center;
+}
+.tooltip .info {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	font-size: 12px;
+	color: #ff0000;
+}
+.tooltip .infobox {
+	width: 90%;
+	height: auto;
+	background-color: gainsboro;
+	border-radius: 5px;
+	margin: 3px;
+	padding-left: 5px;
 }
