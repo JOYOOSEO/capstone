@@ -1,11 +1,7 @@
 // 보유 학생
 var student = 0;
-// 보유 학생
-var student = 0;
 
-var addClickStudent = 1000;
-var addPerSecondStudent = 0;
-var addClickStudent = 1000;
+var addClickStudent = 10;
 var addPerSecondStudent = 0;
 
 // FormatNumber list
@@ -32,10 +28,13 @@ var arrProductGetCount = [0,0,0,0,0,0,0,0,0,0];
 var arrProductAddPerSecond = [0,0,0,0,0,0,0,0,0,0];
 var arrProductAddPerSecondBonus = [1,1,1,1,1,1,1,1,1,1];
 var arrProductAddPerSecondTotal = [0,0,0,0,0,0,0,0,0,0];
+var arrProductProducedTotal = [0,0,0,0,0,0,0,0,0,0];
 var productAddPerSecondTotal;
 
 var arrProductUnlock = [false,false,false,false,false,false,false,false,false,false]
 
+var arrProductUpgradeCount = [0,0,0,0,0,0,0,0,0,0];
+var arrProductUpgradeMaxCount = [10,10,10,10,10,10,10,10,10,10];
 //
 //
 //
@@ -97,20 +96,36 @@ for(let i = 0 ; i < 10 ; i++) {
 
         if(arrProductUnlock[i] == true) {
             tooltip.querySelector('.name').textContent = arrProductNameKr[i];
+            tooltip.querySelector('.price').textContent = formatNumber(arrProductPrice[i]) + ' 명';
             tooltip.querySelector('.description').textContent = arrProductDescriptionKr[i];
-            tooltip.querySelector('#bottomLine').classList.remove('disabled');
+            tooltip.querySelector('.getCount').textContent = arrProductGetCount[i] + ' 보유';
+            tooltip.querySelector('#centerLine').classList.remove('disabled');
             tooltip.querySelector('#info_1').classList.remove('disabled');
+            tooltip.querySelector('#info_1').textContent = '개당 ' + formatNumber(arrProductAddPerSecond[i]) + ' 명 입학';
             tooltip.querySelector('#info_2').classList.remove('disabled');
+            tooltip.querySelector('#info_2').textContent = '초당 ' + formatNumber(arrProductAddPerSecondTotal[i]) + ' 명 입학';
             tooltip.querySelector('#info_3').classList.remove('disabled');
+            tooltip.querySelector('#info_3').textContent = '총 ' + formatNumber(arrProductProducedTotal[i]) + ' 명 입학';
+            
+
+            if(arrProductUpgradeCount[i] >= 1) {
+                tooltip.querySelector('#bottomLine').classList.remove('disabled');
+                tooltip.querySelector('#productUpgradeDone').classList.remove('disabled');
+            }
         }
         else {
-            //tooltip.querySelector
+            tooltip.src = "/img/icon_lock.png";
             tooltip.querySelector('.name').textContent = '???';
+            tooltip.querySelector('.price').textContent = '';
             tooltip.querySelector('.description').textContent = '"???"';
-            tooltip.querySelector('#bottomLine').classList.add('disabled');
+            tooltip.querySelector('.getCount').textContent = '';
+            tooltip.querySelector('.tag').textContent = '';
+            tooltip.querySelector('#centerLine').classList.add('disabled');
             tooltip.querySelector('#info_1').classList.add('disabled');
             tooltip.querySelector('#info_2').classList.add('disabled');
             tooltip.querySelector('#info_3').classList.add('disabled');
+            tooltip.querySelector('#bottomLine').classList.add('disabled');
+            tooltip.querySelector('#productUpgradeDone').classList.add('disabled');
         }
         // 설명창 보이기
         tooltip.style.display = 'block';
@@ -163,6 +178,10 @@ setInterval(perSecond, 1000);
 function perSecond() {
     student += addPerSecondStudent;
     updateStudent();
+
+    for(let i = 0 ; i < arrProductAddPerSecond.length ; i++) {
+        arrProductProducedTotal[i] += arrProductAddPerSecondTotal[i]
+    }
     
 }
 // 초당 추가 업데이트

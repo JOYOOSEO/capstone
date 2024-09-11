@@ -1,11 +1,4 @@
-html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var,
-b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
+ del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed,  figure, figcaption, footer, header, hgroup,  menu, nav, output, ruby, section, summary, time, mark, audio, video {
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -107,13 +100,13 @@ body {
 	left:-128px;
 	top:-128px;
 	z-index:10000;
-	border-radius:128px;
 	border:none;
 	overflow:hidden;
 	outline:none;
 	cursor:pointer;
 	background: url(img/icon_school.png);
 	object-fit: cover;
+	background-size: cover;
 }
 #sectionLeft #logoBundle #universityLogo:hover {
 	transform: scale(1.15);
@@ -263,7 +256,6 @@ body {
 }
 
 .tooltip {
-    color: white;
     position: absolute;
     width: 300px; /* 너비 설정 */
     right: 320px; /* .product 왼쪽 바깥으로 이동 */
@@ -276,14 +268,39 @@ body {
 }
 
 .tooltip .icon {
+	float: left;
 	width: 64px;
 	height: 64px;
 	border: #000 1px solid;
+	background: url("img/icon_lock.png") no-repeat;
+	background-size: cover;
+	margin-right: 8px;
+	margin-bottom: 4px;
 }
-
+.tooltip .price {
+	float: right;
+}
+.tooltip .name {
+	float: center;
+	font-weight: bold;
+	font-size: 110%;
+	color: #fff;
+	/*margin:2px 0px;
+	/*text-shadow:0px -2px 4px rgba(255,255,200,0.4),0px 1px 0px rgba(100,100,100,1),0px 2px 4px rgba(0,0,0,1);*/
+}
+.tooltip .getCount {
+	float: center;
+}
+.tooltip .tag {
+	display: inline-block;
+	color: #fff;
+	font-size: 75%;
+	background-color: #000;
+	border-radius: 5px;
+}
 .tooltip .line {
 	width: 95%;
-	height: 1px;
+	height: 2px;
 	background: linear-gradient(to right,rgba(255,255,255,0),rgba(255,255,255,1),rgba(255,255,255,0));
 	border: 0px;
 }
@@ -306,4 +323,17 @@ body {
 	border-radius: 5px;
 	margin: 3px;
 	padding-left: 5px;
+}
+.tooltip .infoBundle .info {
+	width: 90%;
+	height: auto;
+	background-color: gainsboro;
+	border-radius: 5px;
+	margin: 3px;
+	padding-left: 5px;
+}
+.tooltip .productUpgradeDone {
+	font-size: 120%;
+	color: gray;
+	text-align: center;
 }
