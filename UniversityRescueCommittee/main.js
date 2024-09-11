@@ -99,19 +99,44 @@ for(let i = 0 ; i < 10 ; i++) {
             tooltip.querySelector('.price').textContent = formatNumber(arrProductPrice[i]) + ' 명';
             tooltip.querySelector('.description').textContent = arrProductDescriptionKr[i];
             tooltip.querySelector('.getCount').textContent = arrProductGetCount[i] + ' 보유';
-            tooltip.querySelector('#centerLine').classList.remove('disabled');
-            tooltip.querySelector('#info_1').classList.remove('disabled');
-            tooltip.querySelector('#info_1').textContent = '개당 ' + formatNumber(arrProductAddPerSecond[i]) + ' 명 입학';
-            tooltip.querySelector('#info_2').classList.remove('disabled');
-            tooltip.querySelector('#info_2').textContent = '초당 ' + formatNumber(arrProductAddPerSecondTotal[i]) + ' 명 입학';
-            tooltip.querySelector('#info_3').classList.remove('disabled');
-            tooltip.querySelector('#info_3').textContent = '총 ' + formatNumber(arrProductProducedTotal[i]) + ' 명 입학';
             
-
+            // 태그 활성화
+            document.getElementById('tagList').innerHTML = '';
+            if(arrProductGetCount[i] == 2) {
+                const appendTag = document.createElement('div');
+                appendTag.className = 'tag colorRed';
+                appendTag.innerHTML = '테스트'
+                document.getElementById('tagList').appendChild(appendTag);
+                const appendTag_1 = document.createElement('div');
+                appendTag_1.className = 'tag colorRed';
+                appendTag_1.innerHTML = '123'
+                document.getElementById('tagList').appendChild(appendTag_1);
+            }
+            // 통계 활성화
+            if(arrProductGetCount[i] >= 1) {
+                tooltip.querySelector('#centerLine').classList.remove('disabled');
+                tooltip.querySelector('#info_1').classList.remove('disabled');
+                tooltip.querySelector('#info_1').textContent = '개당 ' + formatNumber(arrProductAddPerSecond[i]) + ' 명 입학';
+                tooltip.querySelector('#info_2').classList.remove('disabled');
+                tooltip.querySelector('#info_2').textContent = '초당 ' + formatNumber(arrProductAddPerSecondTotal[i]) + ' 명 입학';
+                tooltip.querySelector('#info_3').classList.remove('disabled');
+                tooltip.querySelector('#info_3').textContent = '총 ' + formatNumber(arrProductProducedTotal[i]) + ' 명 입학';
+            }
+            else { // 비활성화
+                tooltip.querySelector('#centerLine').classList.add('disabled');
+                tooltip.querySelector('#info_1').classList.add('disabled');
+                tooltip.querySelector('#info_2').classList.add('disabled');
+                tooltip.querySelector('#info_3').classList.add('disabled');
+            }
+            // 강화 현황 활성화
             if(arrProductUpgradeCount[i] >= 1) {
                 tooltip.querySelector('#bottomLine').classList.remove('disabled');
                 tooltip.querySelector('#productUpgradeDone').classList.remove('disabled');
                 tooltip.querySelector('#progressUpgrade').textContent = '(' + arrProductUpgradeCount[i] + '/' + arrProductUpgradeCountMax[i] + ')';
+            }
+            else {
+                tooltip.querySelector('#productUpgradeDone').classList.add('disabled');
+                tooltip.querySelector('#progressUpgrade').classList.add('disabled');
             }
         }
         else {
@@ -120,7 +145,7 @@ for(let i = 0 ; i < 10 ; i++) {
             tooltip.querySelector('.price').textContent = '';
             tooltip.querySelector('.description').textContent = '"???"';
             tooltip.querySelector('.getCount').textContent = '';
-            tooltip.querySelector('.tag').textContent = '';
+            tooltip.querySelector('.tagList').textContent = '';
             tooltip.querySelector('#centerLine').classList.add('disabled');
             tooltip.querySelector('#info_1').classList.add('disabled');
             tooltip.querySelector('#info_2').classList.add('disabled');
@@ -227,27 +252,30 @@ function formatNumber(value) {
         }
     }
 }
-/*
-const product = document.querySelectorAll('.product');
-const tooltip = document.querySelector('.tooltip');
-    
-product.addEventListener('mouseenter', () => {
-    test(product.offsetTop); // .product의 왼쪽으로 이동
-    console.log('enter');
-    console.log(product.offsetTop);
-    console.log(tooltip.style.top);
-});
 
-product.addEventListener('mouseleave', () => {
-    tooltip.style.display = 'none';
-    console.log('leave');
-});
-function test(aaaa) {
-    tooltip.style.display = 'block';
-    tooltip.style.top = aaaa; // .product의 왼쪽으로 이동
-}
-console.log(tooltip.style.top);
+// 텍스트 파일 추출
 
+document.getElementById('downloadButton').addEventListener('click', function() {
+    const textContent = arrProductGetCount[0] + '/' + arrProductGetCount[1] + '저장된 내용을 저장하고 추출\n두번째 줄 테스트 \n 세번 째 줄 테스트\n1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+    // Blob 객체를 생성(파일의 내용을 포함)
+    const blob = new Blob([textContent], { type: 'text/plain' });
+
+    // 링크 생성
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    // 다운로드할 파일의 이름
+    a.download = 'example.txt';
+
+    // 클릭하여 다운로드를시작
+    document.body.appendChild(a);
+    a.click();
+
+    // 다운로드 링크를 제거
+    document.body.removeChild(a);
+    // 메모리를 반환
+    URL.revokeObjectURL(URL.createObjectURL(blob));
+});
 
 /*
 else

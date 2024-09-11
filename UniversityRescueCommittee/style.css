@@ -291,12 +291,20 @@ body {
 .tooltip .getCount {
 	float: center;
 }
-.tooltip .tag {
+/*.tooltip .tagList {
+}*/
+.tooltip .tagList .tag {
 	display: inline-block;
+	font-size: 80%;
 	color: #fff;
-	font-size: 75%;
+	text-align: center;
 	background-color: #000;
-	border-radius: 5px;
+	border-radius: 10px;
+	padding: 2px 10px;
+	margin-right: 2px;
+}
+.tooltip .tagList .tag p{
+	display: inline-block;
 }
 .tooltip .line {
 	width: 95%;
