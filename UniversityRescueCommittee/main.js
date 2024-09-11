@@ -91,100 +91,39 @@ for(let i = 0 ; i < 10 ; i++) {
         }
     });
 
-    // 설명창 보이기
-
+    // 마우스가 들어왔을 때
     product.addEventListener('mouseenter', (e) => {
-
         tooltip.style.top = `${product.getBoundingClientRect().top + 10}px`;
-        // name
+
         if(arrProductUnlock[i] == true) {
             tooltip.querySelector('.name').textContent = arrProductNameKr[i];
             tooltip.querySelector('.description').textContent = arrProductDescriptionKr[i];
+            tooltip.querySelector('#bottomLine').classList.remove('disabled');
+            tooltip.querySelector('#info_1').classList.remove('disabled');
+            tooltip.querySelector('#info_2').classList.remove('disabled');
+            tooltip.querySelector('#info_3').classList.remove('disabled');
         }
         else {
+            //tooltip.querySelector
             tooltip.querySelector('.name').textContent = '???';
             tooltip.querySelector('.description').textContent = '"???"';
-            //tooltip.querySelector('.bottomLine').classList.add('.');
+            tooltip.querySelector('#bottomLine').classList.add('disabled');
+            tooltip.querySelector('#info_1').classList.add('disabled');
+            tooltip.querySelector('#info_2').classList.add('disabled');
+            tooltip.querySelector('#info_3').classList.add('disabled');
         }
-        
+        // 설명창 보이기
         tooltip.style.display = 'block';
     });
+    // 마우스가 바깥으로 나갔을 때
     product.addEventListener('mouseleave', (e) => {
+        // 설명창 가리기
         tooltip.style.display = 'none';
     });
 }
 
-// 자릿수 계산
-function formatNumber(value) {
-    // value의 값이 0일 경우
-    if(value == 0) return value;
-    // 아닐 경우
-    else {
-        for(let i = arrFormatNumberKr.length - 1 ; i > -1 ; i--) {
-            if(value >= arrFormatStandardKr[i]) {
-                // 1e72 이상 | 무한
-                if(i == arrFormatNumberKr.length - 1) return arrFormatNumberKr[i] 
-                // 1e4 이하
-                else if(i == 0) return value + arrFormatNumberKr[0];
-                // 그 외
-                else return (value / arrFormatStandardKr[i]).toFixed(2) + arrFormatNumberKr[i];
-            }
-        }
-    }
-}
-
-// 1초마다 작동
-setInterval(perSecond, 1000);
-function perSecond() {
-    student += addPerSecondStudent;
-    updateStudent();
-    
-}
-
-// 초당 추가 업데이트
-function updateAddPerSecond() {
-    addPerSecondStudent = 0;
-    for(let i = 0 ; i < arrProductAddPerSecond.length; i++) {
-        arrProductAddPerSecondTotal[i] = arrProductAddPerSecond[i] * arrProductAddPerSecondBonus[i]
-        addPerSecondStudent += arrProductAddPerSecondTotal[i];
-    }
-    updateStudent();
-}
-function updateStudent() {
-    student += addPerSecondStudent;
-    updateStudent();
-    
-}
-
-// 초당 추가 업데이트
-function updateAddPerSecond() {
-    addPerSecondStudent = 0;
-    for(let i = 0 ; i < arrProductAddPerSecond.length; i++) {
-        arrProductAddPerSecondTotal[i] = arrProductAddPerSecond[i] * arrProductAddPerSecondBonus[i]
-        addPerSecondStudent += arrProductAddPerSecondTotal[i];
-    }
-    updateStudent();
-}
-function updateStudent() {
-    // 보유 중인 학생 갱신
-    document.getElementById('getStudent').textContent = formatNumber(student) + ' 명';
-    document.getElementById('getStudent').textContent = formatNumber(student) + ' 명';
-    // 초당 학생 갱신
-    document.getElementById('perSecondStudent').textContent = '초당 ' + formatNumber(addPerSecondStudent) + ' 명';
-    document.getElementById('perSecondStudent').textContent = '초당 ' + formatNumber(addPerSecondStudent) + ' 명';
-}
-
-// 2초마다 작동 | 최적화를 위함
-setInterval(twoSecond, 1000*2);
-function twoSecond() {
-    // 웹 HTML 제목 갱신
-    document.title = formatNumber(student) + " 명 - 대학교 구조 위원회";
-    document.title = formatNumber(student) + " 명 - 대학교 구조 위원회";
-}
-
 // 매 틱 반복
-setInterval(() => {
-        
+setInterval(() => {  
     for(let i = 0 ; i < arrProductPrice.length ; i++) {
 
         // 해금
@@ -219,6 +158,54 @@ setInterval(() => {
     document.getElementById('debugDiv').textContent = arrProductGetCount + ' / ' + arrProductAddPerSecond + '(' + addPerSecondStudent + ')';
 });
 
+// 1초마다 작동
+setInterval(perSecond, 1000);
+function perSecond() {
+    student += addPerSecondStudent;
+    updateStudent();
+    
+}
+// 초당 추가 업데이트
+function updateAddPerSecond() {
+    addPerSecondStudent = 0;
+    for(let i = 0 ; i < arrProductAddPerSecond.length; i++) {
+        arrProductAddPerSecondTotal[i] = arrProductAddPerSecond[i] * arrProductAddPerSecondBonus[i]
+        addPerSecondStudent += arrProductAddPerSecondTotal[i];
+    }
+    updateStudent();
+}
+
+function updateStudent() {
+    // 보유 중인 학생 갱신
+    document.getElementById('getStudent').textContent = formatNumber(student) + ' 명';
+    // 초당 학생 갱신
+    document.getElementById('perSecondStudent').textContent = '초당 ' + formatNumber(addPerSecondStudent) + ' 명';
+}
+
+// 2초마다 작동 | 최적화를 위함
+setInterval(twoSecond, 1000*2);
+function twoSecond() {
+    // 웹 HTML 제목 갱신
+    document.title = formatNumber(student) + " 명 - 대학교 구조 위원회";
+}
+// 자릿수 계산
+function formatNumber(value) {
+    // value의 값이 0일 경우
+    if(value == 0) return value;
+    // 아닐 경우
+    else {
+        for(let i = arrFormatNumberKr.length - 1 ; i > -1 ; i--) {
+            if(value >= arrFormatStandardKr[i]) {
+                // 1e72 이상 | 무한
+                if(i == arrFormatNumberKr.length - 1) return arrFormatNumberKr[i] 
+                // 1e4 이하
+                else if(i == 0) return value + arrFormatNumberKr[0];
+                // 그 외
+                else return (value / arrFormatStandardKr[i]).toFixed(2) + arrFormatNumberKr[i];
+            }
+        }
+    }
+}
 /*
 const product = document.querySelectorAll('.product');
 const tooltip = document.querySelector('.tooltip');

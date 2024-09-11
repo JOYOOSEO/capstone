@@ -275,10 +275,16 @@ body {
     display: block;
 }
 
+.tooltip .icon {
+	width: 64px;
+	height: 64px;
+	border: #000 1px solid;
+}
+
 .tooltip .line {
 	width: 95%;
 	height: 1px;
-	background-color: #FFFFFF;
+	background: linear-gradient(to right,rgba(255,255,255,0),rgba(255,255,255,1),rgba(255,255,255,0));
 	border: 0px;
 }
 .tooltip .description {
@@ -286,14 +292,14 @@ body {
 	color: gray;
 	text-align: center;
 }
-.tooltip .info {
+.tooltip .infoBundle {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	font-size: 12px;
 	color: #ff0000;
 }
-.tooltip .infobox {
+.tooltip .infoBundle .info {
 	width: 90%;
 	height: auto;
 	background-color: gainsboro;

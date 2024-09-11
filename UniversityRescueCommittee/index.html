@@ -7,22 +7,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
 <link href="style.css" rel="stylesheet" type="text/css">
 
 <body>
     <div id="game">
         <div id="sectionLeft">
             <div id="gradient"></div>
-            <div id="gradient"></div>
             <div id="nameBundle">
                 <div id="universityName">대림 대학교</div>
             </div>
-            <div id="studentBundle">
-                <div id="getStudent">0 명</div>
-                <div id="perSecondStudent">초당 0 명</div>
             <div id="studentBundle">
                 <div id="getStudent">0 명</div>
                 <div id="perSecondStudent">초당 0 명</div>
@@ -32,13 +25,7 @@
             </div>
             <div id="debugDiv"></div>
             <div id="version">V 0.1.0</div>
-            <div id="debugDiv"></div>
-            <div id="version">V 0.1.0</div>
         </div>
-
-        <div id="divisionLeft"></div>
-        <div id="divisionRight"></div>
-
 
         <div id="divisionLeft"></div>
         <div id="divisionRight"></div>
@@ -51,7 +38,6 @@
                 
             </div>
         </div>
-
 
         <div id="sectionRight">
             <div id="gameMenu">
@@ -85,21 +71,8 @@
                             <div id="product_1_price" class="price">100 명</div>
                             <div id="product_1_getCount" class="getCount"></div>
                         </div>
-                        <div class="icon"></div>
-                        <div class="info">
-                            <div id="product_1_name" class="name"></div>
-                            <div id="product_1_price" class="price">100 명</div>
-                            <div id="product_1_getCount" class="getCount"></div>
-                        </div>
                     </div>
                     <div id="product_2" class="product">
-                        <div class="icon"></div>
-                        <div class="info">
-                            <div id="product_2_name" class="name"></div>
-                            <div id="product_2_price" class="price">1100 명</div>
-                            <div id="product_2_getCount" class="getCount"></div>
-                        </div>
-                    </div>
                         <div class="icon"></div>
                         <div class="info">
                             <div id="product_2_name" class="name"></div>
@@ -170,14 +143,15 @@
         </div>
         
         <div class="tooltip" id="tooltip">
-            <div class="name">5959</div>
+            <div class="img"></div>
+            <div class="name"></div>
             <hr id="topLine" class="line" />
-            <div class="description">해당 생산품 어쩌구저쩌구</div>
+            <div class="description"></div>
             <hr id="bottomLine" class="line" />
-            <div class="info">
-                <div class="info_1 infobox">초당 0.1 x 1 명의 학생 입학</div>
-                <div class="info_2 infobox">현재 초당 0.5 명의 학생 입학</div>
-                <div class="info_3 infobox">총 100 명의 학생 입학</div>
+            <div id="infoBundle" class="infoBundle">
+                <div id="info_1" class="info">초당 0.1 x 1 명의 학생 입학</div>
+                <div id="info_2" class="info">현재 초당 0.5 명의 학생 입학</div>
+                <div id="info_3" class="info">총 100 명의 학생 입학</div>
             </div>
         </div>
     </div>
