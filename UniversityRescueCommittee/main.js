@@ -34,7 +34,7 @@ var productAddPerSecondTotal;
 var arrProductUnlock = [false,false,false,false,false,false,false,false,false,false]
 
 var arrProductUpgradeCount = [0,0,0,0,0,0,0,0,0,0];
-var arrProductUpgradeMaxCount = [10,10,10,10,10,10,10,10,10,10];
+var arrProductUpgradeCountMax = [10,10,10,10,10,10,10,10,10,10];
 //
 //
 //
@@ -111,6 +111,7 @@ for(let i = 0 ; i < 10 ; i++) {
             if(arrProductUpgradeCount[i] >= 1) {
                 tooltip.querySelector('#bottomLine').classList.remove('disabled');
                 tooltip.querySelector('#productUpgradeDone').classList.remove('disabled');
+                tooltip.querySelector('#progressUpgrade').textContent = '(' + arrProductUpgradeCount[i] + '/' + arrProductUpgradeCountMax[i] + ')';
             }
         }
         else {
@@ -126,6 +127,7 @@ for(let i = 0 ; i < 10 ; i++) {
             tooltip.querySelector('#info_3').classList.add('disabled');
             tooltip.querySelector('#bottomLine').classList.add('disabled');
             tooltip.querySelector('#productUpgradeDone').classList.add('disabled');
+            tooltip.querySelector('#progressUpgrade').classList.add('disabled');
         }
         // 설명창 보이기
         tooltip.style.display = 'block';

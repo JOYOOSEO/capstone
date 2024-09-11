@@ -337,3 +337,8 @@ body {
 	color: gray;
 	text-align: center;
 }
+.tooltip .progressUpgrade {
+	font-size: 90%;
+	color: gray;
+	text-align: center;
+}
