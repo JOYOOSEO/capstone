@@ -1,6 +1,10 @@
 // 보유 학생
 var student = 0;
+// 보유 학생
+var student = 0;
 
+var addClickStudent = 1000;
+var addPerSecondStudent = 0;
 var addClickStudent = 1000;
 var addPerSecondStudent = 0;
 
@@ -147,9 +151,26 @@ function updateAddPerSecond() {
     updateStudent();
 }
 function updateStudent() {
+    student += addPerSecondStudent;
+    updateStudent();
+    
+}
+
+// 초당 추가 업데이트
+function updateAddPerSecond() {
+    addPerSecondStudent = 0;
+    for(let i = 0 ; i < arrProductAddPerSecond.length; i++) {
+        arrProductAddPerSecondTotal[i] = arrProductAddPerSecond[i] * arrProductAddPerSecondBonus[i]
+        addPerSecondStudent += arrProductAddPerSecondTotal[i];
+    }
+    updateStudent();
+}
+function updateStudent() {
     // 보유 중인 학생 갱신
     document.getElementById('getStudent').textContent = formatNumber(student) + ' 명';
+    document.getElementById('getStudent').textContent = formatNumber(student) + ' 명';
     // 초당 학생 갱신
+    document.getElementById('perSecondStudent').textContent = '초당 ' + formatNumber(addPerSecondStudent) + ' 명';
     document.getElementById('perSecondStudent').textContent = '초당 ' + formatNumber(addPerSecondStudent) + ' 명';
 }
 
@@ -157,6 +178,7 @@ function updateStudent() {
 setInterval(twoSecond, 1000*2);
 function twoSecond() {
     // 웹 HTML 제목 갱신
+    document.title = formatNumber(student) + " 명 - 대학교 구조 위원회";
     document.title = formatNumber(student) + " 명 - 대학교 구조 위원회";
 }
 
