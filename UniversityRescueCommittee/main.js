@@ -1,7 +1,7 @@
 // 보유 학생
 var student = 0;
 
-var addClickStudent = 10;
+var addClickStudent = 100000;
 var addPerSecondStudent = 0;
 
 // FormatNumber list
@@ -9,7 +9,7 @@ var arrFormatNumberKr = ['','만','억','조','경','해','자','양','구','간
 var arrFormatStandardKr = [1,1e4,1e8,1e12,1e16,1e20,1e24,1e28,1e32,1e36,1e40,1e44,1e48,1e52,1e56,1e60,1e64,1e68,1e72]
 
 // Product list
-var arrProductNameKr = ['1번 생산','2번 생산','3번 생산','4번 생산','5번 생산','6번 생산','7번 생산','8번 생산','9번 생산','10번 생산'];
+var arrProductName = ['학생','학교 시설','교통 시설','주거 시설','은행','공항','기업','정부','세계 정부','복제 실험실','우주정거장','차원 포탈','블랙홀','타임머신','평행 세계','또 다른 나'];
 var arrProductDescriptionKr = [
     '1번 생산 설명 -----',
     '2번 생산 설명 -----',
@@ -22,19 +22,19 @@ var arrProductDescriptionKr = [
     '9번 생산 설명 -----',
     '10번 생산 설명 -----'
 ];
-var arrProductPrice = [10,100,1100,12000,150000,500000,17000000,9800000000,115200000000,9256100000000000];
-var arrProductGetCount = [0,0,0,0,0,0,0,0,0,0];
+var arrProductPrice = [10,100,1100,12000,150000,500000,17000000,9800000000,115200000000,9256100000000000,1e25,1e30,1e35,1e40,1e45,1e50];
+var arrProductGetCount = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 
-var arrProductAddPerSecond = [0,0,0,0,0,0,0,0,0,0];
-var arrProductAddPerSecondBonus = [1,1,1,1,1,1,1,1,1,1];
-var arrProductAddPerSecondTotal = [0,0,0,0,0,0,0,0,0,0];
-var arrProductProducedTotal = [0,0,0,0,0,0,0,0,0,0];
+var arrProductAddPerSecond = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+var arrProductAddPerSecondBonus = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
+var arrProductAddPerSecondTotal = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+var arrProductProducedTotal = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 var productAddPerSecondTotal;
 
 var arrProductUnlock = [false,false,false,false,false,false,false,false,false,false]
 
-var arrProductUpgradeCount = [0,0,0,0,0,0,0,0,0,0];
-var arrProductUpgradeCountMax = [10,10,10,10,10,10,10,10,10,10];
+var arrProductUpgradeCount = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+var arrProductUpgradeCountMax = [10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10];
 //
 //
 //
@@ -53,7 +53,7 @@ universityLogo.addEventListener('mousedown', (e) => {
 })
 
 
-for(let i = 0 ; i < 10 ; i++) {
+for(let i = 0 ; i < arrProductName.length ; i++) {
 
     // 처음 작동
     const product = document.getElementById(`product_${i}`);
@@ -95,7 +95,7 @@ for(let i = 0 ; i < 10 ; i++) {
         tooltip.style.top = `${product.getBoundingClientRect().top + 10}px`;
 
         if(arrProductUnlock[i] == true) {
-            tooltip.querySelector('.name').textContent = arrProductNameKr[i];
+            tooltip.querySelector('.name').textContent = arrProductName[i];
             tooltip.querySelector('.price').textContent = formatNumber(arrProductPrice[i]) + ' 명';
             tooltip.querySelector('.description').textContent = arrProductDescriptionKr[i];
             tooltip.querySelector('.getCount').textContent = arrProductGetCount[i] + ' 보유';
@@ -170,11 +170,11 @@ setInterval(() => {
 
         // 해금
         const product = document.getElementById(`product_${i}`);
-        if(arrProductUnlock[i] == false && arrProductGetCount[i-1] >= 1) {
+        if(arrProductGetCount[i-1] >= 1) {
             product.classList.remove('disabled');
         }
         if(arrProductUnlock[i] == false && student >= arrProductPrice[i] * 0.8) {
-            product.querySelector('.name').textContent = arrProductNameKr[i];
+            product.querySelector('.name').textContent = arrProductName[i];
             arrProductUnlock[i] = true;
         }
 
