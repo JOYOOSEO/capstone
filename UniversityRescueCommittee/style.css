@@ -234,9 +234,11 @@ sectionRight
 	position: absolute;
 	right: 0px;
 	background: #99CCFF;
+	opacity: 0.5;
 	margin: 4px;
 	padding: 4px 16px;
 	border-radius: 5px;
+	pointer-events: none;
 }
 #upgradeExpand:hover {
 	filter: brightness(115%);
@@ -257,7 +259,7 @@ sectionRight
 	height: 48px;
 	background: #FFCC99;
 	border: #ffffff 1px solid;
-	margin: 2px;
+	margin: 4px;
 }
 .upgradeIcon:hover {
 	filter: brightness(115%);
@@ -330,7 +332,8 @@ sectionRight
 }
 
 /*
-tooltip
+	tooltip common
+
 */
 .tooltip {
 	font-size: 16px;
@@ -344,7 +347,6 @@ tooltip
     z-index: 99;
 	overflow: hidden;
 }
-
 .tooltip .icon {
 	float: left;
 	width: 64px;
@@ -364,10 +366,16 @@ tooltip
 	text-shadow:0px 0px 8px #ffffff;
 	font-size: 130%;	
 }
+
+
+/*
+	tooltip
+*/
 .tooltip .getCount {
 	color: #ffffff;
 	float: center;
 }
+
 /*.tooltip .tagList {
 }*/
 .tooltip .tagList .tag {
@@ -384,13 +392,13 @@ tooltip
 .tooltip .tagList .tag p{
 	display: inline-block;
 }
-.tooltip .line {
+#productTooltip .line {
 	width: 95%;
 	height: 2px;
 	background: linear-gradient(to right,rgba(255,255,255,0),rgba(255,255,255,1),rgba(255,255,255,0));
 	border: 0px;
 }
-.tooltip .description {
+#productTooltip .description {
 	color: gray;
 	font-size: 100%;
 	text-align: center;
@@ -420,6 +428,31 @@ tooltip
 	font-size: 90%;
 	text-align: center;
 }
+
+/*
+	Upgrade Tooltip
+*/
+#upgradeTooltip {
+	width: 400px;
+}
+#upgradeTooltip .line {
+	width: 95%;
+	height: 2px;
+	background: linear-gradient(to right,rgba(255,255,255,0),rgb(131, 103, 255),rgba(255,255,255,0));
+	border: 0px;
+}
+#upgradeTooltip .description {
+	color: #A9A9A9;
+	font-size: 120%;
+	text-align: left;
+
+}
+#upgradeTooltip .description b {
+	font-size: 110%;
+	color: #FFFFFF;
+
+}
+
 
 /* divisionLine */
 .divisionLine {

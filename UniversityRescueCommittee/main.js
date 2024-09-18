@@ -1,7 +1,7 @@
 // 보유 학생
-var student = 0;
+var student = 1;
 
-var addClickStudent = 1;
+var addClickStudent = 100;
 var addPerSecondStudent = 0;
 
 // FormatNumber list
@@ -16,15 +16,15 @@ const arrProductDescription = [
     '학업, 오락, 휴식 시설 같은 원하는 모든 시설을 갖춥니다. 학생을 위해서 못해줄 건 없는 법입니다.',
     '세계 어디든 우리 학교로 쉽게 올 수 있는 다양한 교통 수단을 만듭니다. 재학생은 무료로 이용할 수 있습니다.',
     '반지하, 주택, 아파트 등 거주가 가능한 시설을 학교 주변에 짓습니다. 우리 학교 학생이라면 재학하는 동안 한 채씩 무료로 거주할 수 있습니다.',
-    '우리 학교 재학생이라면 증명 없이 필요한 돈을 무조건 대출해줄 수 있는 은행을 설립합니다. 이자는 평생 없습니다.',
+    '우리 학교 재학생이라면 증명 없이 필요한 비용을 반드시 대출할 수 있는 은행을 설립합니다. 이자는 평생 없습니다.',
     '각 국 나라에서 학교로 1시간마다 운행하는 공항을 세웁니다. 물론 재학생은 무료로 이용할 수 있습니다.',
     '기업은 자기 회사로 데려올 재학생을 항상 눈여겨 보고 있습니다.',
     '정부는 우리 학생과 학교를 위한 지원과 정책을 실시합니다.',
     '세계는 앞으로 우리 학교만을 위해 움직입니다.',
-    '자원을 받은 학생을 복제해 더 많은 학생을 만듭니다. 학구열 앞에서는 윤리 따위는 중요한 것이 아닙니다.',
+    '자원을 받은 학생을 복제해 더 많은 학생을 만듭니다. 학구열 앞에서는 윤리와 혼란 따위는 중요한 것이 아닙니다.',
     '우리 학교에서 가까운 행성까지 우주선을 통해 이동합니다. 재학생이라면 탑승료와 동면 서비스는 무료입니다.',
     '천문학과가 아니라면 마주할 수 없는 거리를 순식간에 이동할 수 있는 포탈을 세웁니다. 학생이라고 주장하는 존재에게 우리 학교를 설명할 수 있겠네요.',
-    '블랙홀 내부에서 살아있는 학생을 우리 학교로 데리고 옵니다.',
+    '블랙홀 내부에서 살아있는 학생을 우리 학교로 구조합니다. 때로는 위험을 감수할줄도 알아야 합니다.',
     '과거 혹은 미래로 가 더 많은 학생을 현재 시간대로 데려옵니다. 시대 차이 따위 극복 가능한 법이죠.',
     '평행 세계를 횡단하는 방법을 찾아 다른 세계 학생에게 우리 학교를 홍보합니다. 횡단 비용은 많이 들지만 같은 홍보물을 반복해 쓸 수 있어 경제적이죠.',
     '당신은 혼자가 아닙니다. 그리고 또 다른 당신도 혼자가 아니죠.'
@@ -40,6 +40,14 @@ var productAddPerSecondTotal;
 
 var arrProductUnlock = [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]
 
+var arrProductUpgradeId = [];
+var arrProductUpgradeEnable = [
+    [false,false,false,false,false],
+    [false,false,false,false,false],
+    [false,false,false,false,false],
+    [false,false,false,false,false],
+    [false,false,false,false,false]
+]
 var arrProductUpgradeCount = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 var arrProductUpgradeCountMax = [10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10];
 //
@@ -64,7 +72,7 @@ for(let i = 0 ; i < productLength ; i++) {
 
     // 처음 작동
     const product = document.getElementById(`product_${i}`);
-    const tooltip = document.getElementById('tooltip');
+    const tooltip = document.getElementById('productTooltip');
 
     product.querySelector('.name').textContent = '???';
     product.querySelector('.price').textContent = formatNumber(arrProductPrice[i]) + ' 명';
@@ -82,6 +90,25 @@ for(let i = 0 ; i < productLength ; i++) {
             // 생산품 증가
             arrProductGetCount[i]++;
             document.getElementById(`product_${i}_getCount`).textContent = arrProductGetCount[i];
+            // 일정 개수 이상이라면 강화 아이콘 추가
+            if(arrProductGetCount[i] >= 1 && arrProductUpgradeEnable[i][0] === false) { // 1개 이상
+                arrProductUpgradeEnable[i][0] = true;
+                arrProductUpgradeId.push(i * 100 + 1);
+
+                reorderUpgradeIcon();
+                upgradeMenu();
+            }
+            if(arrProductGetCount[i] >= 10 && arrProductUpgradeEnable[i][1] === false) { // 10개 이상
+                arrProductUpgradeEnable[i][1] = true;
+                arrProductUpgradeId.push(i * 100 + 2);
+
+                reorderUpgradeIcon();
+                upgradeMenu();
+            }
+            /*
+                이곳에 개수에 따라 강화 추가 코드 놓을 자리
+            */
+
             // 초당 추가 값 증가
             updateAddPerSecond();
         }
@@ -164,24 +191,14 @@ for(let i = 0 ; i < productLength ; i++) {
     }); 
 }
 
-// 업그레이드 아코디언 메뉴
-const upgradeExpand = document.getElementById('upgradeExpand');
-const upgradeBundle = document.getElementById('upgradeBundle');
-const upgradeIconCount = upgradeBundle.getElementsByClassName('upgradeIcon').length;
-
-if(upgradeIconCount >= 6) {
-    upgradeExpand.style.pointerEvents = 'auto';
-    upgradeExpand.style.opacity = '1';
-} else {
-    upgradeExpand.style.pointerEvents = 'none';
-    upgradeExpand.style.opacity = '0.5';
-}
+// 업그레이드 확장 버튼
 upgradeExpand.addEventListener('click', () => {
     upgradeBundle.classList.toggle('open');
 
     if(upgradeBundle.classList.contains('open')) upgradeExpand.textContent = '접기';
     else upgradeExpand.textContent = '펼치기';
 })
+
 // 매 틱 반복
 setInterval(() => {  
     for(let i = 0 ; i < productLength ; i++) {
@@ -216,7 +233,6 @@ setInterval(() => {
     document.getElementById('debugDiv').textContent = arrProductGetCount + ' / ' + arrProductAddPerSecond + '(' + addPerSecondStudent + ')';
 });
 
-
 /*
     1초마다 작동
 */
@@ -231,7 +247,6 @@ function perSecond() {
     
 }
 
-
 /* 
     FUNCTION
     초당 추가 업데이트
@@ -245,7 +260,6 @@ function updateAddPerSecond() {
     updateStudent();
 }
 
-
 /*
     FUNCTION
     설명창 갱신
@@ -253,7 +267,7 @@ function updateAddPerSecond() {
 function updateTooltip(i) {
     console.log("test");
 
-    const tooltip = document.getElementById('tooltip');
+    const tooltip = document.getElementById('productTooltip');
     tooltip.querySelector('.price').textContent = formatNumber(arrProductPrice[i]) + ' 명';
 
     // 보유
@@ -262,12 +276,12 @@ function updateTooltip(i) {
     }
     
     if(student >= arrProductPrice[i]) {
-        document.getElementById('tooltipPrice').style.color = '#00FF00';
-        document.getElementById('tooltipPrice').style.opacity = 1;
+        document.getElementById('productTooltipPrice').style.color = '#00FF00';
+        document.getElementById('productTooltipPrice').style.opacity = 1;
     }
     else {
-        document.getElementById('tooltipPrice').style.color = '#FF0000';
-        document.getElementById('tooltipPrice').style.opacity = 0.5;
+        document.getElementById('productTooltipPrice').style.color = '#FF0000';
+        document.getElementById('productTooltipPrice').style.opacity = 0.5;
     }
     // 태그
     document.getElementById('tagList').innerHTML = ''; // 태그 지우기
@@ -293,7 +307,6 @@ function updateTooltip(i) {
     }
 }
 
-
 /*
     FUNCTION
     학생 수 갱신
@@ -304,7 +317,6 @@ function updateStudent() {
     // 초당 학생 갱신
     document.getElementById('perSecondStudent').textContent = '초당 ' + formatNumber(addPerSecondStudent) + ' 명';
 }
-
 
 /*
     FUNCTION
@@ -319,6 +331,61 @@ function appendTag(tagText, color) {
     if(color == 'blue') appendTag.style.background = '#0000FF';
     if(color == 'green') appendTag.style.background = '#008000';
     document.getElementById('tagList').appendChild(appendTag);
+}
+
+/*
+    FUNCTION
+    업그레이드 확장 버튼 활성화 여부
+*/
+function upgradeMenu() {
+    const upgradeExpand = document.getElementById('upgradeExpand');
+    const upgradeBundle = document.getElementById('upgradeBundle');
+    const upgradeIconCount = upgradeBundle.getElementsByClassName('upgradeIcon').length;
+    
+    if(upgradeIconCount >= 6) {
+        upgradeExpand.style.pointerEvents = 'auto';
+        upgradeExpand.style.opacity = '1';
+    } else {
+        upgradeExpand.style.pointerEvents = 'none';
+        upgradeExpand.style.opacity = '0.5';
+    }
+}
+
+/* 
+    FUNCTION
+    업그레이드 아이콘 재정렬
+*/
+function reorderUpgradeIcon() {
+    const upgradeBundle = document.getElementById('upgradeBundle');
+    upgradeBundle.innerHTML = '';
+
+    const arrReorder = arrProductUpgradeId.slice().sort((a, b) => a - b);
+
+    arrReorder.forEach(number => {
+        const addUpgradeDiv = document.createElement('div');
+        addUpgradeDiv.id = `upgrade_${number}`;
+        addUpgradeDiv.className = `upgradeIcon ${number}`;
+        addUpgradeDiv.textContent = `${number}`;
+
+        upgradeBundle.appendChild(addUpgradeDiv);
+
+        
+        const upgradeTooltip = document.getElementById('upgradeTooltip');
+        const upgradeIcon = document.getElementById(`upgrade_${number}`);
+        // 이벤트 리스너 추가
+        upgradeIcon.addEventListener('mouseenter', () => {
+            upgradeTooltip.style.display = 'block';
+            // 선 위치 조절
+            upgradeTooltip.style.top = `${upgradeIcon.getBoundingClientRect().top + 10}px`;
+            // 만약 맨 위를 벗어났다면
+            if(upgradeIcon.getBoundingClientRect().top <= 0) {
+                upgradeTooltip.style.top = `5px`;
+            }
+        });
+        upgradeIcon.addEventListener('mouseleave', () => {
+            upgradeTooltip.style.display = 'none';
+        });
+    });
 }
 
 // 2초마다 작동 | 최적화를 위함
