@@ -29,11 +29,43 @@ const arrProductDescription = [
     '평행 세계를 횡단하는 방법을 찾아 다른 세계 학생에게 우리 학교를 홍보합니다. 횡단 비용은 많이 들지만 같은 홍보물을 반복해 쓸 수 있어 경제적이죠.',
     '당신은 혼자가 아닙니다. 그리고 또 다른 당신도 혼자가 아니죠.'
 ];
-var arrProductPrice = [50,160,2700,39000,52*1e4,670*1e4,7500*1e4,9.8000*1e8,12900000000,263000000000,4180000000000,60700000000000,851000000000000,11840000000000000,24600000000000000,407000000000000000];
-var arrProductGetCount = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-
-// 1 7 56 448 3584 28672 229376 1834999 14,679,992 117,439,936 939,519,488 7,516,155,904 60,129,247,232 481,033,977,856 3,848,271,822,848 30,786,174,582,784
-var arrProductAddPerSecond = [1,7,56,450,3600,30000,230000,1900000,15000000,120000000,950000000,8000000000,61000000000,500000000000,4000000000000,31000000000000];
+var arrProductGetCount = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];                                                                                                             233, 377, 610, 987
+var arrProductPrice = [ // 증축 가격
+    50, // 50
+    160, // 160
+    2700, // 2700
+    3.9 * 1e4, // 3.9만
+    52 * 1e4, // 52만
+    670 * 1e4, // 670만
+    8500 * 1e4, // 8700만
+    10.8 * 1e8, // 10.8억
+    229 * 1e8, // 229 억
+    3630 * 1e8, // 3630 억
+    5.18 * 1e12, // 5.18 조
+    70.7 * 1e12, // 70.7 조
+    951 * 1e12, // 951 조
+    1.29 * 1e16, // 1.29 경
+    26.7 * 1e16, // 26.7 경
+    428 * 1e16 // 428 경
+];
+var arrProductAddPerSecond = [ // 증축 초당 증가량
+    1, // 1
+    10, // 10
+    55, // 55
+    300, // 300
+    2000, // 2000
+    1 * 1e4, // 1만
+    5.5 * 1e4, // 5.5만
+    30 * 1e4, // 30만
+    200 * 1e4, // 200만
+    1500 * 1e4, // 1500만
+    8000 * 1e4, // 8000만
+    5.5 * 1e8, // 5.5억
+    35 * 1e8, // 35억
+    300 * 1e8, // 300억
+    2000 * 1e8, // 2000억
+    1.5 * 1e12 // 1.5조
+];
 var arrProductAddPerSecondBonus = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
 var arrProductAddPerSecondTotal = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 var arrProductProducedTotal = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
@@ -63,11 +95,113 @@ var arrProductUpgradePurchase = [
     [],
     []
 ];
+var arrProductUpgradeName = [
+    ['학생 업그레이드 1','학생 업그레이드 2','학생 업그레이드 3','학생 업그레이드 4','학생 업그레이드 5'],
+    ['학교 업그레이드 1','학교 업그레이드 2','학교 업그레이드 3','학교 업그레이드 4','학교 업그레이드 5'],
+    ['교통 업그레이드 1','교통 업그레이드 2','교통 업그레이드 3','교통 업그레이드 4','교통 업그레이드 5'],
+    ['주거 업그레이드 1','주거 업그레이드 2','주거 업그레이드 3','주거 업그레이드 4','주거 업그레이드 5'],
+    ['은행 업그레이드 1','은행 업그레이드 2','은행 업그레이드 3','은행 업그레이드 4','은행 업그레이드 5'],
+
+];
+var arrProductUpgradeDescription = [
+    [],
+    [],
+    [],
+    [],
+    []
+];
 var arrProductUpgradeCount = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 var arrProductUpgradeCountMax = [10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10];
 //
 //
 //
+
+/*
+    언어
+*/
+const translations = {
+    ko: {
+        windowTitle: (value) => `${value} 명 - 대학 구조 위원회`,
+        students: (value) => `${value} 명`,
+        perSecond: (value) => `초당: ${value}`,
+        menuSubtitleUpgrade: '강화',
+        menuSubtitleProduct: '증축',
+        upgradeMenuButtonExpand: '펼치기',
+        upgradeMenuButtonFold: '접기',
+        arrProductName: ['학생','학교 시설','교통 시설','주거 시설','은행','공항','기업','정부','세계 정부','복제 실험실','우주정거장','차원 포탈','블랙홀','타임머신','평행 세계','또 다른 나'],
+        productTooltipDescription: [
+            '학생 한 명 한 명이 소중한 법입니다.',
+            '학업, 오락, 휴식 시설 같은 원하는 모든 시설을 갖춥니다. 학생을 위해서 못해줄 건 없는 법입니다.',
+            '세계 어디든 우리 학교로 쉽게 올 수 있는 다양한 교통 수단을 만듭니다. 재학생은 무료로 이용할 수 있습니다.',
+            '반지하, 주택, 아파트 등 거주가 가능한 시설을 학교 주변에 짓습니다. 우리 학교 학생이라면 재학하는 동안 한 채씩 무료로 거주할 수 있습니다.',
+            '우리 학교 재학생이라면 증명 없이 필요한 비용을 반드시 대출할 수 있는 은행을 설립합니다. 이자는 평생 없습니다.',
+            '각 국 나라에서 학교로 1시간마다 운행하는 공항을 세웁니다. 물론 재학생은 무료로 이용할 수 있습니다.',
+            '기업은 자기 회사로 데려올 재학생을 항상 눈여겨 보고 있습니다.',
+            '정부는 우리 학생과 학교를 위한 지원과 정책을 실시합니다.',
+            '세계는 앞으로 우리 학교만을 위해 움직입니다.',
+            '자원을 받은 학생을 복제해 더 많은 학생을 만듭니다. 학구열 앞에서는 윤리와 혼란 따위는 중요한 것이 아닙니다.',
+            '우리 학교에서 가까운 행성까지 우주선을 통해 이동합니다. 재학생이라면 탑승료와 동면 서비스는 무료입니다.',
+            '천문학과가 아니라면 마주할 수 없는 거리를 순식간에 이동할 수 있는 포탈을 세웁니다. 학생이라고 주장하는 존재에게 우리 학교를 설명할 수 있겠네요.',
+            '블랙홀 내부에서 살아있는 학생을 우리 학교로 구조합니다. 때로는 위험을 감수할줄도 알아야 합니다.',
+            '과거 혹은 미래로 가 더 많은 학생을 현재 시간대로 데려옵니다. 시대 차이 따위 극복 가능한 법이죠.',
+            '평행 세계를 횡단하는 방법을 찾아 다른 세계 학생에게 우리 학교를 홍보합니다. 횡단 비용은 많이 들지만 같은 홍보물을 반복해 쓸 수 있어 경제적이죠.',
+            '당신은 혼자가 아닙니다. 그리고 또 다른 당신도 혼자가 아니죠.'
+        ],
+        productTooltipGetCount: (value) => `${value} 보유`,
+        productTooltipStat_1: (value) => `보유마다 <b>${value} 명</b> 입학`,
+        productTooltipStat_2: (value) => `초당 총 <b>${value} 명</b> 입학`,
+        productTooltipStat_3: (value) => `지금까지 <b>${value} 명</b> 입학`
+    },
+    en: {
+        windowTitle: (value) => `${value} students - Rescue Committee`,
+        students: (value) => `${value} students`,
+        perSecond: (value) => `Per second: ${value}`,
+        menuSubtitleUpgrade: 'Upgrade',
+        menuSubtitleProduct: 'Expansion',
+        upgradeMenuButtonExpand: 'Expand',
+        upgradeMenuButtonFold: 'Fold',
+        arrProductName: ['Student','Student facilities','Transportation facilities','Residential facilities','Bank','Airport','Corporation','Government','World government','Cloning laboratory','Space station','Dimensional portal','Black hole','Time machine','Multiverse','Another me'],
+        productTooltipDescription: [
+            '학생 한 명 한 명이 소중한 법입니다.',
+            '학업, 오락, 휴식 시설 같은 원하는 모든 시설을 갖춥니다. 학생을 위해서 못해줄 건 없는 법입니다.',
+            '세계 어디든 우리 학교로 쉽게 올 수 있는 다양한 교통 수단을 만듭니다. 재학생은 무료로 이용할 수 있습니다.',
+            '반지하, 주택, 아파트 등 거주가 가능한 시설을 학교 주변에 짓습니다. 우리 학교 학생이라면 재학하는 동안 한 채씩 무료로 거주할 수 있습니다.',
+            '우리 학교 재학생이라면 증명 없이 필요한 비용을 반드시 대출할 수 있는 은행을 설립합니다. 이자는 평생 없습니다.',
+            '각 국 나라에서 학교로 1시간마다 운행하는 공항을 세웁니다. 물론 재학생은 무료로 이용할 수 있습니다.',
+            '기업은 자기 회사로 데려올 재학생을 항상 눈여겨 보고 있습니다.',
+            '정부는 우리 학생과 학교를 위한 지원과 정책을 실시합니다.',
+            '세계는 앞으로 우리 학교만을 위해 움직입니다.',
+            '자원을 받은 학생을 복제해 더 많은 학생을 만듭니다. 학구열 앞에서는 윤리와 혼란 따위는 중요한 것이 아닙니다.',
+            '우리 학교에서 가까운 행성까지 우주선을 통해 이동합니다. 재학생이라면 탑승료와 동면 서비스는 무료입니다.',
+            '천문학과가 아니라면 마주할 수 없는 거리를 순식간에 이동할 수 있는 포탈을 세웁니다. 학생이라고 주장하는 존재에게 우리 학교를 설명할 수 있겠네요.',
+            '블랙홀 내부에서 살아있는 학생을 우리 학교로 구조합니다. 때로는 위험을 감수할줄도 알아야 합니다.',
+            '과거 혹은 미래로 가 더 많은 학생을 현재 시간대로 데려옵니다. 시대 차이 따위 극복 가능한 법이죠.',
+            '평행 세계를 횡단하는 방법을 찾아 다른 세계 학생에게 우리 학교를 홍보합니다. 횡단 비용은 많이 들지만 같은 홍보물을 반복해 쓸 수 있어 경제적이죠.',
+            '당신은 혼자가 아닙니다. 그리고 또 다른 당신도 혼자가 아니죠.'
+        ],
+
+        productTooltipGetCount: (value) => `Have ${value} `,
+        productTooltipStat_1: (value) => `<b>${value} people</b> per holding for school admission`,
+        productTooltipStat_2: (value) => `<b>${value} people</b> students admitted as per second`,
+        productTooltipStat_3: (value) => `<b>${value} people</b> admitted as students so far`
+
+    }
+}
+// 언어
+const languageSelector = document.getElementById('languageSelector')
+var lang = languageSelector.value;
+changeLanguage();
+
+document.getElementById('languageSelector').addEventListener('change', changeLanguage);
+function changeLanguage() {
+    lang = languageSelector.value;
+
+    document.getElementById('upgradeSubtitle').textContent = translations[lang].menuSubtitleUpgrade;
+    document.getElementById('productSubtitle').textContent = translations[lang].menuSubtitleProduct;
+
+    updateStudent();
+    updateUpgradeMenuButton();
+}
 
 var universityLogo = document.getElementById('universityLogo');
 // 학교 로고 클릭 이벤트
@@ -91,7 +225,7 @@ for(let i = 0 ; i < productLength ; i++) {
     let intervalUpdateProductTooltip;
 
     product.querySelector('.name').textContent = '???';
-    product.querySelector('.price').textContent = formatNumber(arrProductPrice[i]) + ' 명';
+    product.querySelector('.price').textContent = translations[lang].students(formatNumber(arrProductPrice[i]));
     
     // 마우스가 들어왔을 때 >설명창< 
     product.addEventListener('mouseenter', (e) => {
@@ -121,9 +255,9 @@ for(let i = 0 ; i < productLength ; i++) {
 
         if(arrProductUnlock[i] == true) { // 해금되었다면
             // 이름 재설정
-            tooltip.querySelector('.name').textContent = arrProductName[i];
+            tooltip.querySelector('.name').textContent = translations[lang].arrProductName[i];
             // 설명 재설정
-            tooltip.querySelector('.description').textContent = arrProductDescription[i];
+            tooltip.querySelector('.description').textContent = translations[lang].productTooltipDescription[i];
             
             // 강화 현황 활성화
             if(arrProductUpgradeCount[i] >= 1) { // 강화 최소 1개 이상 했을 시
@@ -176,7 +310,7 @@ for(let i = 0 ; i < productLength ; i++) {
             updateStudent();
             // 비용 증가
             arrProductPrice[i] = Math.floor(arrProductPrice[i] * 1.15);
-            document.getElementById(`product_${i}_price`).textContent = formatNumber(arrProductPrice[i]) + ' 명';
+            document.getElementById(`product_${i}_price`).textContent = translations[lang].students(formatNumber(arrProductPrice[i]));
             // 생산품 증가
             arrProductGetCount[i]++;
             document.getElementById(`product_${i}_getCount`).textContent = arrProductGetCount[i];
@@ -211,11 +345,12 @@ for(let i = 0 ; i < productLength ; i++) {
 // 업그레이드 확장 버튼
 upgradeExpand.addEventListener('click', () => {
     upgradeBundle.classList.toggle('open');
-
-    if(upgradeBundle.classList.contains('open')) upgradeExpand.textContent = '접기';
-    else upgradeExpand.textContent = '펼치기';
+    updateUpgradeMenuButton();
 })
-
+function updateUpgradeMenuButton() {
+    if(upgradeBundle.classList.contains('open')) upgradeExpand.textContent = translations[lang].upgradeMenuButtonFold;
+    else upgradeExpand.textContent = translations[lang].upgradeMenuButtonExpand;
+}
 /* 
     FUNCTION
     초당 추가 업데이트
@@ -237,11 +372,11 @@ function updateTooltip(i) {
     console.log("Product tooltip");
 
     const tooltip = document.getElementById('productTooltip');
-    tooltip.querySelector('.price').textContent = formatNumber(arrProductPrice[i]) + ' 명';
+    tooltip.querySelector('.price').textContent = translations[lang].students(formatNumber(arrProductPrice[i]));
 
     // 보유
     if(arrProductGetCount[i] >= 1) {
-        tooltip.querySelector('.getCount').textContent = arrProductGetCount[i] + ' 보유';
+        tooltip.querySelector('.getCount').textContent = translations[lang].productTooltipGetCount(arrProductGetCount[i]);
     }
     
     if(student >= arrProductPrice[i]) {
@@ -260,11 +395,11 @@ function updateTooltip(i) {
     if(arrProductGetCount[i] >= 1) {
         tooltip.querySelector('#centerLine').classList.remove('disabled');
         tooltip.querySelector('#info_1').classList.remove('disabled');
-        tooltip.querySelector('#info_1').innerHTML = '보유마다 <b>' + formatNumber(arrProductAddPerSecond[i] * arrProductAddPerSecondBonus[i]) + '</b> 명 입학';
+        tooltip.querySelector('#info_1').innerHTML = translations[lang].productTooltipStat_1(formatNumber(arrProductAddPerSecond[i] * arrProductAddPerSecondBonus[i]));
         tooltip.querySelector('#info_2').classList.remove('disabled');
-        tooltip.querySelector('#info_2').innerHTML = '초당 총 <b>' + formatNumber(arrProductAddPerSecondTotal[i]) + '</b> 명 입학';
+        tooltip.querySelector('#info_2').innerHTML = translations[lang].productTooltipStat_2(formatNumber(arrProductAddPerSecondTotal[i]));
         tooltip.querySelector('#info_3').classList.remove('disabled');
-        tooltip.querySelector('#info_3').innerHTML = '지금까지 <b>' + formatNumber(arrProductProducedTotal[i]) + '</b> 명 입학';
+        tooltip.querySelector('#info_3').innerHTML = translations[lang].productTooltipStat_3(formatNumber(arrProductProducedTotal[i]));
     } else { // 비활성화
         tooltip.querySelector('#centerLine').classList.add('disabled');
         tooltip.querySelector('#info_1').classList.add('disabled');
@@ -279,9 +414,9 @@ function updateTooltip(i) {
 */
 function updateStudent() {
     // 보유 중인 학생 갱신
-    document.getElementById('getStudent').textContent = formatNumber(student) + ' 명';
+    document.getElementById('getStudent').textContent = translations[lang].students(formatNumber(student));
     // 초당 학생 갱신
-    document.getElementById('perSecondStudent').textContent = '초당 ' + formatNumber(addPerSecondStudent) + ' 명';
+    document.getElementById('perSecondStudent').textContent = translations[lang].perSecond(formatNumber(addPerSecondStudent));
 }
 
 /*
@@ -408,7 +543,7 @@ function updateUpgradeTooltip(i, j) {
     console.log("Upgrade tooltip");
 
     const tooltip = document.getElementById('upgradeTooltip');
-    tooltip.querySelector('.price').textContent = formatNumber(arrProductUpgradePrice[i][j]) + ' 명';
+    tooltip.querySelector('.price').textContent = translations[lang].students(formatNumber(arrProductUpgradePrice[i][j]));
 
     // 구매 가능 여부
     if(student >= arrProductUpgradePrice[i][j]) {
@@ -455,7 +590,7 @@ setInterval(() => {
             product.classList.remove('disabled');
         }
         if(arrProductUnlock[i] == false && student >= arrProductPrice[i] * 0.8) {
-            product.querySelector('.name').textContent = arrProductName[i];
+            product.querySelector('.name').textContent = translations[lang].arrProductName[i];
             arrProductUnlock[i] = true;
         }
 
@@ -497,7 +632,7 @@ function perSecond() {
 */
 setInterval(() => {
     // 웹 HTML 제목 갱신
-    document.title = formatNumber(student) + " 명 - 대학교 구조 위원회";
+    document.title = translations[lang].windowTitle(formatNumber(student));
 }, 1000*2);
 
 

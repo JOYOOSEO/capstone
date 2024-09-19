@@ -454,7 +454,10 @@ sectionRight
 
 }
 
-
+#languageSelector {
+	font-size: 200%;
+	z-index: 99;
+}
 /* divisionLine */
 .divisionLine {
 	z-index: 50;

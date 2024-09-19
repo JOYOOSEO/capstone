@@ -19,8 +19,8 @@
                 <div id="universityName">대림 대학교</div>
             </div>
             <div id="studentBundle">
-                <div id="getStudent">0 명</div>
-                <div id="perSecondStudent">초당 0 명</div>
+                <div id="getStudent"></div>
+                <div id="perSecondStudent"></div>
             </div>
             <div id="logoBundle">
                 <button id="universityLogo"></button>
@@ -36,7 +36,10 @@
         <!-- section middle  -->
         <div id="sectionMiddle">
             <div id="panel">
-
+                <select id="languageSelector">
+                    <option value="ko">한국어</option>
+                    <option value="en">English</option>
+                </select>
             </div>
             <div class="divisionLine row"></div>
             <div id="productStateList">
@@ -100,14 +103,14 @@
             <div id="upgradeList">
                 <div class="gradient"></div>
                 <div id="upgradeExpand">펼치기</div>
-                <div class="subtitle">강화</div>
+                <div id="upgradeSubtitle" class="subtitle"></div>
                 <div id="upgradeBundle">
 
                 </div>
             </div>
             <div class="divisionLine row bottom"></div>
             <div id="productList">
-                <div class="subtitle">증축</div>
+                <div id="productSubtitle" class="subtitle"></div>
                 <div id="product">
                     <div id="product_0" class="product">
                         <div class="icon"></div>
@@ -273,7 +276,6 @@
             <hr id="upgradeTooltipMainLine" class="line">
             <div id="upgradeTooltipDescription" class="description">학생의 입학 효율 <b>두 배</b> 증가</div>
         </div>
-        
     </div>
     <script type="text/javascript" src="main.js"></script>
 </body>
