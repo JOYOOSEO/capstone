@@ -1,4 +1,4 @@
- del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed,  figure, figcaption, footer, header, hgroup,  menu, nav, output, ruby, section, summary, time, mark, audio, video {
+del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed,  figure, figcaption, footer, header, hgroup,  menu, nav, output, ruby, section, summary, time, mark, audio, video {
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -28,18 +28,17 @@ body {
 /* sectionLeft */
 #sectionLeft {
 	position: absolute;
-	left: 0px;
 	top: 0px;
-	width: 30%;
 	bottom: 0px;
+	left: 0px;
+	width: 30%;
 	min-width: 100px;
 	background: url(img/sectionLeftBackground.png)
 }
 #sectionLeft #gradient {
-	position: absolute;
 	width: 100%;
 	height: 100%;
-	background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 100%);
+	background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 300px);
 }
 #sectionLeft #studentBundle {
 	color: white;
@@ -129,12 +128,15 @@ body {
 	bottom: 50px;
 	margin: 0px 0px 0px 5px;
 }
-/* sectionMiddle */
+
+/*
+sectionMiddle 
+*/
 #sectionMiddle {
-	position:absolute;
-	left:30%;
-	padding-left:16px;
-	margin-right:15px;
+	position: absolute;
+	left: 30%;
+	padding-left: 16px;
+	margin-right: 16px;
 	top:0px;
 	right:318px;
 	bottom:0px;
@@ -172,16 +174,33 @@ body {
 
 
 
-/* sectionRight */
+/* 
+sectionRight 
+*/
 #sectionRight {
-	height:100%;
-	position:absolute;
-	top:0px;
-	right:0px;
-	overflow-x:hidden;
-	overflow-y:scroll;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	min-width: 100px;
+	height: 100%;
+	overflow-x: hidden;
+	overflow-y: scroll;
 	/*background:url(img/panelBG.png);*/
 	background:rgba(0,0,0,0.5);
+}
+#sectionRight .title {
+	color: #FFFFFF;
+	font-size: 44px;
+	text-align: center;
+	text-shadow: 0px 0px 4px #FFFFFF;
+	padding: 8px;
+}
+#sectionRight .subtitle {
+	color: #FFFFFF;
+	text-shadow: 0px 0px 4px #FFFFFF;
+	font-size: 28px;
+	text-align: center;
+	padding: 8px;
 }
 #gameMenu {
 	position: relative;
@@ -203,6 +222,50 @@ body {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
+}
+/* upgrade list */
+#upgradeList {
+	text-align: center;
+	background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0px, rgba(0,0,0,0) 64px);
+	background-repeat: no-repeat;
+}
+#upgradeExpand {
+	font-size: 16px;
+	position: absolute;
+	right: 0px;
+	background: #99CCFF;
+	opacity: 0.5;
+	margin: 4px;
+	padding: 4px 16px;
+	border-radius: 5px;
+	pointer-events: none;
+}
+#upgradeExpand:hover {
+	filter: brightness(115%);
+}
+#upgradeBundle {
+	text-align: left;
+	display: inline-block;
+	width: 290px;
+	height: 59px;
+	overflow: hidden;
+}
+#upgradeBundle.open {
+	height: auto;
+}
+.upgradeIcon {
+	display: inline-block;
+	width: 48px;
+	height: 48px;
+	background: #FFCC99;
+	border: #ffffff 1px solid;
+	margin: 4px;
+}
+.upgradeIcon:hover {
+	filter: brightness(115%);
+}
+#productList {
+	background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0, rgba(0,0,0,0) 64px);
 }
 #product
 {
@@ -261,38 +324,29 @@ body {
 	font-size:40px;
 	opacity:0.9;
 }
+#blankArea {
+	margin-bottom: 250px;
+}
 .disabled {
 	display: none;
 }
 
-#divisionLeft, #divisionRight {
-   width:16px;
-   height:100%;
-   position:absolute;
-   top:0px;
-   bottom:0px;
-   z-index:50;
-}
-#divisionLeft {
-	left: 30%;
-}
-#divisionRight {
-	right: 319px;
-}
+/*
+	tooltip common
 
+*/
 .tooltip {
 	font-size: 16px;
     display: block;
     position: absolute;
-    width: 350px;
     right: 320px;
     height: auto;
+    width: 350px;
     background-color: purple;
-    border: 1px solid black;
     padding: 10px;
     z-index: 99;
+	overflow: hidden;
 }
-
 .tooltip .icon {
 	float: left;
 	width: 64px;
@@ -302,19 +356,26 @@ body {
 	background-size: cover;
 	margin-right: 8px;
 	margin-bottom: 4px;
+	overflow: hidden;
 }
 .tooltip .price {
 	float: right;
 }
 .tooltip .name {
 	color: #ffffff;
-	text-shadow:0px 0px 8px #b0b0b0;
+	text-shadow:0px 0px 8px #ffffff;
 	font-size: 130%;	
 }
+
+
+/*
+	tooltip
+*/
 .tooltip .getCount {
 	color: #ffffff;
 	float: center;
 }
+
 /*.tooltip .tagList {
 }*/
 .tooltip .tagList .tag {
@@ -322,21 +383,22 @@ body {
 	font-size: 80%;
 	text-align: center;
 	display: inline-block;
-	background-color: #000;
+	background: #000;
 	border-radius: 10px;
 	padding: 2px 10px;
-	margin-right: 2px;
+	margin-top: 4px;
+	margin-right: 4px;
 }
 .tooltip .tagList .tag p{
 	display: inline-block;
 }
-.tooltip .line {
+#productTooltip .line {
 	width: 95%;
 	height: 2px;
 	background: linear-gradient(to right,rgba(255,255,255,0),rgba(255,255,255,1),rgba(255,255,255,0));
 	border: 0px;
 }
-.tooltip .description {
+#productTooltip .description {
 	color: gray;
 	font-size: 100%;
 	text-align: center;
@@ -366,3 +428,63 @@ body {
 	font-size: 90%;
 	text-align: center;
 }
+
+/*
+	Upgrade Tooltip
+*/
+#upgradeTooltip {
+	width: 400px;
+}
+#upgradeTooltip .line {
+	width: 95%;
+	height: 2px;
+	background: linear-gradient(to right,rgba(255,255,255,0),rgb(131, 103, 255),rgba(255,255,255,0));
+	border: 0px;
+}
+#upgradeTooltip .description {
+	color: #A9A9A9;
+	font-size: 120%;
+	text-align: left;
+
+}
+#upgradeTooltip .description b {
+	font-size: 110%;
+	color: #FFFFFF;
+
+}
+
+
+/* divisionLine */
+.divisionLine {
+	z-index: 50;
+}
+.divisionLine.cloumn {
+	width: 16px;
+	height: 100%;
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	background: url(img/store.png) no-repeat top left,url(img/store.png) no-repeat bottom left,url(img/store.png) repeat-y;
+	z-index: 50;
+
+}
+.divisionLine.cloumn.left {
+	left: 30%;
+
+}
+.divisionLine.cloumn.right {
+	right: 318px;
+
+}
+.divisionLine.row {
+	width: auto;
+	height: 16px;
+	background: url(img/store.png) repeat;
+
+}
+/*
+.divisionLine.row.top {
+}
+.divisionLine.row.bottom {
+
+} */

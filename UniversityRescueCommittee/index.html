@@ -11,6 +11,8 @@
 
 <body>
     <div id="game">
+        
+        <!-- section left  -->
         <div id="sectionLeft">
             <div id="gradient"></div>
             <div id="nameBundle">
@@ -27,14 +29,16 @@
             <div id="version">V 0.1.0</div>
         </div>
 
-        <div id="divisionLeft"></div>
-        <div id="divisionRight"></div>
+        <!-- division column  -->
+        <div class="divisionLine cloumn left"></div>
+        <div class="divisionLine cloumn right"></div>
 
+        <!-- section middle  -->
         <div id="sectionMiddle">
             <div id="panel">
 
             </div>
-            <div class="divisionRow"></div>
+            <div class="divisionLine row"></div>
             <div id="productStateList">
                 <div id="productRow_0">
                     <div id="productBG_0" class="background"></div>
@@ -75,6 +79,7 @@
             </div>
         </div>
 
+        <!-- section right  -->
         <div id="sectionRight">
             <div id="gameMenu">
                 <div id="setting" class="button">
@@ -90,7 +95,19 @@
                     <img class="img" src="img/game_menu_setting.png" alt="아이콘" />
                 </div>
             </div>
-            <div id="purchaseList">
+            <div class="title">제안서</div>
+            <div class="divisionLine row top"></div>
+            <div id="upgradeList">
+                <div class="gradient"></div>
+                <div id="upgradeExpand">펼치기</div>
+                <div class="subtitle">강화</div>
+                <div id="upgradeBundle">
+
+                </div>
+            </div>
+            <div class="divisionLine row bottom"></div>
+            <div id="productList">
+                <div class="subtitle">증축</div>
                 <div id="product">
                     <div id="product_0" class="product">
                         <div class="icon"></div>
@@ -223,15 +240,17 @@
                         </div>
                     </div>
                     <button id="downloadButton">텍스트 파일 추출</button>
+                    <button id="debugMode" onclick="debugMode()">디버그모드</button>
+                    <div id="blankArea"></div>
                 </div>
             </div>
         </div>
         
-        <div class="tooltip" id="tooltip">
-            <div class="icon"></div>
-            <div class="price">aaaa</div>
-            <div class="name"></div>
-            <div class="getCount">100 보유</div>
+        <div id="productTooltip" class="tooltip">
+            <div id="productTooltipIcon" class="icon"></div>
+            <div id="productTooltipPrice" class="price">aaaa</div>
+            <div id="productTooltipName" class="name"></div>
+            <div id="productTooltipGetCount" class="getCount"></div>
             <div id="tagList" class="tagList"></div>
             <hr id="topLine" class="line" />
             <div class="description"></div>
@@ -244,6 +263,14 @@
             <hr id="bottomLine" class="line" />
             <div id="productUpgradeDone" class="productUpgradeDone">강화 완료 목록</div>
             <div id="progressUpgrade" class="progressUpgrade"></div>
+        </div>
+        <div id="upgradeTooltip" class="tooltip">
+            <div id="upgradeTooltipIcon" class="icon"></div>
+            <div id="upgradeTooltipPrice" class="price">123</div>
+            <div id="upgradeTooltipName" class="name">aaannnb</div>
+            <div id="upgradeTooltipTagList" class="tagList"></div>
+            <hr id="upgradeTooltipMainLine" class="line">
+            <div id="upgradeTooltipDescription" class="description">학생의 입학 효율 <b>두 배</b> 증가</div>
         </div>
         
     </div>
