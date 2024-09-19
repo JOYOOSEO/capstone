@@ -1,4 +1,4 @@
- del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed,  figure, figcaption, footer, header, hgroup,  menu, nav, output, ruby, section, summary, time, mark, audio, video {
+del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed,  figure, figcaption, footer, header, hgroup,  menu, nav, output, ruby, section, summary, time, mark, audio, video {
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -12,79 +12,79 @@ body {
 	font-weight: 400;
 	font-style: normal;
 	user-select: none;
+	scrollbar-color: #bbbbbb #111111;
   }
   
 #game {
-	position:absolute;
-	left:0px;
-	top:0px;
-	right:0px;
-	bottom:0px;
-	overflow:hidden;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	overflow: hidden;
 }
 
 
 /* sectionLeft */
 #sectionLeft {
-	position:absolute;
-	left:0px;
-	top:0px;
-	width:30%;
-	bottom:0px;
-	min-width:100px;
-	background:url(img/sectionLeftBackground.png)
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	width: 30%;
+	min-width: 100px;
+	background: url(img/sectionLeftBackground.png)
 }
 #sectionLeft #gradient {
-	position: absolute;
 	width: 100%;
 	height: 100%;
-	background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 100%);
+	background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 300px);
 }
 #sectionLeft #studentBundle {
-	font-size: 30px;
-	text-align:center;
+	color: white;
+	font-size: 35px;
 	text-shadow:1px 0px 0px #000,-1px 0px 0px #000,0px 1px 0px #000,0px -1px 0px #000,0px 1px 4px #000;
+	text-align:center;
 	position:absolute;
 	left:0px;
 	top:10%;
 	width:100%;
 	border-radius: 5px;
-	z-index:200;
 	background:rgba(0,0,0,0.4);
 	padding:2px 0px;
 	pointer-events:none;
-	color: white;
+	z-index:200;
 }
-#sectionLeft #studentBundle #getPeople {
+#sectionLeft #studentBundle #getStudent {
 	font-size: 100%;
 }
-#sectionLeft #studentBundle #perSecondPeople {
-	font-size:70%;
+#sectionLeft #studentBundle #perSecondStudent {
+	font-size: 70%;
 }
 #sectionLeft #nameBundle {
-	position:absolute;
-	left:0px;
-	top:10%;
-	width:100%;
-	z-index:200;
-	font-size:25px;
+	position: absolute;
+	left: 0px;
+	top: 10%;
+	width: 100%;
+	z-index: 200;
+	font-size: 25px;
 }
 #sectionLeft #nameBundle #universityName {
+	color: rgba(255,255,255,0.8);
 	font-size: 100%;
-	text-align:center;
-	color:rgba(255,255,255,0.8);
-	position:absolute;
-	bottom:8px;
-	left:10%;
-	width:75%;
-	background:rgba(0,0,0,0.4);
-	border-radius:12px;
-	padding:4px 0px;
-	cursor:pointer;
+	text-align: center;
+	position: absolute;
+	bottom: 8px;
+	left: 10%;
+	width: 75%;
+	background: rgba(0,0,0,0.4);
+	border-radius: 12px;
+	padding: 4px 0px;
+	cursor: pointer;
 }
 #sectionLeft #nameBundle #universityName:hover {
-	color: #fff;
-	text-shadow: 0px 0px 8px #fff;
+	color: #ffffff;
+	text-shadow: 0px 0px 8px #ffffff;
 }
 
 #sectionLeft #logoBundle
@@ -128,31 +128,79 @@ body {
 	bottom: 50px;
 	margin: 0px 0px 0px 5px;
 }
-/* sectionMiddle */
+
+/*
+sectionMiddle 
+*/
 #sectionMiddle {
-	position:absolute;
-	left:30%;
-	padding-left:16px;
-	margin-right:15px;
+	position: absolute;
+	left: 30%;
+	padding-left: 16px;
+	margin-right: 16px;
 	top:0px;
 	right:318px;
 	bottom:0px;
 	min-width:100px;
 	overflow:hidden;
 }
+#SectionMiddle #panel {
+	width: 100%;
+	height: 128px;
+	background-color: #ff0000;
+}
 
-
-
-/* sectionRight */
-#sectionRight {
-	height:100%;
+#SectionMiddle #productStateList {
 	position:absolute;
-	top:0px;
-	right:0px;
+	right: 0px;
+	left: 16px;
+	top: 144px;
+	bottom: 0px;
 	overflow-x:hidden;
 	overflow-y:scroll;
+}
+#sectionMiddle #productStateList .background {
+	width: 100%;
+	height: 128px;
+	background: url('img/background_product_2.png') repeat-x;
+	display: block;
+	object-fit: cover;
+	background-size: 128px;
+}
+#sectionMiddle #productStateList .divisionRow {
+	width: 100%;
+	height: 16px;
+	background: url('img/image.png') repeat-x;
+}
+
+
+
+/* 
+sectionRight 
+*/
+#sectionRight {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	min-width: 100px;
+	height: 100%;
+	overflow-x: hidden;
+	overflow-y: scroll;
 	/*background:url(img/panelBG.png);*/
 	background:rgba(0,0,0,0.5);
+}
+#sectionRight .title {
+	color: #FFFFFF;
+	font-size: 44px;
+	text-align: center;
+	text-shadow: 0px 0px 4px #FFFFFF;
+	padding: 8px;
+}
+#sectionRight .subtitle {
+	color: #FFFFFF;
+	text-shadow: 0px 0px 4px #FFFFFF;
+	font-size: 28px;
+	text-align: center;
+	padding: 8px;
 }
 #gameMenu {
 	position: relative;
@@ -174,6 +222,50 @@ body {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
+}
+/* upgrade list */
+#upgradeList {
+	text-align: center;
+	background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0px, rgba(0,0,0,0) 64px);
+	background-repeat: no-repeat;
+}
+#upgradeExpand {
+	font-size: 16px;
+	position: absolute;
+	right: 0px;
+	background: #99CCFF;
+	opacity: 0.5;
+	margin: 4px;
+	padding: 4px 16px;
+	border-radius: 5px;
+	pointer-events: none;
+}
+#upgradeExpand:hover {
+	filter: brightness(115%);
+}
+#upgradeBundle {
+	text-align: left;
+	display: inline-block;
+	width: 290px;
+	height: 59px;
+	overflow: hidden;
+}
+#upgradeBundle.open {
+	height: auto;
+}
+.upgradeIcon {
+	display: inline-block;
+	width: 48px;
+	height: 48px;
+	background: #FFCC99;
+	border: #ffffff 1px solid;
+	margin: 4px;
+}
+.upgradeIcon:hover {
+	filter: brightness(115%);
+}
+#productList {
+	background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0, rgba(0,0,0,0) 64px);
 }
 #product
 {
@@ -198,9 +290,7 @@ body {
     width: 64px;
     height: 64px;
 	background: url(img/game_menu_setting.png);
-	opacity: 1;
 	background-size: cover;
-	background-repeat: no-repeat;
 }
 .product .info {
 	position: relative;
@@ -211,15 +301,15 @@ body {
 	justify-content: space-between;
 }
 .product .info .name {
-	font-size: 28px;
 	color: #fff;
-	text-shadow:0px 0px 8px #fff;
+	font-size: 28px;
+	text-shadow:0px 0px 16px #808080;
 	position: absolute;
 	top: 8px;
 	left: 8px;
 }
 .product .info .price {
-	text-shadow: 0px 0px 8px #000;
+	text-shadow: 0px 0px 4px #000000;
 	position: absolute;
 	top: 40px;
 	left: 8px;
@@ -227,46 +317,36 @@ body {
 	color: #ff0000;
 }
 .product .info .getCount {
-	text-shadow:0px 0px 8px #fff;
+	color: #000000;
+	text-shadow: 0px 0px 4px #ffffff;
 	position: absolute;
 	right: 8px;
 	font-size:40px;
 	opacity:0.9;
-	color:#000;
+}
+#blankArea {
+	margin-bottom: 250px;
 }
 .disabled {
 	display: none;
 }
 
-#divisionLeft, #divisionRight {
-   width:16px;
-   height:100%;
-   background:url(img/store.png) repeat-y;
-   background:url(img/store.png) no-repeat top left,url(img/store.png) no-repeat bottom left,url(img/store.png?v=2) repeat-y;
-   position:absolute;
-   top:0px;
-   bottom:0px;
-   z-index:50;
-}
-#divisionLeft {
-	left: 30%;
-}
-#divisionRight {
-	right: 317px;
-}
+/*
+	tooltip common
 
+*/
 .tooltip {
-    position: absolute;
-    width: 300px; /* 너비 설정 */
-    right: 320px; /* .product 왼쪽 바깥으로 이동 */
-    height: auto; /* 높이 자동 조정 */
-    background-color: purple; /* 배경색 설정 */
-    border: 1px solid black; /* 검은색 선 설정 */
-    z-index: 99; /* .product 요소 위에 보이도록 설정 */
-    padding: 10px;
+	font-size: 16px;
     display: block;
+    position: absolute;
+    right: 320px;
+    height: auto;
+    width: 350px;
+    background-color: purple;
+    padding: 10px;
+    z-index: 99;
+	overflow: hidden;
 }
-
 .tooltip .icon {
 	float: left;
 	width: 64px;
@@ -276,53 +356,59 @@ body {
 	background-size: cover;
 	margin-right: 8px;
 	margin-bottom: 4px;
+	overflow: hidden;
 }
 .tooltip .price {
 	float: right;
 }
 .tooltip .name {
-	float: center;
-	font-weight: bold;
-	font-size: 110%;
-	color: #fff;
-	/*margin:2px 0px;
-	/*text-shadow:0px -2px 4px rgba(255,255,200,0.4),0px 1px 0px rgba(100,100,100,1),0px 2px 4px rgba(0,0,0,1);*/
+	color: #ffffff;
+	text-shadow:0px 0px 8px #ffffff;
+	font-size: 130%;	
 }
+
+
+/*
+	tooltip
+*/
 .tooltip .getCount {
+	color: #ffffff;
 	float: center;
 }
-.tooltip .tag {
-	display: inline-block;
+
+/*.tooltip .tagList {
+}*/
+.tooltip .tagList .tag {
 	color: #fff;
-	font-size: 75%;
-	background-color: #000;
-	border-radius: 5px;
+	font-size: 80%;
+	text-align: center;
+	display: inline-block;
+	background: #000;
+	border-radius: 10px;
+	padding: 2px 10px;
+	margin-top: 4px;
+	margin-right: 4px;
 }
-.tooltip .line {
+.tooltip .tagList .tag p{
+	display: inline-block;
+}
+#productTooltip .line {
 	width: 95%;
 	height: 2px;
 	background: linear-gradient(to right,rgba(255,255,255,0),rgba(255,255,255,1),rgba(255,255,255,0));
 	border: 0px;
 }
-.tooltip .description {
-	font-size: 12px;
+#productTooltip .description {
 	color: gray;
+	font-size: 100%;
 	text-align: center;
 }
 .tooltip .infoBundle {
+	color: #ff0000;
+	font-size: 100%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	font-size: 12px;
-	color: #ff0000;
-}
-.tooltip .infoBundle .info {
-	width: 90%;
-	height: auto;
-	background-color: gainsboro;
-	border-radius: 5px;
-	margin: 3px;
-	padding-left: 5px;
 }
 .tooltip .infoBundle .info {
 	width: 90%;
@@ -333,7 +419,72 @@ body {
 	padding-left: 5px;
 }
 .tooltip .productUpgradeDone {
-	font-size: 120%;
 	color: gray;
+	font-size: 120%;
 	text-align: center;
 }
+.tooltip .progressUpgrade {
+	color: gray;
+	font-size: 90%;
+	text-align: center;
+}
+
+/*
+	Upgrade Tooltip
+*/
+#upgradeTooltip {
+	width: 400px;
+}
+#upgradeTooltip .line {
+	width: 95%;
+	height: 2px;
+	background: linear-gradient(to right,rgba(255,255,255,0),rgb(131, 103, 255),rgba(255,255,255,0));
+	border: 0px;
+}
+#upgradeTooltip .description {
+	color: #A9A9A9;
+	font-size: 120%;
+	text-align: left;
+
+}
+#upgradeTooltip .description b {
+	font-size: 110%;
+	color: #FFFFFF;
+
+}
+
+
+/* divisionLine */
+.divisionLine {
+	z-index: 50;
+}
+.divisionLine.cloumn {
+	width: 16px;
+	height: 100%;
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	background: url(img/store.png) no-repeat top left,url(img/store.png) no-repeat bottom left,url(img/store.png) repeat-y;
+	z-index: 50;
+
+}
+.divisionLine.cloumn.left {
+	left: 30%;
+
+}
+.divisionLine.cloumn.right {
+	right: 318px;
+
+}
+.divisionLine.row {
+	width: auto;
+	height: 16px;
+	background: url(img/store.png) repeat;
+
+}
+/*
+.divisionLine.row.top {
+}
+.divisionLine.row.bottom {
+
+} */
