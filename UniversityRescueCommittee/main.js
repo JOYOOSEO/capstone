@@ -1,7 +1,7 @@
 // 보유 학생
-var student = 1;
+var student = 0;
 
-var addClickStudent = 100;
+var addClickStudent = 10000;
 var addPerSecondStudent = 0;
 
 // FormatNumber list
@@ -29,10 +29,11 @@ const arrProductDescription = [
     '평행 세계를 횡단하는 방법을 찾아 다른 세계 학생에게 우리 학교를 홍보합니다. 횡단 비용은 많이 들지만 같은 홍보물을 반복해 쓸 수 있어 경제적이죠.',
     '당신은 혼자가 아닙니다. 그리고 또 다른 당신도 혼자가 아니죠.'
 ];
-var arrProductPrice = [10,100,1100,12000,150000,500000,17000000,9800000000,115200000000,9256100000000000,1e25,1e30,1e35,1e40,1e45,1e50];
+var arrProductPrice = [50,160,2700,39000,52*1e4,670*1e4,7500*1e4,9.8000*1e8,12900000000,263000000000,4180000000000,60700000000000,851000000000000,11840000000000000,24600000000000000,407000000000000000];
 var arrProductGetCount = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 
-var arrProductAddPerSecond = [1,2,4,8,16,32,64,128,256,512,1024,2048,4096,8192,16384,32768];
+// 1 7 56 448 3584 28672 229376 1834999 14,679,992 117,439,936 939,519,488 7,516,155,904 60,129,247,232 481,033,977,856 3,848,271,822,848 30,786,174,582,784
+var arrProductAddPerSecond = [1,7,56,450,3600,30000,230000,1900000,15000000,120000000,950000000,8000000000,61000000000,500000000000,4000000000000,31000000000000];
 var arrProductAddPerSecondBonus = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
 var arrProductAddPerSecondTotal = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 var arrProductProducedTotal = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
@@ -47,7 +48,21 @@ var arrProductUpgradeEnable = [
     [false,false,false,false,false],
     [false,false,false,false,false],
     [false,false,false,false,false]
-]
+];
+var arrProductUpgradePrice = [
+    [10,1000,50000,175000,9000000],
+    [11,1011,50000,175000,9000000],
+    [12,1022,50000,175000,9000000],
+    [13,1033,50000,175000,9000000],
+    [14,1044,50000,175000,9000000]
+];
+var arrProductUpgradePurchase = [
+    [],
+    [],
+    [],
+    [],
+    []
+];
 var arrProductUpgradeCount = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 var arrProductUpgradeCountMax = [10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10];
 //
@@ -73,58 +88,17 @@ for(let i = 0 ; i < productLength ; i++) {
     // 처음 작동
     const product = document.getElementById(`product_${i}`);
     const tooltip = document.getElementById('productTooltip');
+    let intervalUpdateProductTooltip;
 
     product.querySelector('.name').textContent = '???';
     product.querySelector('.price').textContent = formatNumber(arrProductPrice[i]) + ' 명';
     
-    
-    // 구매
-    product.addEventListener('click', () => {
-        if(student >= arrProductPrice[i]) {
-            // 비용 지불
-            student -= arrProductPrice[i];
-            updateStudent();
-            // 비용 증가
-            arrProductPrice[i] = Math.floor(arrProductPrice[i] * 1.15);
-            document.getElementById(`product_${i}_price`).textContent = formatNumber(arrProductPrice[i]) + ' 명';
-            // 생산품 증가
-            arrProductGetCount[i]++;
-            document.getElementById(`product_${i}_getCount`).textContent = arrProductGetCount[i];
-            // 일정 개수 이상이라면 강화 아이콘 추가
-            if(arrProductGetCount[i] >= 1 && arrProductUpgradeEnable[i][0] === false) { // 1개 이상
-                arrProductUpgradeEnable[i][0] = true;
-                arrProductUpgradeId.push(i * 100 + 1);
-
-                reorderUpgradeIcon();
-                upgradeMenu();
-            }
-            if(arrProductGetCount[i] >= 10 && arrProductUpgradeEnable[i][1] === false) { // 10개 이상
-                arrProductUpgradeEnable[i][1] = true;
-                arrProductUpgradeId.push(i * 100 + 2);
-
-                reorderUpgradeIcon();
-                upgradeMenu();
-            }
-            /*
-                이곳에 개수에 따라 강화 추가 코드 놓을 자리
-            */
-
-            // 초당 추가 값 증가
-            updateAddPerSecond();
-        }
-    });
-
-    
-    // >설명창< 마우스가 들어왔을 때
+    // 마우스가 들어왔을 때 >설명창< 
     product.addEventListener('mouseenter', (e) => {
         // 선 위치 조절
         tooltip.style.top = `${product.getBoundingClientRect().top + 10}px`;
-
         // 만약 맨 위를 벗어났다면
-        if(product.getBoundingClientRect().top <= 0) {
-            tooltip.style.top = `5px`;
-            console.log("out top");
-        }
+        if(product.getBoundingClientRect().top <= 0) tooltip.style.top = `5px`;
 
         // 만약 맨 아래를 벗어났다면 |||| 작동 안 됨 다시 확인할 것
         if(Math.floor(tooltip.getBoundingClientRect().bottom) > window.innerHeight) {
@@ -155,10 +129,17 @@ for(let i = 0 ; i < productLength ; i++) {
             if(arrProductUpgradeCount[i] >= 1) { // 강화 최소 1개 이상 했을 시
                 tooltip.querySelector('#bottomLine').classList.remove('disabled');
                 tooltip.querySelector('#productUpgradeDone').classList.remove('disabled');
+                tooltip.querySelector('#progressUpgrade').classList.remove('disabled');
                 tooltip.querySelector('#progressUpgrade').textContent = '(' + arrProductUpgradeCount[i] + '/' + arrProductUpgradeCountMax[i] + ')';
+                tooltip.querySelector('#upgradePurchaseList').classList.remove('disabled');
+                tooltip.querySelector('#upgradePurchaseList').innerHTML = '';
+                addProductUpgradeIcon(i);
             } else { // 아니라면
+                tooltip.querySelector('#bottomLine').classList.add('disabled');
                 tooltip.querySelector('#productUpgradeDone').classList.add('disabled');
                 tooltip.querySelector('#progressUpgrade').classList.add('disabled');
+                tooltip.querySelector('#upgradePurchaseList').innerHTML = '';
+                tooltip.querySelector('#upgradePurchaseList').classList.add('disabled');
             }
         } else { // 해금 안 됐다면
             tooltip.src = "/img/icon_lock.png";
@@ -178,17 +159,53 @@ for(let i = 0 ; i < productLength ; i++) {
         // 설명창 보이기
         tooltip.style.display = 'block';
         // 갱신 함수 || 최적화를 위해 1초에 100번 작동
-        const intervalUpdateTooltip = setInterval(() => { updateTooltip(i); }, 10);
+        intervalUpdateProductTooltip = setInterval(() => { updateTooltip(i); }, 10);
+    });
+    // 마우스가 바깥으로 나갔을 때
+    product.addEventListener('mouseleave', (e) => {
+        // 설명창 가리기
+        tooltip.style.display = 'none';
+        // 반복 제거
+        clearInterval(intervalUpdateProductTooltip);
+    });
+    // 구매
+    product.addEventListener('click', () => {
+        if(student >= arrProductPrice[i]) {
+            // 비용 지불
+            student -= arrProductPrice[i];
+            updateStudent();
+            // 비용 증가
+            arrProductPrice[i] = Math.floor(arrProductPrice[i] * 1.15);
+            document.getElementById(`product_${i}_price`).textContent = formatNumber(arrProductPrice[i]) + ' 명';
+            // 생산품 증가
+            arrProductGetCount[i]++;
+            document.getElementById(`product_${i}_getCount`).textContent = arrProductGetCount[i];
+            // 일정 개수 이상이라면 강화 아이콘 추가
+            if(arrProductGetCount[i] >= 1 && arrProductUpgradeEnable[i][0] === false) { // 1개 이상
+                arrProductUpgradeEnable[i][0] = true;
+                arrProductUpgradeId.push(i * 100);
 
+                reorderUpgradeIcon();
+                upgradeMenu();
+            }
+            if(arrProductGetCount[i] >= 3 && arrProductUpgradeEnable[i][1] === false) { // 10개 이상
+                arrProductUpgradeEnable[i][1] = true;
+                arrProductUpgradeId.push(i * 100 + 1);
 
-        // 마우스가 바깥으로 나갔을 때
-        product.addEventListener('mouseleave', (e) => {
-            // 설명창 가리기
-            tooltip.style.display = 'none';
-            // 반복 제거
-            clearInterval(intervalUpdateTooltip);
-        });
-    }); 
+                reorderUpgradeIcon();
+                upgradeMenu();
+            }
+            /*
+                이곳에 개수에 따라 강화 추가 코드 놓을 자리
+            */
+
+            // 초당 추가 값 증가
+            updateAddPerSecond();
+        }
+    });
+
+    
+    
 }
 
 // 업그레이드 확장 버튼
@@ -199,7 +216,236 @@ upgradeExpand.addEventListener('click', () => {
     else upgradeExpand.textContent = '펼치기';
 })
 
-// 매 틱 반복
+/* 
+    FUNCTION
+    초당 추가 업데이트
+*/
+function updateAddPerSecond() {
+    addPerSecondStudent = 0;
+    for(let i = 0 ; i < productLength; i++) {
+        arrProductAddPerSecondTotal[i] = arrProductGetCount[i] * arrProductAddPerSecond[i] * arrProductAddPerSecondBonus[i];
+        addPerSecondStudent += arrProductAddPerSecondTotal[i];
+    }
+    updateStudent();
+}
+
+/*
+    FUNCTION
+    설명창 갱신
+*/
+function updateTooltip(i) {
+    console.log("Product tooltip");
+
+    const tooltip = document.getElementById('productTooltip');
+    tooltip.querySelector('.price').textContent = formatNumber(arrProductPrice[i]) + ' 명';
+
+    // 보유
+    if(arrProductGetCount[i] >= 1) {
+        tooltip.querySelector('.getCount').textContent = arrProductGetCount[i] + ' 보유';
+    }
+    
+    if(student >= arrProductPrice[i]) {
+        document.getElementById('productTooltipPrice').style.color = '#00FF00';
+        document.getElementById('productTooltipPrice').style.opacity = 1;
+    } else {
+        document.getElementById('productTooltipPrice').style.color = '#FF0000';
+        document.getElementById('productTooltipPrice').style.opacity = 0.5;
+    }
+    // 태그
+    document.getElementById('tagList').innerHTML = ''; // 태그 지우기
+    if(arrProductGetCount[i] >= 1) {
+        appendTag('증축', 'product');
+    }
+    // 통계 활성화
+    if(arrProductGetCount[i] >= 1) {
+        tooltip.querySelector('#centerLine').classList.remove('disabled');
+        tooltip.querySelector('#info_1').classList.remove('disabled');
+        tooltip.querySelector('#info_1').innerHTML = '보유마다 <b>' + formatNumber(arrProductAddPerSecond[i] * arrProductAddPerSecondBonus[i]) + '</b> 명 입학';
+        tooltip.querySelector('#info_2').classList.remove('disabled');
+        tooltip.querySelector('#info_2').innerHTML = '초당 총 <b>' + formatNumber(arrProductAddPerSecondTotal[i]) + '</b> 명 입학';
+        tooltip.querySelector('#info_3').classList.remove('disabled');
+        tooltip.querySelector('#info_3').innerHTML = '지금까지 <b>' + formatNumber(arrProductProducedTotal[i]) + '</b> 명 입학';
+    } else { // 비활성화
+        tooltip.querySelector('#centerLine').classList.add('disabled');
+        tooltip.querySelector('#info_1').classList.add('disabled');
+        tooltip.querySelector('#info_2').classList.add('disabled');
+        tooltip.querySelector('#info_3').classList.add('disabled');
+    }
+}
+
+/*
+    FUNCTION
+    학생 수 갱신
+*/
+function updateStudent() {
+    // 보유 중인 학생 갱신
+    document.getElementById('getStudent').textContent = formatNumber(student) + ' 명';
+    // 초당 학생 갱신
+    document.getElementById('perSecondStudent').textContent = '초당 ' + formatNumber(addPerSecondStudent) + ' 명';
+}
+
+/*
+    FUNCTION
+    태그 추가
+*/
+function appendTag(tagText, color) {
+    const appendTag = document.createElement('div');
+    appendTag.className = 'tag';
+    appendTag.innerHTML = tagText;
+    if(color == 'product') appendTag.style.background = 'linear-gradient(to right,#ABBAAB,#FFFFFF)';
+    if(color == 'black') appendTag.style.background = '#000000';
+    if(color == 'red') appendTag.style.background = '#FF0000';
+    if(color == 'blue') appendTag.style.background = '#0000FF';
+    if(color == 'green') appendTag.style.background = '#008000';
+    document.getElementById('tagList').appendChild(appendTag);
+}
+
+/*
+    FUNCTION
+    업그레이드 확장 버튼 활성화 여부
+*/
+function upgradeMenu() {
+    const upgradeExpand = document.getElementById('upgradeExpand');
+    const upgradeBundle = document.getElementById('upgradeBundle');
+    const upgradeIconLength = upgradeBundle.getElementsByClassName('upgradeIcon').length;
+    
+    if(upgradeIconLength >= 6) {
+        upgradeExpand.style.pointerEvents = 'auto';
+        upgradeExpand.style.opacity = '1';
+    } else {
+        upgradeExpand.style.pointerEvents = 'none';
+        upgradeExpand.style.opacity = '0.5';
+    }
+}
+
+/* 
+    FUNCTION
+    업그레이드 아이콘 재정렬
+*/
+function reorderUpgradeIcon() {
+    const upgradeBundle = document.getElementById('upgradeBundle');
+    upgradeBundle.innerHTML = '';
+
+    const arrReorder = arrProductUpgradeId.slice().sort((a, b) => a - b);
+
+    arrReorder.forEach(number => {
+        const addUpgradeDiv = document.createElement('div');
+        addUpgradeDiv.id = `upgrade_${number}`;
+        addUpgradeDiv.className = `upgradeIcon ${number}`;
+        addUpgradeDiv.textContent = `${number}`;
+
+        upgradeBundle.appendChild(addUpgradeDiv);
+
+        const upgradeTooltip = document.getElementById('upgradeTooltip');
+        const upgradeIcon = document.getElementById(`upgrade_${number}`); // 여기에서 정의
+        const arr1 = Math.floor(number / 100);
+        const arr2 = number % 100;
+
+        let intervalUpdateUpgradeTooltip;
+
+        // 마우스가 들어왔을 때
+        upgradeIcon.addEventListener('mouseenter', () => {
+            upgradeTooltip.style.display = 'block';
+
+            upgradeTooltip.style.top = `${upgradeIcon.getBoundingClientRect().top + 10}px`;
+            if (upgradeIcon.getBoundingClientRect().top <= 0) {
+                upgradeTooltip.style.top = `5px`;
+            }
+            intervalUpdateUpgradeTooltip = setInterval(() => { updateUpgradeTooltip(arr1, arr2); }, 10);
+        });
+
+        // 마우스가 떠났을 때
+        upgradeIcon.addEventListener('mouseleave', () => {
+            upgradeTooltip.style.display = 'none';
+            clearInterval(intervalUpdateUpgradeTooltip);
+        });
+
+        // 클릭
+        upgradeIcon.addEventListener('click', () => {
+            if (student >= arrProductUpgradePrice[arr1][arr2]) {
+                // 비용 지불
+                student -= arrProductUpgradePrice[arr1][arr2];
+                // 배열 갱신
+                arrProductAddPerSecondBonus[arr1] *= 2; // 보너스 적용
+                arrProductUpgradeCount[arr1]++; // 카운트 증가
+                arrProductUpgradePurchase[arr1].push(number); // 카운트 증가
+                // 배열 제거
+                arrProductUpgradeId = arrProductUpgradeId.filter(n => n !== number);
+                // 반복 제거
+                clearInterval(intervalUpdateUpgradeTooltip);
+                // 설명창 가리기
+                upgradeTooltip.style.display = 'none';
+                updateAddPerSecond();
+                updateStudent(); // 학생 수 갱신
+                reorderUpgradeIcon(); // 아이콘 재정렬
+            }
+        });
+    });
+}
+/* 
+    FUNCTION
+    업그레이드 아이콘 생성
+*/
+function addProductUpgradeIcon(i) {
+    const upgradePurchaseList = document.getElementById('upgradePurchaseList');
+
+    const arrReorder = arrProductUpgradePurchase[i].slice().sort((a, b) => a - b);
+
+    arrReorder.forEach(number => {
+        const addUpgradeIcon = document.createElement('div');
+        addUpgradeIcon.id = `upgrade_${number}`;
+        addUpgradeIcon.className = `upgradeIcon ${number}`;
+        addUpgradeIcon.textContent = `${number}`;
+
+        upgradePurchaseList.appendChild(addUpgradeIcon);
+    });
+}
+/*
+    FUNCTION
+    업그레이드 설명창 갱신
+*/
+function updateUpgradeTooltip(i, j) {
+    console.log("Upgrade tooltip");
+
+    const tooltip = document.getElementById('upgradeTooltip');
+    tooltip.querySelector('.price').textContent = formatNumber(arrProductUpgradePrice[i][j]) + ' 명';
+
+    // 구매 가능 여부
+    if(student >= arrProductUpgradePrice[i][j]) {
+        tooltip.querySelector('.price').style.color = '#00FF00';
+        tooltip.querySelector('.price').style.opacity = 1;
+    }
+    else {
+        tooltip.querySelector('.price').style.color = '#FF0000';
+        tooltip.querySelector('.price').style.opacity = 0.5;
+    }
+}
+/*
+    FUNCTION
+    자릿수 계산
+*/
+function formatNumber(value) {
+    // value의 값이 0일 경우
+    if(value == 0) return value;
+    // 아닐 경우
+    else {
+        for(let i = arrFormatNumberKr.length - 1 ; i > -1 ; i--) {
+            if(value >= arrFormatStandardKr[i]) {
+                // 1e72 이상 | 무한
+                if(i == arrFormatNumberKr.length - 1) return arrFormatNumberKr[i] 
+                // 1e4 이하
+                else if(i == 0) return value + arrFormatNumberKr[0];
+                // 그 외
+                else return (value / arrFormatStandardKr[i]).toFixed(2) + arrFormatNumberKr[i];
+            }
+        }
+    }
+}
+
+/*
+    Interval
+    매 틱 반복
+*/
 setInterval(() => {  
     for(let i = 0 ; i < productLength ; i++) {
 
@@ -232,9 +478,9 @@ setInterval(() => {
     // Debug text
     document.getElementById('debugDiv').textContent = arrProductGetCount + ' / ' + arrProductAddPerSecond + '(' + addPerSecondStudent + ')';
 });
-
 /*
-    1초마다 작동
+    Interval
+    1초 반복
 */
 setInterval(perSecond, 1000);
 function perSecond() {
@@ -244,174 +490,15 @@ function perSecond() {
     for(let i = 0 ; i < productLength ; i++) {
         arrProductProducedTotal[i] += arrProductAddPerSecondTotal[i]
     }
-    
 }
-
-/* 
-    FUNCTION
-    초당 추가 업데이트
-*/
-function updateAddPerSecond() {
-    addPerSecondStudent = 0;
-    for(let i = 0 ; i < productLength; i++) {
-        arrProductAddPerSecondTotal[i] = arrProductGetCount[i] * arrProductAddPerSecond[i] * arrProductAddPerSecondBonus[i];
-        addPerSecondStudent += arrProductAddPerSecondTotal[i];
-    }
-    updateStudent();
-}
-
 /*
-    FUNCTION
-    설명창 갱신
+    Interval
+    2초 반복 | 최적화를 위함
 */
-function updateTooltip(i) {
-    console.log("test");
-
-    const tooltip = document.getElementById('productTooltip');
-    tooltip.querySelector('.price').textContent = formatNumber(arrProductPrice[i]) + ' 명';
-
-    // 보유
-    if(arrProductGetCount[i] >= 1) {
-        tooltip.querySelector('.getCount').textContent = arrProductGetCount[i] + ' 보유';
-    }
-    
-    if(student >= arrProductPrice[i]) {
-        document.getElementById('productTooltipPrice').style.color = '#00FF00';
-        document.getElementById('productTooltipPrice').style.opacity = 1;
-    }
-    else {
-        document.getElementById('productTooltipPrice').style.color = '#FF0000';
-        document.getElementById('productTooltipPrice').style.opacity = 0.5;
-    }
-    // 태그
-    document.getElementById('tagList').innerHTML = ''; // 태그 지우기
-    if(arrProductGetCount[i] >= 1) {
-        appendTag('테스트', 'red');
-        appendTag('태그 테스트', 'black');
-    }
-    // 통계 활성화
-    if(arrProductGetCount[i] >= 1) {
-        tooltip.querySelector('#centerLine').classList.remove('disabled');
-        tooltip.querySelector('#info_1').classList.remove('disabled');
-        tooltip.querySelector('#info_1').textContent = '개당 ' + formatNumber(arrProductAddPerSecond[i]) + ' 명 입학';
-        tooltip.querySelector('#info_2').classList.remove('disabled');
-        tooltip.querySelector('#info_2').textContent = '초당 ' + formatNumber(arrProductAddPerSecondTotal[i]) + ' 명 입학';
-        tooltip.querySelector('#info_3').classList.remove('disabled');
-        tooltip.querySelector('#info_3').textContent = '총 ' + formatNumber(arrProductProducedTotal[i]) + ' 명 입학';
-    }
-    else { // 비활성화
-        tooltip.querySelector('#centerLine').classList.add('disabled');
-        tooltip.querySelector('#info_1').classList.add('disabled');
-        tooltip.querySelector('#info_2').classList.add('disabled');
-        tooltip.querySelector('#info_3').classList.add('disabled');
-    }
-}
-
-/*
-    FUNCTION
-    학생 수 갱신
-*/
-function updateStudent() {
-    // 보유 중인 학생 갱신
-    document.getElementById('getStudent').textContent = formatNumber(student) + ' 명';
-    // 초당 학생 갱신
-    document.getElementById('perSecondStudent').textContent = '초당 ' + formatNumber(addPerSecondStudent) + ' 명';
-}
-
-/*
-    FUNCTION
-    태그 추가
-*/
-function appendTag(tagText, color) {
-    const appendTag = document.createElement('div');
-    appendTag.className = 'tag';
-    appendTag.innerHTML = tagText;
-    if(color == 'black') appendTag.style.background = '#000000';
-    if(color == 'red') appendTag.style.background = '#FF0000';
-    if(color == 'blue') appendTag.style.background = '#0000FF';
-    if(color == 'green') appendTag.style.background = '#008000';
-    document.getElementById('tagList').appendChild(appendTag);
-}
-
-/*
-    FUNCTION
-    업그레이드 확장 버튼 활성화 여부
-*/
-function upgradeMenu() {
-    const upgradeExpand = document.getElementById('upgradeExpand');
-    const upgradeBundle = document.getElementById('upgradeBundle');
-    const upgradeIconCount = upgradeBundle.getElementsByClassName('upgradeIcon').length;
-    
-    if(upgradeIconCount >= 6) {
-        upgradeExpand.style.pointerEvents = 'auto';
-        upgradeExpand.style.opacity = '1';
-    } else {
-        upgradeExpand.style.pointerEvents = 'none';
-        upgradeExpand.style.opacity = '0.5';
-    }
-}
-
-/* 
-    FUNCTION
-    업그레이드 아이콘 재정렬
-*/
-function reorderUpgradeIcon() {
-    const upgradeBundle = document.getElementById('upgradeBundle');
-    upgradeBundle.innerHTML = '';
-
-    const arrReorder = arrProductUpgradeId.slice().sort((a, b) => a - b);
-
-    arrReorder.forEach(number => {
-        const addUpgradeDiv = document.createElement('div');
-        addUpgradeDiv.id = `upgrade_${number}`;
-        addUpgradeDiv.className = `upgradeIcon ${number}`;
-        addUpgradeDiv.textContent = `${number}`;
-
-        upgradeBundle.appendChild(addUpgradeDiv);
-
-        
-        const upgradeTooltip = document.getElementById('upgradeTooltip');
-        const upgradeIcon = document.getElementById(`upgrade_${number}`);
-        // 이벤트 리스너 추가
-        upgradeIcon.addEventListener('mouseenter', () => {
-            upgradeTooltip.style.display = 'block';
-            // 선 위치 조절
-            upgradeTooltip.style.top = `${upgradeIcon.getBoundingClientRect().top + 10}px`;
-            // 만약 맨 위를 벗어났다면
-            if(upgradeIcon.getBoundingClientRect().top <= 0) {
-                upgradeTooltip.style.top = `5px`;
-            }
-        });
-        upgradeIcon.addEventListener('mouseleave', () => {
-            upgradeTooltip.style.display = 'none';
-        });
-    });
-}
-
-// 2초마다 작동 | 최적화를 위함
-setInterval(twoSecond, 1000*2);
-function twoSecond() {
+setInterval(() => {
     // 웹 HTML 제목 갱신
     document.title = formatNumber(student) + " 명 - 대학교 구조 위원회";
-}
-// 자릿수 계산
-function formatNumber(value) {
-    // value의 값이 0일 경우
-    if(value == 0) return value;
-    // 아닐 경우
-    else {
-        for(let i = arrFormatNumberKr.length - 1 ; i > -1 ; i--) {
-            if(value >= arrFormatStandardKr[i]) {
-                // 1e72 이상 | 무한
-                if(i == arrFormatNumberKr.length - 1) return arrFormatNumberKr[i] 
-                // 1e4 이하
-                else if(i == 0) return value + arrFormatNumberKr[0];
-                // 그 외
-                else return (value / arrFormatStandardKr[i]).toFixed(2) + arrFormatNumberKr[i];
-            }
-        }
-    }
-}
+}, 1000*2);
 
 
 /* 

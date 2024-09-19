@@ -13,7 +13,7 @@ body {
 	font-style: normal;
 	user-select: none;
 	scrollbar-color: #bbbbbb #111111;
-  }
+}
   
 #game {
 	position: absolute;
@@ -342,10 +342,13 @@ sectionRight
     right: 320px;
     height: auto;
     width: 350px;
-    background-color: purple;
+    background-color: #2B2B2B;
     padding: 10px;
     z-index: 99;
 	overflow: hidden;
+	border: 2px solid;
+	border-image: linear-gradient(to right bottom, #FFC800, #FF7D00);
+	border-image-slice: 1;
 }
 .tooltip .icon {
 	float: left;
@@ -359,72 +362,70 @@ sectionRight
 	overflow: hidden;
 }
 .tooltip .price {
+	font-size: 125%;
 	float: right;
 }
 .tooltip .name {
 	color: #ffffff;
-	text-shadow:0px 0px 8px #ffffff;
+	text-shadow:0px 0px 4px #ffffff;
 	font-size: 130%;	
 }
 
 
 /*
-	tooltip
+	Product tooltip
 */
-.tooltip .getCount {
-	color: #ffffff;
+#productTooltip .getCount {
+	color: #FFFFFF;
 	float: center;
 }
-
-/*.tooltip .tagList {
-}*/
-.tooltip .tagList .tag {
-	color: #fff;
-	font-size: 80%;
+#productTooltip .tagList .tag {
+	color: #000000;
+	font-size: 95%;
 	text-align: center;
 	display: inline-block;
-	background: #000;
-	border-radius: 10px;
-	padding: 2px 10px;
-	margin-top: 4px;
-	margin-right: 4px;
-}
-.tooltip .tagList .tag p{
-	display: inline-block;
+	border-radius: 5px;
+	padding: 2px 5px;
+	margin: 4px 4px 0px 0px;
 }
 #productTooltip .line {
 	width: 95%;
-	height: 2px;
+	height: 1px;
 	background: linear-gradient(to right,rgba(255,255,255,0),rgba(255,255,255,1),rgba(255,255,255,0));
 	border: 0px;
 }
 #productTooltip .description {
-	color: gray;
+	color: #C5C5C5;
 	font-size: 100%;
 	text-align: center;
 }
-.tooltip .infoBundle {
-	color: #ff0000;
-	font-size: 100%;
+#productTooltip .infoBundle {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 }
-.tooltip .infoBundle .info {
+#productTooltip .infoBundle .info {
+	color: #D0D0D0;
+	font-size: 110%;
 	width: 90%;
 	height: auto;
-	background-color: gainsboro;
+	background-color: #4A4A4A;
 	border-radius: 5px;
 	margin: 3px;
 	padding-left: 5px;
 }
-.tooltip .productUpgradeDone {
-	color: gray;
+#productTooltip .infoBundle .info b {
+	color: #FFFFFF;
+	font-size: 105%;
+	text-shadow: 0px 0px 2px #000000;
+}
+#productTooltip .productUpgradeDone {
+	color: #FFFFFF;
 	font-size: 120%;
 	text-align: center;
 }
-.tooltip .progressUpgrade {
-	color: gray;
+#productTooltip .progressUpgrade {
+	color: #E0E0E0;
 	font-size: 90%;
 	text-align: center;
 }
@@ -437,7 +438,7 @@ sectionRight
 }
 #upgradeTooltip .line {
 	width: 95%;
-	height: 2px;
+	height: 1px;
 	background: linear-gradient(to right,rgba(255,255,255,0),rgb(131, 103, 255),rgba(255,255,255,0));
 	border: 0px;
 }
