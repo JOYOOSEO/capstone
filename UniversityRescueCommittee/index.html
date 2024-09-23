@@ -11,8 +11,13 @@
 
 <body>
     <div id="game">
-        
-        <!-- section left  -->
+        <div id="popupArea" class="popupArea disabled">
+            <div id="popupBackground" class="background disabled"></div>
+            <div id="popupBox" class="popupBox disabled">
+                <!-- Add div here -->
+            </div>
+        </div>
+        <!-- section left -->
         <div id="sectionLeft">
             <div id="gradient"></div>
             <div id="nameBundle">
@@ -29,11 +34,11 @@
             <div id="version">V 0.1.0</div>
         </div>
 
-        <!-- division column  -->
+        <!-- division column -->
         <div class="divisionLine cloumn left"></div>
         <div class="divisionLine cloumn right"></div>
 
-        <!-- section middle  -->
+        <!-- section middle -->
         <div id="sectionMiddle">
             <div id="panel">
                 <select id="languageSelector">
@@ -82,7 +87,7 @@
             </div>
         </div>
 
-        <!-- section right  -->
+        <!-- section right -->
         <div id="sectionRight">
             <div id="gameMenu">
                 <div id="setting" class="button">
@@ -105,7 +110,7 @@
                 <div id="upgradeExpand">펼치기</div>
                 <div id="upgradeSubtitle" class="subtitle"></div>
                 <div id="upgradeBundle">
-
+                    <!-- Add div here -->
                 </div>
             </div>
             <div class="divisionLine row bottom"></div>
@@ -135,8 +140,6 @@
                             <div id="product_2_price" class="price">1100 명</div>
                             <div id="product_2_getCount" class="getCount"></div>
                         </div>
-                    </div>
-                        
                     </div>
                     <div id="product_3" class="product disabled">
                         <div class="icon"></div>
@@ -244,6 +247,7 @@
                     </div>
                     <button id="downloadButton">텍스트 파일 추출</button>
                     <button id="debugMode" onclick="debugMode()">디버그모드</button>
+                    <button id="debugMode" onclick="saveCookie()">쿠키 저장</button>
                     <div id="blankArea"></div>
                 </div>
             </div>
@@ -251,7 +255,7 @@
         
         <div id="productTooltip" class="tooltip">
             <div id="productTooltipIcon" class="icon"></div>
-            <div id="productTooltipPrice" class="price">aaaa</div>
+            <div id="productTooltipPrice" class="price"></div>
             <div id="productTooltipName" class="name"></div>
             <div id="productTooltipGetCount" class="getCount"></div>
             <div id="tagList" class="tagList"></div>
@@ -270,8 +274,8 @@
         </div>
         <div id="upgradeTooltip" class="tooltip">
             <div id="upgradeTooltipIcon" class="icon"></div>
-            <div id="upgradeTooltipPrice" class="price">123</div>
-            <div id="upgradeTooltipName" class="name">aaannnb</div>
+            <div id="upgradeTooltipPrice" class="price"></div>
+            <div id="upgradeTooltipName" class="name"></div>
             <div id="upgradeTooltipTagList" class="tagList"></div>
             <hr id="upgradeTooltipMainLine" class="line">
             <div id="upgradeTooltipDescription" class="description">학생의 입학 효율 <b>두 배</b> 증가</div>
