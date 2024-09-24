@@ -438,7 +438,14 @@ sectionRight
 	text-shadow:0px 0px 4px #ffffff;
 	font-size: 130%;	
 }
-
+.tooltip .tagList .tag {
+	font-size: 95%;
+	text-align: center;
+	display: inline-block;
+	border-radius: 5px;
+	padding: 2px 5px;
+	margin: 4px 4px 0px 0px;
+}
 
 /*
 	Product tooltip
@@ -457,15 +464,6 @@ sectionRight
 #productTooltip .getCount {
 	color: #FFFFFF;
 	float: center;
-}
-#productTooltip .tagList .tag {
-	color: #000000;
-	font-size: 95%;
-	text-align: center;
-	display: inline-block;
-	border-radius: 5px;
-	padding: 2px 5px;
-	margin: 4px 4px 0px 0px;
 }
 #productTooltip .line {
 	width: 95%;

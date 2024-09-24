@@ -12,6 +12,12 @@ var arrPopupAppearBool = [
 const arrFormatNumberKr = ['','만','억','조','경','해','자','양','구','간','정','재','극','항하사','아승기','나유타','불가사의','무량대수','무한']
 var arrFormatStandardKr = [1,1e4,1e8,1e12,1e16,1e20,1e24,1e28,1e32,1e36,1e40,1e44,1e48,1e52,1e56,1e60,1e64,1e68,1e72]
 
+// Tooltip
+const arrTooltipTagColor = [
+    [],
+    ['#ADB5BD,#F8F9FA', 'rgb(82,28,20),rgb(241,183,139)', 'rgb(214,138,46),rgb(242,225,193)', 'rgb(255,61,0),rgb(255,214,0)', 'rgb(102,7,8),rgb(229,56,59)', 'rgb(9,132,0),rgb(118,82,35)', 'rgb(255,255,0),rgb(225,98,110)', 'rgb(0,0,0),rgb(225,255,255)', 'rgb(0,0,0),rgb(225,255,255)', 'rgb(0,0,0),rgb(225,255,255)']
+]
+
 // Product list
 var arrProductGetCount = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 const productLength = 16; // 증축 개수 | 고정
@@ -168,6 +174,10 @@ const translations = {
         perSecond: (value) => `초당: ${value} 명`,
         menuSubtitleProduct: '증축',
         arrProductName: ['학생','학교 시설','교통 시설','주거 시설','은행','공항','기업','정부','세계 정부','복제 실험실','우주정거장','차원 포탈','블랙홀','타임머신','평행 세계','또 다른 나'],
+        tooltipTagName: [
+            ['증축', '강화'],
+            ['금속', '초콜릿', '호박꿀', '오렌지 즙', '경고등', '짙은 나무', '불꽃', '다이아몬드', '4차원', '공허']
+        ],
         productTooltipDescription: [
             '학생 한 명 한 명이 소중한 법입니다.',
             '학업, 오락, 휴식 시설 같은 원하는 모든 시설을 갖춥니다. 학생을 위해서 못해줄 건 없는 법입니다.',
@@ -190,6 +200,7 @@ const translations = {
         productTooltipStat_1: (value) => `보유마다 <b>${value} 명</b> 입학`,
         productTooltipStat_2: (value) => `초당 총 <b>${value} 명</b> 입학`,
         productTooltipStat_3: (value) => `지금까지 <b>${value} 명</b> 입학`,
+        productTooltipUpgradeDone: '강화 완료 목록',
         menuSubtitleUpgrade: '강화',
         upgradeMenuButtonExpand: '펼치기',
         upgradeMenuButtonFold: '접기',
@@ -272,6 +283,7 @@ const translations = {
             '평행 세계를 횡단하는 방법을 찾아 다른 세계 학생에게 우리 학교를 홍보합니다. 횡단 비용은 많이 들지만 같은 홍보물을 반복해 쓸 수 있어 경제적이죠.',
             '당신은 혼자가 아닙니다. 그리고 또 다른 당신도 혼자가 아니죠.'
         ],
+        productTooltipUpgradeDone: 'Upgrade complete list',
         productTooltipGetCount: (value) => `Have ${value} `,
         productTooltipStat_1: (value) => `<b>${value} people</b> per holding for school admission`,
         productTooltipStat_2: (value) => `<b>${value} people</b> students admitted as per second`,
@@ -338,13 +350,22 @@ for(let i = 0 ; i < productLength ; i++) {
             tooltip.querySelector('.name').textContent = translations[lang].arrProductName[i];
             // 설명 재설정
             tooltip.querySelector('.description').textContent = translations[lang].productTooltipDescription[i];
-            
+            // 태그 재설정
+            tooltip.querySelector('.tagList').innerHTML = ''; // 태그 지우기
+            if(arrProductGetCount[i] >= 1) {
+                appendTag('product', 'normal');
+
+                for(let j = 0 ; j < arrProductUpgradeCountMax[i] ; j++) {
+                    if(arrProductUpgradeCount[i] == `${j}`) appendTag('product', `upgradeLevel_${j}`);
+                }
+            }
             // 강화 현황 활성화
             if(arrProductUpgradeCount[i] >= 1) { // 강화 최소 1개 이상 했을 시
                 tooltip.querySelector('#bottomLine').classList.remove('disabled');
                 tooltip.querySelector('#productUpgradeDone').classList.remove('disabled');
+                tooltip.querySelector('#productUpgradeDone').innerHTML = translations[lang].productTooltipUpgradeDone;
                 tooltip.querySelector('#progressUpgrade').classList.remove('disabled');
-                tooltip.querySelector('#progressUpgrade').textContent = '(' + arrProductUpgradeCount[i] + '/' + arrProductUpgradeCountMax[i] + ')';
+                tooltip.querySelector('#progressUpgrade').innerHTML = '(' + arrProductUpgradeCount[i] + '/' + arrProductUpgradeCountMax[i] + ')';
                 tooltip.querySelector('#upgradePurchaseList').classList.remove('disabled');
                 tooltip.querySelector('#upgradePurchaseList').innerHTML = '';
                 addProductUpgradeIcon(i);
@@ -407,13 +428,20 @@ for(let i = 0 ; i < productLength ; i++) {
             }
             // 초당 추가 값 증가
             updateAddPerSecond();
-            updateProduct(i);
+            updateProductInfo(i);
             updateStudent();
         }
     });
 }
+/* 증축 이름 갱신 */
+function updateProductName() {
+    for(let i = 0 ; i < productLength ; i++) {
+        const product = document.getElementById(`product_${i}`);
 
-function updateProduct(i, j = 1) {
+        if(arrProductUnlock[i] == true) document.getElementById(`product_${i}`).innerHTML = translations[lang].arrProductName[i];
+    }
+}
+function updateProductInfo(i, j = 1) {
     for(let k = 0 ; k < j ; k++) {
         // 비용
         arrProductPrice[i] = Math.floor(arrProductPrice[i] * 1.15);
@@ -581,11 +609,6 @@ function updateTooltip(i) {
         document.getElementById('productTooltipPrice').style.color = '#FF0000';
         document.getElementById('productTooltipPrice').style.opacity = 0.5;
     }
-    // 태그
-    document.getElementById('tagList').innerHTML = ''; // 태그 지우기
-    if(arrProductGetCount[i] >= 1) {
-        appendTag('증축', 'product');
-    }
     // 통계 활성화
     if(arrProductGetCount[i] >= 1) {
         tooltip.querySelector('#centerLine').classList.remove('disabled');
@@ -609,25 +632,32 @@ function updateTooltip(i) {
 */
 function updateStudent() {
     // 보유 중인 학생 갱신
-    document.getElementById('getStudent').textContent = translations[lang].students(formatNumber(student));
+    document.getElementById('getStudent').innerHTML = translations[lang].students(formatNumber(student));
     // 초당 학생 갱신
-    document.getElementById('perSecondStudent').textContent = translations[lang].perSecond(formatNumber(addPerSecondStudent));
+    document.getElementById('perSecondStudent').innerHTML = translations[lang].perSecond(formatNumber(addPerSecondStudent));
 }
 
 /*
     FUNCTION
     태그 추가
 */
-function appendTag(tagText, color) {
+function appendTag(elementById, type) {
     const appendTag = document.createElement('div');
     appendTag.className = 'tag';
-    appendTag.innerHTML = tagText;
-    if(color == 'product') appendTag.style.background = 'linear-gradient(to right,#ABBAAB,#FFFFFF)';
-    if(color == 'black') appendTag.style.background = '#000000';
-    if(color == 'red') appendTag.style.background = '#FF0000';
-    if(color == 'blue') appendTag.style.background = '#0000FF';
-    if(color == 'green') appendTag.style.background = '#008000';
-    document.getElementById('tagList').appendChild(appendTag);
+
+    if(type == 'normal') {
+        if(elementById == 'product') appendTag.innerHTML = translations[lang].tooltipTagName[0][0];
+        if(elementById == 'upgrade') appendTag.innerHTML = translations[lang].tooltipTagName[0][1];
+        appendTag.style.background = 'linear-gradient(to right,#ABBAAB,#FFFFFF)';
+        appendTag.style.color = '#000000';
+    }
+    for(let i = 0 ; i < arrProductUpgradeCountMax[i] ; i++) {
+        if(type == `upgradeLevel_${i}`) {
+            appendTag.innerHTML = translations[lang].tooltipTagName[1][i-1];
+            appendTag.style.background = `linear-gradient(to right,${arrTooltipTagColor[1][i-1]})`;
+        }
+    }
+    document.getElementById(`${elementById}TooltipTagList`).appendChild(appendTag);
 }
 
 /*
@@ -798,9 +828,10 @@ setInterval(() => {
         if(arrProductGetCount[i-1] >= 1) {
             product.classList.remove('disabled');
         }
-        if(student >= arrProductPrice[i] * 0.8) {
+        if(arrProductUnlock[i] == false || student >= arrProductPrice[i] * 0.8) {
             product.querySelector('.name').innerHTML = translations[lang].arrProductName[i];
             arrProductUnlock[i] = true;
+            //updateProductName();
         }
 
         // 학생이 충분, 불충분할 때 색 변환
@@ -853,7 +884,7 @@ setInterval(() => {
 }, 1000*30);
 // 쿠키에 저장
 function saveCookie() {
-    console.log('Auto save cookie');
+    console.log('Save cookie');
     // 보유한 학생
     setCookie('student', student);
     // 클릭 추가 학생값
@@ -876,6 +907,7 @@ function saveCookie() {
     setCookie('arrProductUpgradeCount', arrProductUpgradeCount);
 }
 function loadCookie() {
+    console.log('Load cookie');
     // 보유한 학생
     student = getCookie('student');
     // 클릭 추가 학생값
@@ -888,7 +920,7 @@ function loadCookie() {
     arrProductGetCount = getCookie('arrProductGetCount');
     
     for(let i = 0 ; i < arrProductGetCount.length ; i++) {
-        updateProduct(i,arrProductGetCount[i])
+        updateProductInfo(i,arrProductGetCount[i])
     }
 
     arrProductAddPerSecondBonus = getCookie('arrProductAddPerSecondBonus');
@@ -896,12 +928,16 @@ function loadCookie() {
     arrProductProducedTotal = getCookie('arrProductProducedTotal');
     productAddPerSecondTotal = getCookie('productAddPerSecondTotal');
     arrProductUnlock = getCookie('arrProductUnlock');
+    for(let i = 0 ; i < arrProductUnlock.length ; i++) {
+        product.querySelector('.name').innerHTML = translations[lang].arrProductName[i];
+    }
     arrProductUpgradeId = getCookie('arrProductUpgradeId');
     reorderUpgradeIcon();
     arrProductUpgradeEnable = getCookie('arrProductUpgradeEnable');
     arrProductUpgradePurchaseBool = getCookie('arrProductUpgradePurchaseBool');
     arrProductUpgradeCount = getCookie('arrProductUpgradeCount');
 
+    updateStudent();
 }
 
 /* 
