@@ -326,7 +326,7 @@ universityLogo.addEventListener('mousedown', (e) => {
     
 })
 
-// 증축
+
 for(let i = 0 ; i < productLength ; i++) {
     // 처음 작동
     const product = document.getElementById(`product_${i}`);
@@ -335,7 +335,7 @@ for(let i = 0 ; i < productLength ; i++) {
 
     product.querySelector('.name').innerHTML = '???';
     product.querySelector('.price').innerHTML = translations[lang].students(formatNumber(arrProductPrice[i]));
-    
+
     // 마우스가 들어왔을 때 >설명창< 
     product.addEventListener('mouseenter', (e) => {
         // 증축 설명창 위치 조절
@@ -429,6 +429,7 @@ for(let i = 0 ; i < productLength ; i++) {
             // 초당 추가 값 증가
             updateAddPerSecond();
             updateProductInfo(i);
+            updateProductBackground();
             updateStudent();
         }
     });
@@ -448,6 +449,19 @@ function updateProductInfo(i, j = 1) {
         document.getElementById(`product_${i}_price`).innerHTML = translations[lang].students(formatNumber(arrProductPrice[i]));
         // 보유 개수
         document.getElementById(`product_${i}_getCount`).innerHTML = arrProductGetCount[i];
+    }
+}
+function updateProductBackground() {
+
+    for(let i = 0 ; i < productLength ; i++) {
+        const productBackground = document.getElementById(`productRow_${i}`);
+        
+        if(arrProductGetCount[i] >= 1) {
+            
+        productBackground.querySelector('.background').style.background = `url('img/background/product/${i}.png') repeat-x`;
+        productBackground.querySelector('.background').classList.remove('disabled');
+        productBackground.querySelector('.divisionRow').classList.remove('disabled');
+        }
     }
 }
 
@@ -922,6 +936,8 @@ function loadCookie() {
     for(let i = 0 ; i < arrProductGetCount.length ; i++) {
         updateProductInfo(i,arrProductGetCount[i])
     }
+    
+    updateProductBackground();
 
     arrProductAddPerSecondBonus = getCookie('arrProductAddPerSecondBonus');
     arrProductAddPerSecondTotal = getCookie('arrProductAddPerSecondTotal');

@@ -240,15 +240,14 @@ sectionMiddle
 #sectionMiddle #productStateList .background {
 	width: 100%;
 	height: 128px;
-	background: url('img/background_product_2.png') repeat-x;
-	display: block;
+	background: url('img/background/product/0.png') repeat-x;
 	object-fit: cover;
 	background-size: 128px;
 }
 #sectionMiddle #productStateList .divisionRow {
 	width: 100%;
 	height: 16px;
-	background: url('img/image.png') repeat-x;
+	background: url('img/store.png') repeat-x;
 }
 
 
