@@ -20,6 +20,7 @@ const arrTooltipTagColor = [
 
 // Product list
 var arrProductGetCount = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+var arrProductStateImg = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 const productLength = 16; // 증축 개수 | 고정
 var arrProductPrice = [ // 증축 가격 | 고정
     50, // 50
@@ -230,7 +231,7 @@ const translations = {
                 '교통 시설 최초 증축',
                 '주거 시설 최초 증축',
                 '은행 최초 증축',
-                '공행 최초 증축',
+                '공항 최초 증축',
                 '기업 최초 증축',
                 '정부 최초 증축',
                 '세계 정부 최초 증축',
@@ -420,7 +421,7 @@ for(let i = 0 ; i < productLength ; i++) {
                         arrProductUpgradeId.push(i * 100 + forUpgradeIndex[j]);
 
                         reorderUpgradeIcon();
-                        upgradeMenu();
+                        upgradeExpandButton();
 
                         if(j == 0) createPopup(0, i);
                     }
@@ -431,6 +432,7 @@ for(let i = 0 ; i < productLength ; i++) {
             updateProductInfo(i);
             updateProductBackground();
             updateStudent();
+            updateProductStateImg(i);
         }
     });
 }
@@ -463,6 +465,52 @@ function updateProductBackground() {
         productBackground.querySelector('.divisionRow').classList.remove('disabled');
         }
     }
+}
+function updateProductStateImg(i) {
+    console.log(`update img ${i}`);
+    if(arrProductStateImg[i] < arrProductGetCount[i]) {
+        for(let j = arrProductStateImg[i] ; j < arrProductGetCount[i] ; j++) {
+            const appendStateImg = document.createElement('div');
+            appendStateImg.classList.add('stateImg');
+            appendStateImg.style.background = `url('img/state/product_${i}.png') repeat-x`;
+
+            if(i == 0) {
+                let topCount = 0;
+                topCount++;
+                appendStateImg.style.top = `${15 * topCount}px`;
+                appendStateImg.style.left = `${15 * j}px`
+                if(topCount >= 3) topCount = 0;
+            }
+            if(i == 1) {
+                appendStateImg.style.top = `${15}px`;
+                appendStateImg.style.left = `${15 * j}px`
+            }
+            if(i == 2) {
+                const topRandom = Math.floor(Math.random() * 60);
+                appendStateImg.style.top = `${64 - topRandom}px`;
+                appendStateImg.style.left = `${30 * j}px`
+            }
+            if(i == 3) {
+                appendStateImg.style.top = `${64}px`;
+                appendStateImg.style.left = `${30 * j}px`
+            }
+            if(i == 4) {
+                appendStateImg.style.top = `${64}px`;
+                appendStateImg.style.left = `${30 * j}px`
+            }
+            if(i == 5) {
+                const topRandom = Math.floor(Math.random() * 40);
+                appendStateImg.style.top = `${64 - topRandom}px`;
+                appendStateImg.style.left = `${48 * j}px`
+                
+            } else {
+                appendStateImg.style.top = `25px`;
+                appendStateImg.style.left = `${15 * j}px`
+            }
+
+            document.getElementById(`productBackground_${i}`).appendChild(appendStateImg);
+        }
+    } else arrProductStateImg[i] = arrProductGetCount[i];
 }
 
 // 업그레이드 확장 버튼
@@ -678,7 +726,7 @@ function appendTag(elementById, type) {
     FUNCTION
     업그레이드 확장 버튼 활성화 여부
 */
-function upgradeMenu() {
+function upgradeExpandButton() {
     const upgradeExpand = document.getElementById('upgradeExpand');
     const upgradeBundle = document.getElementById('upgradeBundle');
     const upgradeIconLength = upgradeBundle.getElementsByClassName('upgradeIcon').length;
@@ -757,7 +805,7 @@ function reorderUpgradeIcon() {
             }
         });
     });
-    upgradeMenu();
+    upgradeExpandButton();
 }
 /* 
     FUNCTION
@@ -770,11 +818,12 @@ function addProductUpgradeIcon(i) {
 
     arrReorder.forEach(number => {
         const addUpgradeIcon = document.createElement('div');
+        const j = number % 100;
         addUpgradeIcon.id = `upgrade_${number}`;
         addUpgradeIcon.className = `upgradeIcon ${number}`;
         addUpgradeIcon.style.background = `url('img/icons_upgrade.png') no-repeat`;
         addUpgradeIcon.style.backgroundPositionY = `${-48 * i}px`;
-        addUpgradeIcon.style.backgroundPositionX = `${-48 * number}px`
+        addUpgradeIcon.style.backgroundPositionX = `${-48 * j}px`
 
         upgradePurchaseList.appendChild(addUpgradeIcon);
     });
@@ -933,12 +982,12 @@ function loadCookie() {
     // 보유한 증축
     arrProductGetCount = getCookie('arrProductGetCount');
     
+    updateProductBackground();
     for(let i = 0 ; i < arrProductGetCount.length ; i++) {
         updateProductInfo(i,arrProductGetCount[i])
+        updateProductStateImg(i)
     }
     
-    updateProductBackground();
-
     arrProductAddPerSecondBonus = getCookie('arrProductAddPerSecondBonus');
     arrProductAddPerSecondTotal = getCookie('arrProductAddPerSecondTotal');
     arrProductProducedTotal = getCookie('arrProductProducedTotal');

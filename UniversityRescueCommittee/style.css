@@ -64,7 +64,7 @@ body {
 #popupArea #popupBox #popupBoxPicture {
 	height: 225px;
 	width: 400px;
-	background: #FFFFFF;
+	background: url('img/popup/test.png');
 	border: 2px solid;
 	border-image: linear-gradient(to right, #2F80ED, #56CCF2);;
 	border-image-slice: 1;
@@ -238,11 +238,20 @@ sectionMiddle
 	overflow-y:scroll;
 }
 #sectionMiddle #productStateList .background {
+	position: relative;
 	width: 100%;
 	height: 128px;
 	background: url('img/background/product/0.png') repeat-x;
 	object-fit: cover;
 	background-size: 128px;
+	overflow: hidden;
+}
+#sectionMiddle #productStateList .background .stateImg {
+	position: absolute;
+	width: 64px;
+	height: 64px;
+	background-size: cover;
+	object-fit: cover;
 }
 #sectionMiddle #productStateList .divisionRow {
 	width: 100%;
