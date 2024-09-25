@@ -467,50 +467,96 @@ function updateProductBackground() {
     }
 }
 function updateProductStateImg(i) {
-    console.log(`update img ${i}`);
     if(arrProductStateImg[i] < arrProductGetCount[i]) {
         for(let j = arrProductStateImg[i] ; j < arrProductGetCount[i] ; j++) {
             const appendStateImg = document.createElement('div');
             appendStateImg.classList.add('stateImg');
             appendStateImg.style.background = `url('img/state/product_${i}.png') repeat-x`;
 
-            if(i == 0) {
-                let topCount = 0;
-                topCount++;
-                appendStateImg.style.top = `${15 * topCount}px`;
-                appendStateImg.style.left = `${15 * j}px`
-                if(topCount >= 3) topCount = 0;
+            if(i == 0) { // 학생
+                appendStateImg.style.top = `${20 * Math.floor(j % 3)}px`;
+                appendStateImg.style.left = `${16 * j}px`
             }
-            if(i == 1) {
-                appendStateImg.style.top = `${15}px`;
-                appendStateImg.style.left = `${15 * j}px`
+            else if(i == 1) { // 학교 시설
+                appendStateImg.style.top = `${32}px`;
+                appendStateImg.style.left = `${64 * j}px`
             }
-            if(i == 2) {
+            else if(i == 2) { // 교통 시설
                 const topRandom = Math.floor(Math.random() * 60);
                 appendStateImg.style.top = `${64 - topRandom}px`;
-                appendStateImg.style.left = `${30 * j}px`
+                appendStateImg.style.left = `${48 * j}px`
             }
-            if(i == 3) {
-                appendStateImg.style.top = `${64}px`;
-                appendStateImg.style.left = `${30 * j}px`
+            else if(i == 3) { // 주거 시설
+                appendStateImg.style.top = `${32}px`;
+                appendStateImg.style.left = `${80 * j}px`
             }
-            if(i == 4) {
-                appendStateImg.style.top = `${64}px`;
-                appendStateImg.style.left = `${30 * j}px`
+            else if(i == 4) { // 은행
+                appendStateImg.style.top = `${32}px`;
+                appendStateImg.style.left = `${80 * j}px`
             }
-            if(i == 5) {
+            else if(i == 5) { // 공항
                 const topRandom = Math.floor(Math.random() * 40);
                 appendStateImg.style.top = `${64 - topRandom}px`;
                 appendStateImg.style.left = `${48 * j}px`
                 
-            } else {
-                appendStateImg.style.top = `25px`;
-                appendStateImg.style.left = `${15 * j}px`
+            }
+            else if(i == 6) { // 기업
+                appendStateImg.style.top = `${32}px`;
+                appendStateImg.style.left = `${80 * j}px`
+
+            }
+            else if(i == 7) { // 정부
+                appendStateImg.style.top = `${32}px`;
+                appendStateImg.style.left = `${80 * j}px`
+
+            }
+            else if(i == 8) { // 세계 정부
+                appendStateImg.style.top = `${32}px`;
+                appendStateImg.style.left = `${80 * j}px`
+
+            }
+            else if(i == 9) { // 복제 실험실
+                appendStateImg.style.top = `${32}px`;
+                appendStateImg.style.left = `${80 * j}px`
+
+            }
+            else if(i == 10) { // 우주 정거장
+                appendStateImg.style.top = `${32}px`;
+                appendStateImg.style.left = `${80 * j}px`
+
+            }
+            else if(i == 11) { // 차원포탈
+                appendStateImg.style.top = `${40 - 16 * Math.floor(j % 2)}px`;
+                appendStateImg.style.left = `${8 + 80 * j}px`
+                appendStateImg.style.backgroundPositionX = `${-64 * Math.floor(Math.random() * 4)}px`;
+
+            }
+            else if(i == 12) { // 블랙홀
+                appendStateImg.style.top = `${32}px`;
+                appendStateImg.style.left = `${32 + 128 * j}px`
+                appendStateImg.style.backgroundPositionX = `${-64 * Math.floor(Math.random() * 3)}px`;
+
+            }
+            else if(i == 13) { // 타임머신
+                appendStateImg.style.top = `${32}px`;
+                appendStateImg.style.left = `${48 + 80 * j}px`
+
+            }
+            else if(i == 14) { // 평행 세계
+                appendStateImg.style.top = `${32}px`;
+                appendStateImg.style.left = `${80 * j}px`
+
+            }
+            else if(i == 15) { // 또 다른 나
+                appendStateImg.style.top = `${32}px`;
+                appendStateImg.style.left = `${80 + 40 * j}px`
+
             }
 
             document.getElementById(`productBackground_${i}`).appendChild(appendStateImg);
         }
-    } else arrProductStateImg[i] = arrProductGetCount[i];
+        arrProductStateImg[i] = arrProductGetCount[i];
+    }
 }
 
 // 업그레이드 확장 버튼
@@ -759,7 +805,7 @@ function reorderUpgradeIcon() {
         addUpgradeDiv.id = `upgrade_${number}`;
         addUpgradeDiv.className = `upgradeIcon ${number}`;
         addUpgradeDiv.style.background = `url('img/icons_upgrade.png') no-repeat`;
-        addUpgradeDiv.style.backgroundPositionX = `${-48 * arr2}px`
+        addUpgradeDiv.style.backgroundPositionX = `${-48 * arr2}px`;
         addUpgradeDiv.style.backgroundPositionY = `${-48 * arr1}px`;
 
         upgradeBundle.appendChild(addUpgradeDiv);
