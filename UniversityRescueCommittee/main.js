@@ -173,6 +173,19 @@ const translations = {
         universityNameSuffix: ' 대학교',
         students: (value) => `${value} 명`,
         perSecond: (value) => `초당: ${value} 명`,
+        newsTitle: '학교 소식',
+        newsContents: [
+            [
+                '이 학교가 있는지 조차 모르는 사람이 많습니다.', 
+                '우리 학교가 입학생이 기피하는 학교로 선정되었습니다.', 
+                '비어있는 강의실은 음산한 분위기를 내고 있습니다.', 
+                '이 학교의 평가는 별점 1점입니다.', 
+                '남아있는 학생마저 자퇴를 준비하고 있습니다.',
+                '학교에 학생보다 교수가 더 많습니다.'
+            ],
+            [],
+            []
+        ],
         menuSubtitleProduct: '증축',
         arrProductName: ['학생','학교 시설','교통 시설','주거 시설','은행','공항','기업','정부','세계 정부','복제 실험실','우주정거장','차원 포탈','블랙홀','타임머신','평행 세계','또 다른 나'],
         tooltipTagName: [
@@ -303,9 +316,10 @@ languageSelector.addEventListener('change', changeLanguage);
 function changeLanguage() {
     lang = languageSelector.value;
 
+    document.getElementById('showNewsTitle').innerHTML = translations[lang].newsTitle;
     //document.getElementById('universityNameSuffix').innerHTML = popupInput.value + translations[lang].universityNameSuffix;
-    document.getElementById('upgradeSubtitle').textContent = translations[lang].menuSubtitleUpgrade;
-    document.getElementById('productSubtitle').textContent = translations[lang].menuSubtitleProduct;
+    document.getElementById('upgradeSubtitle').innerHTML = translations[lang].menuSubtitleUpgrade;
+    document.getElementById('productSubtitle').innerHTML = translations[lang].menuSubtitleProduct;
 
     updateStudent();
     updateUpgradeMenuButton();
@@ -436,7 +450,59 @@ for(let i = 0 ; i < productLength ; i++) {
         }
     });
 }
-/* 증축 이름 갱신 */
+
+/*
+    뉴스 업데이트
+*/
+const showNewsContents = document.getElementById('showNewsContents');
+let newsIndex = 0;
+let newsSetTimeout;
+let newssetInterval;
+function updateNews() {
+    console.log('Update news');
+
+    showNewsContents.classList.remove('fadeIn');
+    showNewsContents.classList.add('fadeOut');
+
+    clearTimeout(newsSetTimeout);
+    clearInterval(newssetInterval);
+    
+    newsSetTimeout = setTimeout(() => {
+        newsIndex = (newsIndex + 1) % translations[lang].newsContents[0].length;
+        showNewsContents.innerHTML = translations[lang].newsContents[0][newsIndex];
+        showNewsContents.classList.remove('fadeOut');
+        showNewsContents.classList.add('fadeIn');
+    }, 1000);
+
+    newssetInterval = setInterval(() => { updateNews(); }, 1000 * 6);
+}
+showNewsContents.addEventListener('click', () => {
+    clearTimeout(newsSetTimeout);
+    clearInterval(newssetInterval);
+    updateNews();
+})
+/*
+    게임 메뉴
+*/
+const menuSetting = document.getElementById('menuSetting');
+const menuStats = document.getElementById('menuStats');
+const menuInfo = document.getElementById('menuInfo');
+const menuReturn = document.getElementById('menuReturn');
+menuSetting.addEventListener('click', () => {
+    menuSetting.classList.toggle('select');
+
+    if(menuSetting.classList.contains('select')) {
+        document.getElementById('productStateList').style.display = 'none';
+        document.getElementById('pageSetting').style.display = 'block';
+    } else {
+        document.getElementById('productStateList').style.display = '';
+        document.getElementById('pageSetting').style.display = 'none';
+    }
+});
+
+/* 
+    증축 이름 갱신
+*/
 function updateProductName() {
     for(let i = 0 ; i < productLength ; i++) {
         const product = document.getElementById(`product_${i}`);
@@ -982,7 +1048,7 @@ function perSecond() {
 setInterval(() => {
     // 웹 HTML 제목 갱신
     document.title = translations[lang].windowTitle(formatNumber(student));
-}, 1000*2);
+}, 1000 * 2);
 /*
     Interval
     30초 반복
@@ -1115,6 +1181,8 @@ window.onload = function() {
     if(checkCookies) loadCookie();
 
     if(arrPopupAppearBool[1][0] == false) createPopup(1, 0);
+
+    updateNews();
 };
 
 
