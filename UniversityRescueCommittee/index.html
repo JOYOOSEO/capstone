@@ -11,16 +11,21 @@
 
 <body>
     <div id="game">
-        
-        <!-- section left  -->
+        <div id="popupArea" class="popupArea disabled">
+            <div id="popupBackground" class="background disabled"></div>
+            <div id="popupBox" class="popupBox disabled">
+                <!-- Add div here -->
+            </div>
+        </div>
+        <!-- section left -->
         <div id="sectionLeft">
             <div id="gradient"></div>
             <div id="nameBundle">
                 <div id="universityName">대림 대학교</div>
             </div>
             <div id="studentBundle">
-                <div id="getStudent">0 명</div>
-                <div id="perSecondStudent">초당 0 명</div>
+                <div id="getStudent"></div>
+                <div id="perSecondStudent"></div>
             </div>
             <div id="logoBundle">
                 <button id="universityLogo"></button>
@@ -29,57 +34,89 @@
             <div id="version">V 0.1.0</div>
         </div>
 
-        <!-- division column  -->
+        <!-- division column -->
         <div class="divisionLine cloumn left"></div>
         <div class="divisionLine cloumn right"></div>
 
-        <!-- section middle  -->
+        <!-- section middle -->
         <div id="sectionMiddle">
             <div id="panel">
-
+                <select id="languageSelector">
+                    <option value="ko">한국어</option>
+                    <option value="en">English</option>
+                </select>
+                <div id="news">학교 소식: 어쩌구저쩌구</div>
             </div>
             <div class="divisionLine row"></div>
             <div id="productStateList">
                 <div id="productRow_0">
-                    <div id="productBG_0" class="background"></div>
-                    <div class="divisionRow"></div>
+                    <div id="productBackground_0" class="background disabled"></div>
+                    <div class="divisionRow disabled"></div>
                 </div>
                 <div id="productRow_1">
-                    <div id="productBG_1" class="background"></div>
-                    <div class="divisionRow"></div>
+                    <div id="productBackground_1" class="background disabled"></div>
+                    <div class="divisionRow disabled"></div>
                 </div>
                 <div id="productRow_2">
-                    <div id="productBG_2" class="background"></div>
-                    <div class="divisionRow"></div>
+                    <div id="productBackground_2" class="background disabled"></div>
+                    <div class="divisionRow disabled"></div>
                 </div>
                 <div id="productRow_3">
-                    <div id="productBG_3" class="background"></div>
-                    <div class="divisionRow"></div>
+                    <div id="productBackground_3" class="background disabled"></div>
+                    <div class="divisionRow disabled"></div>
                 </div>
                 <div id="productRow_4">
-                    <div id="productBG_4" class="background"></div>
-                    <div class="divisionRow"></div>
+                    <div id="productBackground_4" class="background disabled"></div>
+                    <div class="divisionRow disabled"></div>
                 </div>
                 <div id="productRow_5">
-                    <div id="productBG_5" class="background"></div>
-                    <div class="divisionRow"></div>
+                    <div id="productBackground_5" class="background disabled"></div>
+                    <div class="divisionRow disabled"></div>
                 </div>
                 <div id="productRow_6">
-                    <div id="productBG_6" class="background"></div>
-                    <div class="divisionRow"></div>
+                    <div id="productBackground_6" class="background disabled"></div>
+                    <div class="divisionRow disabled"></div>
                 </div>
                 <div id="productRow_7">
-                    <div id="productBG_7" class="background"></div>
-                    <div class="divisionRow"></div>
+                    <div id="productBackground_7" class="background disabled"></div>
+                    <div class="divisionRow disabled"></div>
                 </div>
                 <div id="productRow_8">
-                    <div id="productBG_8" class="background"></div>
-                    <div class="divisionRow"></div>
+                    <div id="productBackground_8" class="background disabled"></div>
+                    <div class="divisionRow disabled"></div>
+                </div>
+                <div id="productRow_9">
+                    <div id="productBackground_9" class="background disabled"></div>
+                    <div class="divisionRow disabled"></div>
+                </div>
+                <div id="productRow_10">
+                    <div id="productBackground_10" class="background disabled"></div>
+                    <div class="divisionRow disabled"></div>
+                </div>
+                <div id="productRow_11">
+                    <div id="productBackground_11" class="background disabled"></div>
+                    <div class="divisionRow disabled"></div>
+                </div>
+                <div id="productRow_12">
+                    <div id="productBackground_12" class="background disabled"></div>
+                    <div class="divisionRow disabled"></div>
+                </div>
+                <div id="productRow_13">
+                    <div id="productBackground_13" class="background disabled"></div>
+                    <div class="divisionRow disabled"></div>
+                </div>
+                <div id="productRow_14">
+                    <div id="productBackground_14" class="background disabled"></div>
+                    <div class="divisionRow disabled"></div>
+                </div>
+                <div id="productRow_15">
+                    <div id="productBackground_15" class="background disabled"></div>
+                    <div class="divisionRow disabled"></div>
                 </div>
             </div>
         </div>
 
-        <!-- section right  -->
+        <!-- section right -->
         <div id="sectionRight">
             <div id="gameMenu">
                 <div id="setting" class="button">
@@ -100,20 +137,20 @@
             <div id="upgradeList">
                 <div class="gradient"></div>
                 <div id="upgradeExpand">펼치기</div>
-                <div class="subtitle">강화</div>
+                <div id="upgradeSubtitle" class="subtitle"></div>
                 <div id="upgradeBundle">
-
+                    <!-- Add div here -->
                 </div>
             </div>
             <div class="divisionLine row bottom"></div>
             <div id="productList">
-                <div class="subtitle">증축</div>
+                <div id="productSubtitle" class="subtitle"></div>
                 <div id="product">
                     <div id="product_0" class="product">
                         <div class="icon"></div>
                         <div class="info">
-                            <div id="product_0_name" class="name">000</div>
-                            <div id="product_0_price" class="price">10 명</div>
+                            <div id="product_0_name" class="name"></div>
+                            <div id="product_0_price" class="price"></div>
                             <div id="product_0_getCount" class="getCount"></div>
                         </div>
                     </div>
@@ -121,7 +158,7 @@
                         <div class="icon"></div>
                         <div class="info">
                             <div id="product_1_name" class="name"></div>
-                            <div id="product_1_price" class="price">100 명</div>
+                            <div id="product_1_price" class="price"></div>
                             <div id="product_1_getCount" class="getCount"></div>
                         </div>
                     </div>
@@ -129,17 +166,15 @@
                         <div class="icon"></div>
                         <div class="info">
                             <div id="product_2_name" class="name"></div>
-                            <div id="product_2_price" class="price">1100 명</div>
+                            <div id="product_2_price" class="price"></div>
                             <div id="product_2_getCount" class="getCount"></div>
                         </div>
-                    </div>
-                        
                     </div>
                     <div id="product_3" class="product disabled">
                         <div class="icon"></div>
                         <div class="info">
                             <div id="product_3_name" class="name"></div>
-                            <div id="product_3_price" class="price">1100 명</div>
+                            <div id="product_3_price" class="price"></div>
                             <div id="product_3_getCount" class="getCount"></div>
                         </div>                        
                     </div>
@@ -147,7 +182,7 @@
                         <div class="icon"></div>
                         <div class="info">
                             <div id="product_4_name" class="name"></div>
-                            <div id="product_4_price" class="price">1100 명</div>
+                            <div id="product_4_price" class="price"></div>
                             <div id="product_4_getCount" class="getCount"></div>
                         </div>                        
                     </div>
@@ -155,7 +190,7 @@
                         <div class="icon"></div>
                         <div class="info">
                             <div id="product_5_name" class="name"></div>
-                            <div id="product_5_price" class="price">1100 명</div>
+                            <div id="product_5_price" class="price"></div>
                             <div id="product_5_getCount" class="getCount"></div>
                         </div>                           
                     </div>
@@ -163,7 +198,7 @@
                         <div class="icon"></div>
                         <div class="info">
                             <div id="product_6_name" class="name"></div>
-                            <div id="product_6_price" class="price">1100 명</div>
+                            <div id="product_6_price" class="price"></div>
                             <div id="product_6_getCount" class="getCount"></div>
                         </div>                        
                     </div>
@@ -171,7 +206,7 @@
                         <div class="icon"></div>
                         <div class="info">
                             <div id="product_7_name" class="name"></div>
-                            <div id="product_7_price" class="price">1100 명</div>
+                            <div id="product_7_price" class="price"></div>
                             <div id="product_7_getCount" class="getCount"></div>
                         </div>                        
                     </div>
@@ -179,7 +214,7 @@
                         <div class="icon"></div>
                         <div class="info">
                             <div id="product_8_name" class="name"></div>
-                            <div id="product_8_price" class="price">1100 명</div>
+                            <div id="product_8_price" class="price"></div>
                             <div id="product_8_getCount" class="getCount"></div>
                         </div>                        
                     </div>
@@ -187,7 +222,7 @@
                         <div class="icon"></div>
                         <div class="info">
                             <div id="product_9_name" class="name"></div>
-                            <div id="product_9_price" class="price">1100 명</div>
+                            <div id="product_9_price" class="price"></div>
                             <div id="product_9_getCount" class="getCount"></div>
                         </div>
                     </div>
@@ -195,7 +230,7 @@
                         <div class="icon"></div>
                         <div class="info">
                             <div id="product_10_name" class="name"></div>
-                            <div id="product_10_price" class="price">1100 명</div>
+                            <div id="product_10_price" class="price"></div>
                             <div id="product_10_getCount" class="getCount"></div>
                         </div>
                     </div>
@@ -203,7 +238,7 @@
                         <div class="icon"></div>
                         <div class="info">
                             <div id="product_11_name" class="name"></div>
-                            <div id="product_11_price" class="price">1100 명</div>
+                            <div id="product_11_price" class="price"></div>
                             <div id="product_11_getCount" class="getCount"></div>
                         </div>
                     </div>
@@ -211,7 +246,7 @@
                         <div class="icon"></div>
                         <div class="info">
                             <div id="product_12_name" class="name"></div>
-                            <div id="product_12_price" class="price">1100 명</div>
+                            <div id="product_12_price" class="price"></div>
                             <div id="product_12_getCount" class="getCount"></div>
                         </div>
                     </div>
@@ -219,7 +254,7 @@
                         <div class="icon"></div>
                         <div class="info">
                             <div id="product_13_name" class="name"></div>
-                            <div id="product_13_price" class="price">1100 명</div>
+                            <div id="product_13_price" class="price"></div>
                             <div id="product_13_getCount" class="getCount"></div>
                         </div>
                     </div>
@@ -227,7 +262,7 @@
                         <div class="icon"></div>
                         <div class="info">
                             <div id="product_14_name" class="name"></div>
-                            <div id="product_14_price" class="price">1100 명</div>
+                            <div id="product_14_price" class="price"></div>
                             <div id="product_14_getCount" class="getCount"></div>
                         </div>
                     </div>
@@ -235,12 +270,13 @@
                         <div class="icon"></div>
                         <div class="info">
                             <div id="product_15_name" class="name"></div>
-                            <div id="product_15_price" class="price">1100 명</div>
+                            <div id="product_15_price" class="price"></div>
                             <div id="product_15_getCount" class="getCount"></div>
                         </div>
                     </div>
                     <button id="downloadButton">텍스트 파일 추출</button>
                     <button id="debugMode" onclick="debugMode()">디버그모드</button>
+                    <button id="debugMode" onclick="saveCookie()">쿠키 저장</button>
                     <div id="blankArea"></div>
                 </div>
             </div>
@@ -248,10 +284,10 @@
         
         <div id="productTooltip" class="tooltip">
             <div id="productTooltipIcon" class="icon"></div>
-            <div id="productTooltipPrice" class="price">aaaa</div>
+            <div id="productTooltipPrice" class="price"></div>
             <div id="productTooltipName" class="name"></div>
             <div id="productTooltipGetCount" class="getCount"></div>
-            <div id="tagList" class="tagList"></div>
+            <div id="productTooltipTagList" class="tagList"></div>
             <hr id="topLine" class="line" />
             <div class="description"></div>
             <hr id="centerLine" class="line" />
@@ -261,18 +297,18 @@
                 <div id="info_3" class="info"></div>
             </div>
             <hr id="bottomLine" class="line" />
-            <div id="productUpgradeDone" class="productUpgradeDone">강화 완료 목록</div>
-            <div id="progressUpgrade" class="progressUpgrade"></div>
+            <div id="productUpgradeDone" class="productUpgradeDone upgradeList"></div>
+            <div id="progressUpgrade" class="progressUpgrade upgradeList"></div>
+            <div id="upgradePurchaseList" class="progressUpgrade upgradeList"></div>
         </div>
         <div id="upgradeTooltip" class="tooltip">
             <div id="upgradeTooltipIcon" class="icon"></div>
-            <div id="upgradeTooltipPrice" class="price">123</div>
-            <div id="upgradeTooltipName" class="name">aaannnb</div>
+            <div id="upgradeTooltipPrice" class="price"></div>
+            <div id="upgradeTooltipName" class="name"></div>
             <div id="upgradeTooltipTagList" class="tagList"></div>
             <hr id="upgradeTooltipMainLine" class="line">
-            <div id="upgradeTooltipDescription" class="description">학생의 입학 효율 <b>두 배</b> 증가</div>
+            <div id="upgradeTooltipDescription" class="description"></div>
         </div>
-        
     </div>
     <script type="text/javascript" src="main.js"></script>
 </body>
