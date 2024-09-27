@@ -1,8 +1,16 @@
-// 보유 학생
-var student = 0;
+// 학생
+var student = 0; // 현재 보유 학생
+var addClickStudent = 1e4; // 클릭당 추가 학생
+var addPerSecondStudent = 0; // 초당 추가 학생
+// 통계
+var statsTotalClickCount = 0; // 지금까지 누적된 클릭수
+var statsClickCount = 0; // 누적 클릭수
+var statsTotalAddClickStudent = 0; // 지금까지 누적된 클릭당 추가 학생
+var statsAddClickStudent = 0; // 누적 클릭당 추가 학생
+var statsTotalAddPerSecondStudent = 0; // 지금까지 누적된 초당 추가 학생 수
+var statsAddPerSecondStudent = 0; // 누적 초당 추가 학생 수
+var statsReturningCount = 0; // 회귀 횟수
 
-var addClickStudent = 1e4;
-var addPerSecondStudent = 0;
 
 var arrPopupAppearBool = [
     [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
@@ -186,6 +194,7 @@ const translations = {
             [],
             []
         ],
+        menuStatsText_statsClickCount: (value1, value2, value3) => `지금까지 클릭 횟수: <b>${value1}</b>\n이번 시간 여행동안 클릭 횟수: <b>${value2} (${value3}%)</b>`,
         menuSubtitleProduct: '증축',
         arrProductName: ['학생','학교 시설','교통 시설','주거 시설','은행','공항','기업','정부','세계 정부','복제 실험실','우주정거장','차원 포털','블랙홀','타임머신','평행 세계','또 다른 나'],
         tooltipTagName: [
@@ -225,9 +234,9 @@ const translations = {
             ['보금자리', '인프라 확대', '영혼의 안식처', '삶의 거처', '관리비 무료', '1인 1채', '뿌리의 공간', '쾌적한 공간', '', ''],
             ['자산의 금고', '환율 고정', '이익의 전당', '신용카드', '인터넷 뱅킹 지원', '수업료 전액 대출', '부의 창고', '자본의 정원', '고리대금', '금전의 흐름'],
             ['비상 연결지', '하늘 도로', '공중 교차로', '관제탑', '24시간 운행', '공중 급유', '지평선 거점', '응급상황 대비', '초고속 비행', '무료 면세점 확대'],
-            ['','은행 업그레이드 2','은행 업그레이드 3','은행 업그레이드 4','은행 업그레이드 5', '', '', '', '', ''],
-            ['','은행 업그레이드 2','은행 업그레이드 3','은행 업그레이드 4','은행 업그레이드 5', '', '', '', '', ''],
-            ['','은행 업그레이드 2','은행 업그레이드 3','은행 업그레이드 4','은행 업그레이드 5', '', '', '', '', ''],
+            ['', '', '', '', '', '', '', '', '', ''],
+            ['', '', '', '', '', '', '', '', '', ''],
+            ['', '', '', '', '', '', '', '', '', ''],
             ['복제인간', '생명 재구성', '정체성 조작', '인체 재구성 프로젝트', '복사기', '이중 존재', '존재 변형', '새로운 쌍둥이', '유전자 조작', '복제 재활용 처리소'],
             ['무중력 기지', '장기 체류', '우주선 환승', '냉동 서비스', '우주 관측소', '행성 전초기지', '인공위성 정박', '은하 연구소', '은하계 횡단', '궤도 관문'],
             ['시공간 이동', '여행 서비스', '빠른 등하교', '포털 사이트', '연결 통로', '차원 간섭체', '포털건', '빛보다 빠르게', '전술 차원 도약', '포털 속 미지의 존재'], // 포털 사이트: 동음의어를 활용한 말장난 ||| 포털건: 게임 포탈 시리즈에 등장하는 장비 ||| 전술 차원 도약: 스타크래프트2 속 전투순양함 기술 패러디
@@ -238,13 +247,23 @@ const translations = {
         
         ],
         upgradeDescription: [
-            ['학생의 입학 효율 <b>두 배</b> 증가','학생의 입학 효율 <b>두 배</b> 증가','학생의 입학 효율 <b>두 배</b> 증가','학생의 입학 효율 <b>두 배</b> 증가','학생의 입학 효율 <b>두 배</b> 증가'],
-            ['학교 업그레이드 1','학교 업그레이드 2','학교 업그레이드 3','학교 업그레이드 4','학교 업그레이드 5'],
-            ['교통 업그레이드 1','교통 업그레이드 2','교통 업그레이드 3','교통 업그레이드 4','교통 업그레이드 5'],
-            ['주거 업그레이드 1','주거 업그레이드 2','주거 업그레이드 3','주거 업그레이드 4','주거 업그레이드 5'],
-            ['은행 업그레이드 1','은행 업그레이드 2','은행 업그레이드 3','은행 업그레이드 4','은행 업그레이드 5'],
-        
-        ],
+            ['학생의 입학 효율 <b>두 배</b> 증가'],
+            ['학교 시설의 입학 효율 <b>두 배</b> 증가'],
+            ['교통 시설의 입학 효율 <b>두 배</b> 증가'],
+            ['주거 시설의 입학 효율 <b>두 배</b> 증가'],
+            ['은행의 입학 효율 <b>두 배</b> 증가'],
+            ['공항의 입학 효율 <b>두 배</b> 증가'],
+            ['기업의 입학 효율 <b>두 배</b> 증가'],
+            ['정부의 입학 효율 <b>두 배</b> 증가'],
+            ['세계 정부의 입학 효율 <b>두 배</b> 증가'],
+            ['복제 실험실의 입학 효율 <b>두 배</b> 증가'],
+            ['우주정거장의 입학 효율 <b>두 배</b> 증가'],
+            ['차원 포털의 입학 효율 <b>두 배</b> 증가'],
+            ['블랙홀의 입학 효율 <b>두 배</b> 증가'],
+            ['타임머신의 입학 효율 <b>두 배</b> 증가'],
+            ['평행 세계의 입학 효율 <b>두 배</b> 증가'],
+            ['또 다른 나의 입학 효율 <b>두 배</b> 증가']
+        ]
     },
     en: {
         windowTitle: (value) => `${value} people - Rescue Committee`,
@@ -345,6 +364,8 @@ var universityLogo = document.getElementById('universityLogo');
 // 학교 로고 클릭 이벤트
 universityLogo.addEventListener('click', (e) => {
     student += addClickStudent;
+    statsClickCount++;
+    statsTotalClickCount++;
     console.log(student);
     updateStudent();
 })
@@ -363,7 +384,7 @@ for(let i = 0 ; i < productLength ; i++) {
     product.querySelector('.price').innerHTML = translations[lang].students(formatNumber(arrProductPrice[i]));
 
     // 마우스가 들어왔을 때 >설명창< 
-    product.addEventListener('mouseenter', (e) => {
+    product.addEventListener('mouseenter', () => {
         // 증축 설명창 위치 조절
         tooltip.style.top = `${product.getBoundingClientRect().top + 10}px`;
         // 만약 맨 위를 벗어났다면
@@ -504,12 +525,52 @@ menuSetting.addEventListener('click', () => {
 
     if(menuSetting.classList.contains('select')) {
         document.getElementById('productStateList').style.display = 'none';
-        document.getElementById('pageSetting').style.display = 'block';
-    } else {
-        document.getElementById('productStateList').style.display = '';
-        document.getElementById('pageSetting').style.display = 'none';
-    }
+        document.getElementById('pageSetting').style.display = '';
+        document.getElementById('pageStats').style.display = 'none';
+        document.getElementById('pageInfo').style.display = 'none';
+        document.getElementById('pageReturn').style.display = 'none';
+    } else gameMenuDefaultSetting();
 });
+menuStats.addEventListener('click', () => {
+    menuStats.classList.toggle('select');
+
+    if(menuStats.classList.contains('select')) {
+        document.getElementById('productStateList').style.display = 'none';
+        document.getElementById('pageSetting').style.display = 'none';
+        document.getElementById('pageStats').style.display = '';
+        document.getElementById('pageInfo').style.display = 'none';
+        document.getElementById('pageReturn').style.display = 'none';
+    } else gameMenuDefaultSetting();
+});
+menuInfo.addEventListener('click', () => {
+    menuInfo.classList.toggle('select');
+
+    if(menuInfo.classList.contains('select')) {
+        document.getElementById('productStateList').style.display = 'none';
+        document.getElementById('pageSetting').style.display = 'none';
+        document.getElementById('pageStats').style.display = 'none';
+        document.getElementById('pageInfo').style.display = '';
+        document.getElementById('pageReturn').style.display = 'none';
+    } else gameMenuDefaultSetting();
+});
+menuReturn.addEventListener('click', () => {
+    menuReturn.classList.toggle('select');
+
+    if(menuReturn.classList.contains('select')) {
+        document.getElementById('productStateList').style.display = 'none';
+        document.getElementById('pageSetting').style.display = 'none';
+        document.getElementById('pageStats').style.display = 'none';
+        document.getElementById('pageInfo').style.display = 'none';
+        document.getElementById('pageReturn').style.display = '';
+    } else gameMenuDefaultSetting();
+});
+function gameMenuDefaultSetting() {
+    document.getElementById('productStateList').style.display = '';
+    document.getElementById('pageSetting').style.display = 'none';
+    document.getElementById('pageStats').style.display = 'none';
+    document.getElementById('pageInfo').style.display = 'none';
+    document.getElementById('pageReturn').style.display = 'none';
+}
 
 /* 
     증축 이름 갱신
@@ -635,6 +696,18 @@ function updateProductStateImg(i) {
         arrProductStateImg[i] = arrProductGetCount[i];
     }
 }
+/*
+    통계창 갱신
+*/
+function updatePageStats() {
+    const percentageClickCount = statsTotalClickCount > 0 ? (statsClickCount / statsTotalClickCount) * 100 : 0;
+
+    document.getElementById('statsClick').innerHTML = translations[lang].menuStatsText_statsClickCount(statsTotalClickCount, statsClickCount, percentageClickCount);
+
+    setTimeout(() => {
+        updatePageStats();
+    }, 1000 * 5);
+}
 
 // 업그레이드 확장 버튼
 upgradeExpand.addEventListener('click', () => {
@@ -690,7 +763,6 @@ function popupAddEvent(type) {
             }
         });
     }
-    
 }
 /*
     FUNCTION
@@ -960,7 +1032,7 @@ function updateUpgradeTooltip(i, j) {
 
     const tooltip = document.getElementById('upgradeTooltip');
     const tooltipIcon = document.getElementById('upgradeTooltipIcon');
-    tooltip.querySelector('.price').textContent = translations[lang].students(formatNumber(arrProductUpgradePrice[i][j]));
+    tooltip.querySelector('.price').innerHTML = translations[lang].students(formatNumber(arrProductUpgradePrice[i][j]));
 
     document.getElementById('upgradeTooltipIcon')
     
@@ -978,7 +1050,7 @@ function updateUpgradeTooltip(i, j) {
     }
 
     document.getElementById('upgradeTooltipName').innerHTML = translations[lang].upgradeName[i][j];
-    document.getElementById('upgradeTooltipDescription').innerHTML = translations[lang].upgradeDescription[i][j];
+    document.getElementById('upgradeTooltipDescription').innerHTML = translations[lang].upgradeDescription[i];
 }
 /*
     FUNCTION
@@ -1194,6 +1266,7 @@ window.onload = function() {
     if(arrPopupAppearBool[1][0] == false) createPopup(1, 0);
 
     updateNews();
+    gameMenuDefaultSetting();
 };
 
 
