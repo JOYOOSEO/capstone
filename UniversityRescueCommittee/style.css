@@ -191,7 +191,22 @@ body {
 	transform: scale(1.15);
 	transition: transform 0.15s;
 }
-
+#sectionLeft #logoBundle #universityLogo .floatingUp {
+	color: #FFFFFF;
+	font-size: 250%;
+	position: absolute;
+	animation: floatUp 10s forwards;
+}
+@keyframes floatUp {
+	0% {
+		transform: translateY(0px);
+		opacity: 1;
+	}
+	100% {
+		transform: translateY(-50px);
+		opacity: 0;
+	}
+}
 #sectionLeft #version {
 	color: white;
 	font-size: 32px;
@@ -272,7 +287,7 @@ sectionMiddle
     0% { opacity: 1; }
     100% { opacity: 0; }
 }
-#SectionMiddle #page {
+#SectionMiddle #pageBundle {
 	position: absolute;
 	top: 160px;
 	left: 16px;
@@ -280,34 +295,205 @@ sectionMiddle
 	right: 0px;
 	overflow-x: hidden;
 	overflow-y: scroll;
+	background: linear-gradient(90deg, #1B1B1B, #2B2B2B, #1B1B1B);
 
 }
-#SectionMiddle #page #productStateList {
+#SectionMiddle #pageBundle #productStateList {
 	position: relative;
 }
-#sectionMiddle #page #productStateList .background {
+#sectionMiddle #pageBundle #productStateList .background {
 	position: relative;
 	width: 100%;
 	height: 128px;
-	background: url('img/background/product/0.png') repeat-x;
 	object-fit: cover;
-	background-size: 128px;
 	overflow: hidden;
 }
-#sectionMiddle #page #productStateList .background .stateImg {
+#sectionMiddle #pageBundle #productStateList .background .backgroundSub {
+	position: absolute;
+	width: 128px;
+	height: 128px;
+	transform: translate(-50%);
+}
+#sectionMiddle #pageBundle #productStateList .background .stateImg {
 	position: absolute;
 	width: 64px;
 	height: 64px;
 	background-size: cover;
 	object-fit: cover;
 }
-#sectionMiddle #page #productStateList .divisionRow {
+#sectionMiddle #pageBundle #productStateList .divisionRow {
 	width: 100%;
 	height: 16px;
 	background: url('img/store.png') repeat-x;
 }
+#sectionMiddle #pageBundle .pageCloseButton {
+	font-size: 300%;
+	position: absolute;
+	right: 0px;
+	width: 32px;
+	height: 32px;
+	background-image: url('img/icon_close.png');
+	background-color: #6B6B6B;
+	border-radius: 5px;
+	margin: 4px;
+	cursor: pointer;
+}
+#sectionMiddle #pageBundle .close:hover {
+	filter: brightness(115%);
+}
+#sectionMiddle #pageBundle #pageSetting, #pageStats, #pageInfo, #pageReturning {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	font-size: 16px;
+	height: 100%;
+	width: 100%;
+	color: #D0D0D0;
+}
+#sectionMiddle #pageBundle .title {
+	font-size: 350%;
+	color: #FFFFFF;
+	text-align: center;
+	width: 90%;
+	background: linear-gradient(90deg, #00000000, #000000, #00000000);
+	border: 3px solid;
+	border-radius: 15px;
+    border-image: linear-gradient(90deg, #00000000 5%, #FFFFFF, #00000000 95%);
+    border-image-slice: 1;
+	margin-top: 24px;
+}
+#sectionMiddle #pageBundle .subtitle {
+	font-size: 200%;
+	color: #FFFFFF;
+	text-align: center;
+	width: 90%;
+	background: linear-gradient(90deg, #00000000 25%, #000000, #00000000 75%);
+	border: 1px solid;
+	border-radius: 15px;
+    border-image: linear-gradient(90deg, #00000000 15%, #FFFFFF, #00000000 85%);
+    border-image-slice: 1;
+	padding: 4px 0px;
+	margin: 64px 0px 16px 0px;
+}
+#sectionMiddle #pageBundle .bundle {
+	width: 95%;
+	background-color: #4A4A4A;
+	border-radius: 5px;
+	box-sizing: border-box;
+	padding: 12px;
+}
+#sectionMiddle #pageBundle .bundle:hover {
+	box-shadow: 0px 0px 5px #FFFFFF;
+}
+#sectionMiddle #pageBundle .text {
+	font-size: 110%;
+	margin: 2px;
+}
+#sectionMiddle #pageBundle b {
+	font-size: 125%;
+	color: #FFFFFF;
+}
+#sectionMiddle #pageBundle #pageStats #statsCommonBundle .topMargin {
+	margin-top: 16px;
+}
+#sectionMiddle #pageBundle #pageStats #statsUpgradeBundle {
+	text-align: left;
+}
+#sectionMiddle #pageBundle #pageStats #statsUpgradeBundle .statsUpgradeIcon {
+	display: inline-block;
+	width: 48px;
+	height: 48px;
+	filter: drop-shadow(0px 3px 2px #000000);
+	background-size: cover;
+	object-fit: cover;
+	margin: 6px;
+}
+#sectionMiddle #pageBundle #pageStats #statsUpgradeBundle .statsUpgradeIcon:hover {
+	transform: translateY(-2px);
+}
+#sectionMiddle #pageBundle #pageInfo #infoIntroduce .text {
+	font-size: 125%;
+	margin: 8px 0px;
+}
+#sectionMiddle #pageBundle #pageInfo #infoIntroduce a {
+	font-size: 130%;
+	color: #8686C5;
+	text-shadow: 0px 0px 2px #000000;
+	cursor: pointer;
+}
+#sectionMiddle #pageBundle #pageInfo #infoCreditBundle #developerBundle {
+	text-align: center;
+	display: flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
 
-
+}
+#sectionMiddle #pageBundle #pageInfo #infoCreditBundle #developerBundle .developer {
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+	filter: drop-shadow(0px 1px 1px #000000);
+	margin: 12px;
+	padding: 12px;
+}
+#sectionMiddle #pageBundle #pageInfo #infoCreditBundle #developerBundle .developer:hover {
+	background: rgba(255, 255, 255, 0.2);
+	border-radius: 15px;
+	filter: drop-shadow(0px 2px 4px #000000);
+	transform: translateY(-4px);
+}
+#sectionMiddle #pageBundle #pageInfo #infoCreditBundle #developerBundle .developer .portrait {
+	width: 128px;
+	height: 128px;
+	align-items: center;
+	border: 1px solid #FFFFFF;
+	margin: 12px;
+}
+#sectionMiddle #pageBundle #pageInfo #infoCreditBundle #developerBundle .developer .text {
+	font-size: 125%;
+	margin: 12px 0px;
+	padding: 2px 0px;
+}
+#sectionMiddle #pageBundle #pageInfo #infoCreditBundle #developerBundle .developer .role {
+	color: #FFFFFF;
+	width: 100%;
+	background: #9999FF;
+	border-radius: 5px;
+}
+#sectionMiddle #pageBundle #pageInfo #infoCreditBundle #developerBundle .developer .name {
+	color: #FFFFFF;
+	width: 100%;
+	background-color: #9A9A9A;
+	border-radius: 5px;
+}
+#sectionMiddle #pageBundle #pageInfo #infoPatchNoteBundle .patchNoteTitle {
+	border-radius: 5px 5px 0px 0px;
+	margin: 16px 0px 0px 0px;
+	padding: 4px 8px;
+}
+#sectionMiddle #pageBundle #pageInfo #infoPatchNoteBundle .major {
+	font-size: 150%;
+	color: #FBEAEB;
+	text-shadow: 0px 2px 6px #FFFFFF;
+	background-color: #2E3C7E;
+}
+#sectionMiddle #pageBundle #pageInfo #infoPatchNoteBundle .minor {
+	font-size: 125%;
+	color: #50586C;
+	text-shadow: 0px 1px 4px #505050;
+	background-color: #DCE2F0;
+}
+#sectionMiddle #pageBundle #pageInfo #infoPatchNoteBundle .patchNoteContent {
+	background-color: #808080;
+	box-shadow: 0px 2px 6px #000000, 0px -2px 0px #00000000;
+	border-radius: 0px 0px 5px 5px;
+	padding: 8px;
+}
+#sectionMiddle #pageBundle #pageInfo #infoPatchNoteBundle .patchNoteContent .text {
+	color: #FFFFFF;
+	font-size: 110%;
+	margin: 4px 8px;
+}
 
 /* 
 sectionRight 
@@ -322,6 +508,28 @@ sectionRight
 	/*background:url(img/panelBG.png);*/
 	background:rgba(0,0,0,0.5);
 }
+#gameMenu {
+	position: relative;
+}
+#gameMenu .menuPageButton {
+	cursor: pointer;
+	width: 60px;
+	height: 60px;
+	margin: 5px;
+	background: url('img/game_menu_setting.png');
+	background-color: #999;
+	background-size: cover;
+	object-fit: cover;
+	display: inline-block;
+	border: #000 1px solid;
+	border-radius: 15px;
+}
+#gameMenu .menuPageButton:hover {
+	filter: brightness(115%);
+}
+#gameMenu .menuPageButton.select {
+	filter: brightness(125%);
+}
 #sectionRight .title {
 	color: #FFFFFF;
 	font-size: 44px;
@@ -335,27 +543,6 @@ sectionRight
 	font-size: 28px;
 	text-align: center;
 	padding: 8px;
-}
-#gameMenu {
-	position: relative;
-}
-#gameMenu .button {
-	cursor: pointer;
-	width: 60px;
-	height: 60px;
-	margin: 5px;
-	background-color: #999;
-	display: inline-block;
-	border: #000 1px solid;
-	border-radius: 15px;
-}
-#gameMenu .button:hover {
-	filter: brightness(115%);
-}
-#gameMenu .button .img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
 }
 /* upgrade list */
 #upgradeList {
@@ -627,9 +814,7 @@ sectionRight
 	background: url(img/store.png) repeat;
 
 }
-/*
-.divisionLine.row.top {
+.blankArea {
+	color: #00000000;
+	margin-top: 128px;
 }
-.divisionLine.row.bottom {
-
-} */
