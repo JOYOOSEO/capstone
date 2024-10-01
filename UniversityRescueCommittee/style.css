@@ -188,14 +188,26 @@ body {
 	cursor: pointer;
 }
 #sectionLeft #logoBundle #universityLogo:hover {
-	transform: scale(1.15);
+	transform: scale(1.05);
 	transition: transform 0.15s;
+}
+#sectionLeft #logoBundle #universityLogo.bounce {
+	animation: bounce 0.5s ease;
+}
+@keyframes bounce {
+	0%, 100% {
+		transform: scale(1.05);
+	}
+	50% {
+		transform: scale(1.25);
+	}
 }
 #sectionLeft #logoBundle #universityLogo .floatingUp {
 	color: #FFFFFF;
 	font-size: 250%;
 	position: absolute;
-	animation: floatUp 10s forwards;
+	transform: translate(-50%, -50%);
+	animation: floatUp 1s forwards;
 }
 @keyframes floatUp {
 	0% {
@@ -393,6 +405,22 @@ sectionMiddle
 	font-size: 125%;
 	color: #FFFFFF;
 }
+#sectionMiddle #pageBundle #pageSetting #settingCommonBundle .button {
+	color: white;
+	font-size: 150%;
+	text-align: center;
+	width: 250px;
+	height: auto;
+	background-color: green;
+	border: 1px solid green;
+	padding: 5px;
+	cursor: pointer;
+}
+#sectionMiddle #pageBundle #pageSetting #settingCommonBundle .button:hover {
+	color: green;
+	background: white;
+	border: 1px solid white;
+}
 #sectionMiddle #pageBundle #pageStats #statsCommonBundle .topMargin {
 	margin-top: 16px;
 }
@@ -494,7 +522,30 @@ sectionMiddle
 	font-size: 110%;
 	margin: 4px 8px;
 }
-
+#sectionMiddle #pageBundle #pageReturning #returningLevelBundle #pageReturningExpBar {
+	position: relative;
+	width: 300px;
+	height: 30px;
+	background-color: #eee;
+	border: 1px solid #ccc;
+	margin: 20px 0px;
+}
+#sectionMiddle #pageBundle #pageReturning #returningLevelBundle #pageReturningExpBar #pageReturningExpFilledBar {
+	height: 100%;
+	width: 0%;
+	background-color: #76c7c0;
+}
+#sectionMiddle #pageBundle #pageReturning #returningLevelBundle .button {
+	text-align: center;
+	color: #FF0000;
+	font-size: 200%;
+	width: 256px;
+	height: auto;
+	background: #000000;
+	border-radius: 15px;
+	margin-top: 64px;
+	padding: 8px;
+}
 /* 
 sectionRight 
 */

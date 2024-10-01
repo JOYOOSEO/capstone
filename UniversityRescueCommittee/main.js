@@ -14,7 +14,11 @@ let statsClickCount = 0;
 let statsTotalProductCount = 0;
 let statsProductCount = 0;
 let statsReturningCount = 0;
-
+//회귀
+let returningLevel = 0;
+let returningLevelValue = 0;
+let returningExp = 0;
+let returningExpMax = 1 ** 3 * 1e12;
 
 let arrPopupAppearBool = [
     [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
@@ -227,6 +231,8 @@ const translations = {
         menuInfoText_subtitleCredit: '개발자',
         menuInfoText_subtitlePatchNote: '패치 노트',
         menuReturningText_title: '회귀',
+        menuReturningText_subtitleLevel: '회귀 레벨',
+        menuReturningText_subtitleAbility: '기억 왜곡',
         arrProductName: ['학생','학교 시설','교통 시설','주거 시설','은행','공항','기업','정부','세계 정부','복제 실험실','우주정거장','차원 포털','블랙홀','타임머신','평행 세계','또 다른 나'],
         tooltipTagName: [
             ['증축', '강화'],
@@ -393,7 +399,7 @@ function changeUniversityName() {
 
 // 학교 로고 클릭 이벤트
 let universityLogo = document.getElementById('universityLogo');
-universityLogo.addEventListener('click', function(event) {
+universityLogo.addEventListener('click', (e) => {
     student += addClickStudent;
     statsTotalStudent += addClickStudent;
     statsStudent += addClickStudent;
@@ -401,33 +407,35 @@ universityLogo.addEventListener('click', function(event) {
     statsAddClickStudent += addClickStudent;
     statsClickCount++;
     statsTotalClickCount++;
+    returningExp += addClickStudent;
     console.log(student);
     updateStudent();
 
-    createFloatingText();
+    void universityLogo.offsetWidth;
+    universityLogo.classList.add('bounce');
+    universityLogo.addEventListener('animationend', () => {
+        universityLogo.classList.remove('bounce');
+    })
+
+    setTimeout(() => {
+        console.log(e.pageX + ' / ' + e.pageY);
+        const floatingText = document.createElement('div');
+        floatingText.classList.add('floatingUp');
+        floatingText.innerHTML = '+' + formatNumber(addClickStudent);
+
+        floatingText.style.left = `${e.offsetX}px`;
+        floatingText.style.top = `${e.offsetY}px`;
+        universityLogo.appendChild(floatingText);
+
+        floatingText.addEventListener('animationend', () => {
+            floatingText.remove();
+        });
+    }, 1);
+    
 })
 universityLogo.addEventListener('mousedown', () => {
     
-})
-function createFloatingText(event) {
-    const floatingText = document.createElement('div');
-    floatingText.classList.add('floatingUp');
-    floatingText.innerHTML = '+' + formatNumber(addClickStudent);
-
-    floatingText.style.left = `${event.pageX}px`;
-    floatingText.style.top = `${event.pageY}px`;
-
-    universityLogo.appendChild(floatingText);
-
-    floatingText.addEventListener('animationend', () => {
-        floatingText.remove();
-    })
-    console.log(
-        'pageX: ', event.pageX, 'pageY: ', event.pageY,
-        'clientX: ', event.clientX, 'clientY:', event.clientY)
-  }
-  
-  //window.addEventListener('mousemove', mousemove);
+});
 
 for(let i = 0 ; i < productLength ; i++) {
     // 처음 작동
@@ -823,8 +831,74 @@ function updateProductStateImg(i) { // 배경에 아이콘 삽입
     }
 }
 /*
-    통계창 메뉴
+    설정 메뉴
 */
+function pageSetting() {
+    document.getElementById('pageSettingTitle').innerHTML = translations[lang].menuSettingText_title;
+    document.getElementById('pageSettingCommon').innerHTML = translations[lang].menuSettingText_subtitleCommon;
+    document.getElementById('pageSettingDetail').innerHTML = translations[lang].menuStatsText_subtitleDetail;
+
+    const buttonSave = document.getElementById('buttonSave');
+    const buttonSaveFileExport = document.getElementById('buttonSaveFileExport');
+    const buttonSaveFileImport = document.getElementById('buttonSaveFileImport');
+
+    buttonSave.addEventListener('click', () => {
+        saveCookie();
+    });
+    buttonSaveFileExport.addEventListener('click', () => {
+        exportSaveFile();
+    });
+    buttonSaveFileImport.addEventListener('click', () => {
+        importSaveFile();
+    });
+}
+function exportSaveFile() {
+    const textContent = arrProductGetCount[0] + '/' + arrProductGetCount[1] + '저장된 내용을 저장하고 추출\n두번째 줄 테스트 \n 세번 째 줄 테스트\n1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+    // Blob 객체를 생성(파일의 내용을 포함)
+    const blob = new Blob([textContent], { type: 'text/plain' });
+
+    // 링크 생성
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    // 다운로드할 파일의 이름
+    a.download = 'URC SaveFile.txt';
+
+    // 클릭하여 다운로드를시작
+    document.body.appendChild(a);
+    a.click();
+
+    // 다운로드 링크를 제거
+    document.body.removeChild(a);
+    // 메모리를 반환
+    URL.revokeObjectURL(URL.createObjectURL(blob));
+}
+// function importSaveFile(event) {
+//     const file = event.target.files[0];
+    
+//     if (file) { 
+//         const reader = new FileReader();
+        
+//         reader.onload = function(e) {
+//             const text = e.target.result;
+//             const values = extractValues(text); // 필요한 값들을 추출하는 함수
+            
+//             // 값을 div에 표시
+//             document.getElementById('output').innerText = values.join(', ');
+//         };
+
+//         reader.readAsText(file);
+//     }
+// }
+/*
+    통계 메뉴
+*/
+function pageStats() {
+    document.getElementById('pageStatsTitle').innerHTML = translations[lang].menuStatsText_title;
+    document.getElementById('pageStatsCommon').innerHTML = translations[lang].menuStatsText_subtitleCommon;
+    document.getElementById('pageStatsUpgrade').innerHTML = translations[lang].menuStatsText_subtitleUpgrade;
+    document.getElementById('pageStatsAchievement').innerHTML = translations[lang].menuStatsText_subtitleAchievement;
+}
 let updatePageStatsSetTimeout;
 function updatePageStats() { // 업데이트
     // 기본 항목
@@ -877,7 +951,48 @@ function updatePageStats() { // 업데이트
 function percentageClac(i, j) { // 퍼센트 계산
     return (i > 0 ? ( j / i) * 100 : 0).toFixed(2);
 }
+/*
+    정보 메뉴
+*/
+function pageInfo() {
+    document.getElementById('pageInfoTitle').innerHTML = translations[lang].menuInfoText_title;
+    document.getElementById('pageInfoIntroduce').innerHTML = translations[lang].menuInfoText_subtitleIntroduce;
+    document.getElementById('introductText_1').innerHTML = translations[lang].menuInfoText_introduceText_1;
+    document.getElementById('introductText_2').innerHTML = translations[lang].menuInfoText_introduceText_2;
+    document.getElementById('pageInfoCredit').innerHTML = translations[lang].menuInfoText_subtitleCredit;
+    document.getElementById('pageInfoPatchNote').innerHTML = translations[lang].menuInfoText_subtitlePatchNote;
+}
+/*
+    귀환 메뉴
+*/
+function pageReturning() {
+    document.getElementById('pageReturningTitle').innerHTML = translations[lang].menuReturningText_title;
+    document.getElementById('pageReturningLevel').innerHTML = translations[lang].menuReturningText_subtitleLevel;
+    document.getElementById('pageReturningAbility').innerHTML = translations[lang].menuReturningText_subtitleAbility;
+    
+    setInterval(() => {
+        returningLevelClac();
+    }, 1);
+}
+function returningLevelClac() {
+//     returningLevel
+// returningLevelValue
+// returningExp
+// returningExpMax
 
+    const percent = (returningExp / returningExpMax) * 100;
+    document.getElementById('pageReturningExpFilledBar').style.width = `${percent}%`;
+    while(returningExp >= returningExpMax) {
+
+        returningExp -= returningExpMax
+        returningLevel++;
+        returningExpMax = ((returningLevel + 1) ** 3) * 1e12;
+
+    }
+
+    document.getElementById('pageReturningShowLevel').innerHTML = `회귀 레벨: ${formatNumber(returningLevel)}`;
+    document.getElementById('pageReturningShowExp').innerHTML = `경험치: ${formatNumber(returningExp)} / ${formatNumber(returningExpMax)}`;
+}
 /*
     게임 메뉴
 */
@@ -891,7 +1006,7 @@ menuPageButton.forEach(div => {
 
         const isSelected = div.classList.toggle('select');
         clearTimeout(updatePageStatsSetTimeout);
-
+        // 기본 설정
         if(isSelected) {
             document.getElementById('productStateList').style.display = 'none';
             document.getElementById('pageSetting').style.display = div.id == 'menuSetting' ? '' : 'none';
@@ -899,35 +1014,17 @@ menuPageButton.forEach(div => {
             document.getElementById('pageInfo').style.display = div.id == 'menuInfo' ? '' : 'none';
             document.getElementById('pageReturning').style.display = div.id == 'menuReturning' ? '' : 'none';
         } else gameMenuDefaultSetting();
-
-        if(document.getElementById('menuSetting').classList.contains('select')) {
-            document.getElementById('pageSettingTitle').innerHTML = translations[lang].menuSettingText_title;
-            document.getElementById('pageSettingCommon').innerHTML = translations[lang].menuSettingText_subtitleCommon;
-            document.getElementById('pageSettingDetail').innerHTML = translations[lang].menuStatsText_subtitleDetail;
-            
-
-        }
+        // 설정 메뉴
+        if(document.getElementById('menuSetting').classList.contains('select')) pageSetting();
+        // 통계 메뉴
         if(document.getElementById('menuStats').classList.contains('select')) {
-            document.getElementById('pageStatsTitle').innerHTML = translations[lang].menuStatsText_title;
-            document.getElementById('pageStatsCommon').innerHTML = translations[lang].menuStatsText_subtitleCommon;
-            document.getElementById('pageStatsUpgrade').innerHTML = translations[lang].menuStatsText_subtitleUpgrade;
-            document.getElementById('pageStatsAchievement').innerHTML = translations[lang].menuStatsText_subtitleAchievement;
-
+            pageStats();
             updatePageStats();
         }
-        if(document.getElementById('menuInfo').classList.contains('select')) {
-            document.getElementById('pageInfoTitle').innerHTML = translations[lang].menuInfoText_title;
-            document.getElementById('pageInfoIntroduce').innerHTML = translations[lang].menuInfoText_subtitleIntroduce;
-            document.getElementById('introductText_1').innerHTML = translations[lang].menuInfoText_introduceText_1;
-            document.getElementById('introductText_2').innerHTML = translations[lang].menuInfoText_introduceText_2;
-            document.getElementById('pageInfoCredit').innerHTML = translations[lang].menuInfoText_subtitleCredit;
-            document.getElementById('pageInfoPatchNote').innerHTML = translations[lang].menuInfoText_subtitlePatchNote;
-                        
-        }
-        if(document.getElementById('menuReturning').classList.contains('select')) {
-            document.getElementById('pageReturningTitle').innerHTML = translations[lang].menuReturningText_title;
-
-        }
+        // 정보 메뉴
+        if(document.getElementById('menuInfo').classList.contains('select')) pageInfo();
+        // 회귀 메뉴
+        if(document.getElementById('menuReturning').classList.contains('select')) pageReturning();
     });
 
     const closeButton = document.querySelectorAll('.pageCloseButton');
@@ -1270,6 +1367,7 @@ function perSecond() {
     statsStudent += addPerSecondStudent;
     statsTotalAddPerSecondStudent += addPerSecondStudent;
     statsAddPerSecondStudent += addPerSecondStudent;
+    returningExp += addPerSecondStudent;
     updateStudent();
 
     for(let i = 0 ; i < productLength ; i++) {
@@ -1351,31 +1449,6 @@ function loadCookie() {
 
     updateStudent();
 }
-
-/* 
-    텍스트 파일 추출
-*/
-document.getElementById('downloadButton').addEventListener('click', function() {
-    const textContent = arrProductGetCount[0] + '/' + arrProductGetCount[1] + '저장된 내용을 저장하고 추출\n두번째 줄 테스트 \n 세번 째 줄 테스트\n1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
-    // Blob 객체를 생성(파일의 내용을 포함)
-    const blob = new Blob([textContent], { type: 'text/plain' });
-
-    // 링크 생성
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    // 다운로드할 파일의 이름
-    a.download = 'example.txt';
-
-    // 클릭하여 다운로드를시작
-    document.body.appendChild(a);
-    a.click();
-
-    // 다운로드 링크를 제거
-    document.body.removeChild(a);
-    // 메모리를 반환
-    URL.revokeObjectURL(URL.createObjectURL(blob));
-});
 
 function debugMode() {
     student = 1e58;

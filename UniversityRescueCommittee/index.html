@@ -118,9 +118,9 @@
                     <div id="pageSettingCommon" class="subtitle"></div>
                     <div id="settingCommonBundle" class="bundle">
                         <div>저장하기</div>
-                        <div>저장하기 버튼</div>
-                        <div>저장된 파일 내보내기 버튼</div>
-                        <div>저장된 파일 불러오기 버튼</div>
+                        <div id="buttonSave" class="button">저장하기</div>
+                        <div id="buttonSaveFileExport" class="button">파일 내보내기</div>
+                        <div id="buttonSaveFileImport" class="button">파일 불러오기</div>
                         <div id="text">언어설정</div>
                         <select id="languageSelector">
                             <option value="ko">한국어</option>
@@ -206,7 +206,25 @@
                 <div id="pageReturning" class="pageMenu">
                     <div class="pageCloseButton"></div>
                     <div id="pageReturningTitle" class="title"></div>
-                    <div>귀환 어쩌구</div>
+                    <div id="pageReturningLevel" class="subtitle"></div>
+                    <div id="returningLevelBundle" class="bundle">
+                        <div id="pageReturningShowLevel">현재 레벨</div>
+                        <div id="pageReturningShowExp">경험치</div>
+                        <div id="pageReturningExpBar">
+                            <div id="pageReturningExpFilledBar"></div>
+                        </div>
+                        <div>귀환시 증가 레벨</div>
+                        <div>받는 보너스</div>
+                        <div id="buttonReturning" class="button">과거로 돌아가기</div>
+                    </div>
+                    <div id="pageReturningLevel" class="subtitle">ㅃ</div>
+                    <div id="returningLevelBundle" class="bundle">
+                        <div>ㅁㄴㅇㄹㅁㄴㅇㄹ</div>
+                    </div>
+                    <div id="pageReturningAbility" class="subtitle"></div>
+                    <div id="returningLevelBundle" class="bundle">
+                        <div>ㅁㄴㅇㄹㅁㄴㅇㄹ</div>
+                    </div>
                     <div class="blankArea">DUMMY</div>
                 </div>
             </div>
@@ -362,7 +380,6 @@
                             <div id="product_15_getCount" class="getCount"></div>
                         </div>
                     </div>
-                    <button id="downloadButton">텍스트 파일 추출</button>
                     <button id="debugMode" onclick="debugMode()">디버그모드</button>
                     <button id="debugMode" onclick="saveCookie()">쿠키 저장</button>
                     <div id="blankArea"></div>
