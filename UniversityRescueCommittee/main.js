@@ -16,12 +16,13 @@ let statsProductCount = 0;
 let statsReturningCount = 0;
 //회귀
 let returningLevel = 0;
-let returningLevelValue = 0;
+let returningIncreaseLevel = 0;
 let returningExp = 0;
-let returningExpMax = 1 ** 3 * 1e12;
+let returningExpMax = (1 ** 4) * 1e12;
 
 let arrPopupAppearBool = [
     [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+    [false],
     [false]
 ]
 // FormatNumber list | 고정
@@ -231,9 +232,11 @@ const translations = {
         menuInfoText_subtitleCredit: '개발자',
         menuInfoText_subtitlePatchNote: '패치 노트',
         menuReturningText_title: '회귀',
+        menuReturningText_showLevel: (value1, value2) => `레벨: <b class="currentLevel">${value1}</b> → <b class="increaseLevel">${value2}</b>`,
+        menuReturningText_showExp: '경험치: ',
         menuReturningText_subtitleLevel: '회귀 레벨',
         menuReturningText_subtitleAbility: '기억 왜곡',
-        arrProductName: ['학생','학교 시설','교통 시설','주거 시설','은행','공항','기업','정부','세계 정부','복제 실험실','우주정거장','차원 포털','블랙홀','타임머신','평행 세계','또 다른 나'],
+        arrProductName: ['학생','학교 시설','교통 시설','주거지','은행','공항','기업','정부','세계 정부','복제 실험실','우주정거장','차원 포털','블랙홀','타임머신','평행 세계','또 다른 나'],
         tooltipTagName: [
             ['증축', '강화'],
             ['금속', '초콜릿', '호박꿀', '오렌지 즙', '경고등', '짙은 나무', '불꽃', '다이아몬드', '4차원', '공허']
@@ -969,14 +972,13 @@ function pageInfo() {
 /*
     귀환 메뉴
 */
+let returningLevelClacSetInterval;
 function pageReturning() {
     document.getElementById('pageReturningTitle').innerHTML = translations[lang].menuReturningText_title;
     document.getElementById('pageReturningLevel').innerHTML = translations[lang].menuReturningText_subtitleLevel;
     document.getElementById('pageReturningAbility').innerHTML = translations[lang].menuReturningText_subtitleAbility;
     
-    setInterval(() => {
-        returningLevelClac();
-    }, 1);
+    returningLevelClacSetInterval = setInterval(() => { returningLevelClac(); }, 10); // 1초에 100번 작동
 }
 function returningLevelClac() {
 //     returningLevel
@@ -984,19 +986,23 @@ function returningLevelClac() {
 // returningExp
 // returningExpMax
 
-    const percent = (returningExp / returningExpMax) * 100;
-    document.getElementById('pageReturningExpFilledBar').style.width = `${percent}%`;
+    const expPercent = (returningExp / returningExpMax) * 100;
+    document.getElementById('pageReturningExpFilledBar').style.width = `${expPercent}%`;
     while(returningExp >= returningExpMax) {
 
         returningExp -= returningExpMax
-        returningLevel++;
-        returningExpMax = ((returningLevel + 1) ** 3) * 1e12;
+        returningIncreaseLevel++;
+        returningExpMax = ((((returningIncreaseLevel + 1) ** 4) /2 ) * 1e12).toFixed(0);
 
     }
-
-    document.getElementById('pageReturningShowLevel').innerHTML = `회귀 레벨: ${formatNumber(returningLevel)}`;
+    
+    document.getElementById('pageReturningIncreaseLevel').innerHTML = `+${returningLevel}`;
+    document.getElementById('pageReturningShowLevel').innerHTML = translations[lang].menuReturningText_showLevel(formatNumber(returningLevel), formatNumber(returningIncreaseLevel));
     document.getElementById('pageReturningShowExp').innerHTML = `경험치: ${formatNumber(returningExp)} / ${formatNumber(returningExpMax)}`;
 }
+document.getElementById('buttonReturning').addEventListener('click', () => {
+    createPopup(2,0);
+})
 /*
     게임 메뉴
 */
@@ -1010,6 +1016,7 @@ menuPageButton.forEach(div => {
 
         const isSelected = div.classList.toggle('select');
         clearTimeout(updatePageStatsSetTimeout);
+        clearInterval(returningLevelClacSetInterval)
         // 기본 설정
         if(isSelected) {
             document.getElementById('productStateList').style.display = 'none';
@@ -1081,7 +1088,6 @@ function updateProductInfo(i, j = 1) {
     }
 }
 /* 
-    FUNCTION
     초당 추가 업데이트
 */
 function updateAddPerSecond() {
@@ -1092,9 +1098,7 @@ function updateAddPerSecond() {
     }
     updateStudent();
 }
-
 /*
-    FUNCTION
     설명창 갱신
 */
 function updateTooltip(i) {
@@ -1131,9 +1135,7 @@ function updateTooltip(i) {
         tooltip.querySelector('#info_3').classList.add('disabled');
     }
 }
-
 /*
-    FUNCTION
     학생 수 갱신
 */
 function updateStudent() {
@@ -1144,7 +1146,6 @@ function updateStudent() {
 }
 
 /*
-    FUNCTION
     태그 추가
 */
 function appendTag(elementById, type) {
@@ -1167,7 +1168,6 @@ function appendTag(elementById, type) {
 }
 
 /*
-    FUNCTION
     업그레이드 확장 버튼 활성화 여부
 */
 function upgradeExpandButton() {
@@ -1185,7 +1185,6 @@ function upgradeExpandButton() {
 }
 
 /* 
-    FUNCTION
     업그레이드 아이콘 재정렬
 */
 function reorderUpgradeIcon() {
@@ -1461,7 +1460,6 @@ function debugMode() {
     }
 }
 /*
-    FUNCTION
     쿠키 설정
 */
 function setCookie(name, value) {
@@ -1471,7 +1469,6 @@ function setCookie(name, value) {
     document.cookie = `${name}=${encodeURIComponent(value)}; max-age=${3.156e+8}; path=/`;
 }
 /*
-    FUNCTION
     쿠키 가져오기
 */
 function getCookie(name) {
