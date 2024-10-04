@@ -1,8 +1,25 @@
-// 학생
+/*
+    학생 수치
+*/
 let student = 0; // 현재 보유 학생
 let addClickStudent = 1e4; // 클릭당 추가 학생
 let addPerSecondStudent = 0; // 초당 추가 학생
-// 통계
+/*
+    팝업
+*/
+let arrAppearPopupBool = [
+    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+    [false]
+]
+
+// Tooltip
+const arrTooltipTagColor = [
+    [],
+    ['#ADB5BD,#F8F9FA', 'rgb(82,28,20),rgb(241,183,139)', 'rgb(214,138,46),rgb(242,225,193)', 'rgb(255,61,0),rgb(255,214,0)', 'rgb(102,7,8),rgb(229,56,59)', 'rgb(9,132,0),rgb(118,82,35)', 'rgb(255,255,0),rgb(225,98,110)', 'rgb(0,0,0),rgb(225,255,255)', 'rgb(0,0,0),rgb(225,255,255)', 'rgb(0,0,0),rgb(225,255,255)']
+]
+/*
+    통계 메뉴
+*/
 let statsTotalStudent = 0;
 let statsStudent = 0;
 let statsTotalAddPerSecondStudent = 0;
@@ -14,31 +31,83 @@ let statsClickCount = 0;
 let statsTotalProductCount = 0;
 let statsProductCount = 0;
 let statsReturningCount = 0;
-//회귀
-let returningLevel = 0;
-let returningIncreaseLevel = 0;
-let returningExp = 0;
-let returningExpMax = (1 ** 4) * 1e12;
-
-let arrPopupAppearBool = [
-    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-    [false],
+/*
+    회귀 메뉴
+*/
+let returningCurrentLevel = 0; // 현재 레벨
+let returningIncreaseLevel = 0; // 증가된 레벨
+let returningExp = 0; // 현재 경험치
+let returningExpMax = ((1 ** 3) / 2) * 1e12; // 다음 레벨업하기 위한 필요 경험치
+let returningProductionMultiple = 1; // 회귀 입학 효율 배수
+/*
+    업그레이드
+*/
+let arrUpgradeId = []; // 남아있는 숫자가 강화 메뉴에 등장, 구매하면 해당 강화의 숫자는 제거됨
+let arrUpgradeEnable = [ // 강화가 재반복 등장하는 것을 막기 위한 배열
+    [false, false, false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false, false, false],
     [false]
-]
-// FormatNumber list | 고정
-const arrFormatNumberKr = ['','만','억','조','경','해','자','양','구','간','정','재','극','항하사','아승기','나유타','불가사의','무량대수','무한']
-let arrFormatStandardKr = [1,1e4,1e8,1e12,1e16,1e20,1e24,1e28,1e32,1e36,1e40,1e44,1e48,1e52,1e56,1e60,1e64,1e68,1e72]
-
-// Tooltip
-const arrTooltipTagColor = [
+];
+let arrUpgradePrice = [ // 강화 가격 | 고정
+    [50*10, 50*100, 50*5000, 50*25e4, 50*2500e4, 50*25e8, 50*1.25e12, 50*625e12, 50*62.5e16, 50*6.25e20],
+    [160*10, 160*100, 160*5000, 160*25e4, 160*2500e4, 160*25e8, 160*1.25e12, 160*625e12, 160*62.5e16, 160*6.25e20],
+    [2700*10, 2700*100, 2700*5000, 2700*25e4, 2700*2500e4, 2700*25e8, 2700*1.25e12, 2700*625e12, 2700*62.5e16, 2700*6.25e200],
+    [3.9e4*10, 3.9e4*100, 3.9e4*5000, 3.9e4*25e4, 3.9e4*2500e4, 3.9e4*25e8, 3.9e4*1.25e12, 3.9e4*625e12, 3.9e4*62.5e16, 3.9e4*6.25e20],
+    [52e4*10, 52e4*100, 52e4*5000, 52e4*25e4, 52e4*2500e4, 52e4*25e8, 52e4*1.25e12, 52e4*625e12, 52e4*62.5e16, 52e4*6.25e20],
+    [670e4*10, 670e4*100, 670e4*5000, 670e4*25e4, 670e4*2500e4, 670e4*25e8, 670e4*1.25e12, 670e4*625e12, 670e4*62.5e16, 670e4*6.25e20],
+    [8500e4*10, 8500e4*100, 8500e4*5000, 8500e4*25e4, 8500e4*2500e4, 8500e4*25e8, 8500e4*1.25e12, 8500e4*625e12, 8500e4*62.5e16, 8500e4*6.25e20],
+    [10.8e8*10, 10.8e8*100, 10.8e8*5000, 10.8e8*25e4, 10.8e8*2500e4, 10.8e8*25e8, 10.8e8*1.25e12, 10.8e8*625e12, 10.8e8*62.5e16, 10.8e8*6.25e20],
+    [229e8*10, 229e8*100, 229e8*5000, 229e8*25e4, 229e8*2500e4, 229e8*25e8, 229e8*1.25e12, 229e8*625e12, 229e8*62.5e16, 229e8*6.25e20],
+    [3630e8*10, 3630e8*100, 3630e8*5000, 3630e8*25e4, 3630e8*2500e4, 3630e8*25e8, 3630e8*1.25e12, 3630e8*625e12, 3630e8*62.5e16, 3630e8*6.25e20],
+    [5.18e12*10, 5.18e12*100, 5.18e12*5000, 5.18e12*25e4, 5.18e12*2500e4, 5.18e12*25e8, 5.18e12*1.25e12, 5.18e12*625e12, 5.18e12*62.5e16, 5.18e12*6.25e20],
+    [70.7e12*10, 70.7e12*100, 70.7e12*5000, 70.7e12*25e4, 70.7e12*2500e4, 70.7e12*25e8, 70.7e12*1.25e12, 70.7e12*625e12, 70.7e12*62.5e16, 70.7e12*6.25e20],
+    [951e12*10, 951e12*100, 951e12*5000, 951e12*25e4, 951e12*2500e4, 951e12*25e8, 951e12*1.25e12, 951e12*625e12, 951e12*62.5e16, 951e12*6.25e20],
+    [1.29e16*10, 1.29e16*100, 1.29e16*5000, 1.29e16*25e4, 1.29e16*2500e4, 1.29e16*25e8, 1.29e16*1.25e12, 1.29e16*625e12, 1.29e16*62.5e16, 1.29e16*6.25e20],
+    [26.7e16*10, 26.7e16*100, 26.7e16*5000, 26.7e16*25e4, 26.7e16*2500e4, 26.7e16*25e8, 26.7e16*1.25e12, 26.7e16*625e12, 26.7e16*62.5e16, 26.7e16*6.25e20],
+    [428e16*10, 428e16*100, 428e16*5000, 428e16*25e4, 428e16*2500e4, 428e16*25e8, 428e16*1.25e12, 428e16*625e12, 428e16*62.5e16, 428e16*6.25e20],
+    []
+];
+let arrProductUpgradePurchaseBool = [ // 구매가 완료된 강화 ID 번호
     [],
-    ['#ADB5BD,#F8F9FA', 'rgb(82,28,20),rgb(241,183,139)', 'rgb(214,138,46),rgb(242,225,193)', 'rgb(255,61,0),rgb(255,214,0)', 'rgb(102,7,8),rgb(229,56,59)', 'rgb(9,132,0),rgb(118,82,35)', 'rgb(255,255,0),rgb(225,98,110)', 'rgb(0,0,0),rgb(225,255,255)', 'rgb(0,0,0),rgb(225,255,255)', 'rgb(0,0,0),rgb(225,255,255)']
-]
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    []
+];
+/*
+    입학 효율
+*/
+let productionMultiple = 1; // 입학 효율 배수
 
 // Product list
-let arrProductGetCount = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-let arrProductBackgroundEnable = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
-let arrProductStateImg = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+let arrProductBackgroundEnable = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false] // 고정
+let arrProductStateImg = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 const productLength = 16; // 증축 개수 | 고정
 let arrProductPrice = [ // 증축 가격 | 고정
     50, // 50
@@ -58,7 +127,8 @@ let arrProductPrice = [ // 증축 가격 | 고정
     26.7e16, // 26.7 경
     428e16 // 428 경
 ];
-let arrProductAddPerSecond = [ // 증축 초당 증가량
+let arrProductGetCount = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; // 보유한 증축 개수
+let arrProductAddDefaultValue = [ // 증축 초당 증가량 | 고정
     1, // 1
     10, // 10
     55, // 55
@@ -76,80 +146,28 @@ let arrProductAddPerSecond = [ // 증축 초당 증가량
     2000 * 1e8, // 2000억
     1.5 * 1e12 // 1.5조
 ];
-let arrProductAddPerSecondBonus = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
-let arrProductAddPerSecondTotal = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-let arrProductProducedTotal = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-let productAddPerSecondTotal = 0;
+let arrProductAddBonusValue = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]; // 증축 초당 증가량 배율 보너스
+let arrProductAddTotalValue = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; // 증축 최종 초당 증가량 | 공식: 기본 * 보너스 * 효율 배수 * 회귀 효율 배수
+let arrProductInfoProductionTotal = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; // 증축 정보: 지금까지 입학한 학생 수
+let productAddPerSecondTotal = 0; // 모든 증축의 초당 증가량을 합한 값
 
-let arrProductUnlock = [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]
+let arrProductUnlock = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
 
-let arrProductUpgradeId = [];
-let arrProductUpgradeEnable = [
-    [false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false],
-    [false]
-];
-let arrProductUpgradePrice = [ // 고정
-    [50*10, 50*100, 50*5000, 50*25e4, 50*2500e4, 50*25e8, 50*1.25e12, 50*625e12, 50*62.5e16, 50*6.25e20],
-    [160*10, 160*100, 160*5000, 160*25e4, 160*2500e4, 160*25e8, 160*1.25e12, 160*625e12, 160*62.5e16, 160*6.25e20],
-    [2700*10, 2700*100, 2700*5000, 2700*25e4, 2700*2500e4, 2700*25e8, 2700*1.25e12, 2700*625e12, 2700*62.5e16, 2700*6.25e200],
-    [3.9e4*10, 3.9e4*100, 3.9e4*5000, 3.9e4*25e4, 3.9e4*2500e4, 3.9e4*25e8, 3.9e4*1.25e12, 3.9e4*625e12, 3.9e4*62.5e16, 3.9e4*6.25e20],
-    [52e4*10, 52e4*100, 52e4*5000, 52e4*25e4, 52e4*2500e4, 52e4*25e8, 52e4*1.25e12, 52e4*625e12, 52e4*62.5e16, 52e4*6.25e20],
-    [670e4*10, 670e4*100, 670e4*5000, 670e4*25e4, 670e4*2500e4, 670e4*25e8, 670e4*1.25e12, 670e4*625e12, 670e4*62.5e16, 670e4*6.25e20],
-    [8500e4*10, 8500e4*100, 8500e4*5000, 8500e4*25e4, 8500e4*2500e4, 8500e4*25e8, 8500e4*1.25e12, 8500e4*625e12, 8500e4*62.5e16, 8500e4*6.25e20],
-    [10.8e8*10, 10.8e8*100, 10.8e8*5000, 10.8e8*25e4, 10.8e8*2500e4, 10.8e8*25e8, 10.8e8*1.25e12, 10.8e8*625e12, 10.8e8*62.5e16, 10.8e8*6.25e20],
-    [229e8*10, 229e8*100, 229e8*5000, 229e8*25e4, 229e8*2500e4, 229e8*25e8, 229e8*1.25e12, 229e8*625e12, 229e8*62.5e16, 229e8*6.25e20],
-    [3630e8*10, 3630e8*100, 3630e8*5000, 3630e8*25e4, 3630e8*2500e4, 3630e8*25e8, 3630e8*1.25e12, 3630e8*625e12, 3630e8*62.5e16, 3630e8*6.25e20],
-    [5.18e12*10, 5.18e12*100, 5.18e12*5000, 5.18e12*25e4, 5.18e12*2500e4, 5.18e12*25e8, 5.18e12*1.25e12, 5.18e12*625e12, 5.18e12*62.5e16, 5.18e12*6.25e20],
-    [70.7e12*10, 70.7e12*100, 70.7e12*5000, 70.7e12*25e4, 70.7e12*2500e4, 70.7e12*25e8, 70.7e12*1.25e12, 70.7e12*625e12, 70.7e12*62.5e16, 70.7e12*6.25e20],
-    [951e12*10, 951e12*100, 951e12*5000, 951e12*25e4, 951e12*2500e4, 951e12*25e8, 951e12*1.25e12, 951e12*625e12, 951e12*62.5e16, 951e12*6.25e20],
-    [1.29e16*10, 1.29e16*100, 1.29e16*5000, 1.29e16*25e4, 1.29e16*2500e4, 1.29e16*25e8, 1.29e16*1.25e12, 1.29e16*625e12, 1.29e16*62.5e16, 1.29e16*6.25e20],
-    [26.7e16*10, 26.7e16*100, 26.7e16*5000, 26.7e16*25e4, 26.7e16*2500e4, 26.7e16*25e8, 26.7e16*1.25e12, 26.7e16*625e12, 26.7e16*62.5e16, 26.7e16*6.25e20],
-    [428e16*10, 428e16*100, 428e16*5000, 428e16*25e4, 428e16*2500e4, 428e16*25e8, 428e16*1.25e12, 428e16*625e12, 428e16*62.5e16, 428e16*6.25e20],
-    []
-];
-let arrProductUpgradePurchaseBool = [
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    []
-];
-let arrProductUpgradeCount = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-let arrProductUpgradeCountMax = [10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10]; // 고정
+let arrProductUpgradeCount = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; // 증축 업그레이드 완료된 개수
+let arrProductUpgradeCountMax = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10]; // 증축 업그레이드 최대 개수
+// FormatNumber list | 고정
+const arrFormatNumberKr = ['','만','억','조','경','해','자','양','구','간','정','재','극','항하사','아승기','나유타','불가사의','무량대수','무한']
+let arrFormatStandardKr = [1,1e4,1e8,1e12,1e16,1e20,1e24,1e28,1e32,1e36,1e40,1e44,1e48,1e52,1e56,1e60,1e64,1e68,1e72]
+
 
 /*
     언어
 */
 const translations = {
-    ko: {
+    KO: {
         windowTitle: (value) => `${value} 명 - 대학 구조 위원회`,
+        popupLanguageText_title: '언어 선택',
+        popupLanguageText_description: '',
         popupTitle: [
             [
                 '학생 최초 증축',
@@ -170,23 +188,42 @@ const translations = {
                 '또 다른 나 최초 증축'
             ],
             [
+                '언어 변경',
                 '대학 구조 위원회',
+                '학교의 이름을 바꿀 수 있습니다!',
+                '<b class="returning">돌아갈 시간</b>',
+                '과거로 돌아왔습니다. 기억만요.',
                 '끝'
             ]
         ],
-        popupTitleName: '학교의 이름을 바꿀 수 있습니다!',
         popupDescription: [
             [
-
+                '학생',
+                '학교 시설',
+                '교통 시설',
+                '주거지',
+                '은행',
+                '공항',
+                '기업',
+                '정부',
+                '세계 정부',
+                '복제 실험실',
+                '우주정거장',
+                '차원 포털',
+                '블랙홀',
+                '타임머신',
+                '평행 세계',
+                '또 다른 나'
             ],
             [
+                '<br>설정에서 다른 언어로 변경할 수 있습니다.<br><br>',
                 '텍스트 테스트',
-
+                '원하는 이름으로 최소 1글자에서 최대 12글자까지 변경할 수 있습니다.<br><br>재미를 위한 것으로, 게임 진행에 영향을 주지 않습니다.<br><br>',
+                '정말 회귀를 진행하시겠습니까?<br><br>지금까지의 기억과 경험을 과거의 나로 계승합니다.<br><br>업적, 경험 등급, 박물관을 제외한 모든 진행 상황을 잃어버리게 됩니다.',
+                '텍스트 테스트'
             ]
         ],
-        popupDescriptionName: '원하는 이름으로 최소 1글자에서 최대 12글자까지 변경할 수 있습니다.<br><br>재미를 위한 것으로, 게임 진행에 영향을 주지 않습니다.',
-        popupCloseButton: '닫기',
-        popupChangeButton: '바꾸기',
+        popupButton_text: ['닫기', '바꾸기', '과거로 돌아가기'],
         universityMyName: '대림',
         universityNameSuffix: ' 대학교',
         students: (value) => `${value} 명`,
@@ -232,6 +269,7 @@ const translations = {
         menuInfoText_subtitleCredit: '개발자',
         menuInfoText_subtitlePatchNote: '패치 노트',
         menuReturningText_title: '회귀',
+        menuReturningText_panelLevel: (value) => `경험 등급 <b>${value}</b>`,
         menuReturningText_showLevel: (value1, value2) => `레벨: <b class="currentLevel">${value1}</b> → <b class="increaseLevel">${value2}</b>`,
         menuReturningText_showExp: '경험치: ',
         menuReturningText_subtitleLevel: '회귀 레벨',
@@ -306,7 +344,7 @@ const translations = {
             ['클릭의 입학 효율 <b>두 배</b> 증가']
         ]
     },
-    en: {
+    EN: {
         windowTitle: (value) => `${value} people - Rescue Committee`,
         popupTitle: [
             [
@@ -328,15 +366,39 @@ const translations = {
                 '또 다른 나 최초 증축'
             ],
             [
-                '대학 구조 위원회'
+                'Language Select',
+                '대학 구조 위원회',
+                '학교의 이름을 바꿀 수 있습니다!',
+                '회귀할 시간입니다',
+                '과거로 돌아왔습니다. 기억만요.',
+                '끝'
             ]
         ],
         popupDescription: [
             [
-
+                '학생',
+                '학교 시설',
+                '교통 시설',
+                '주거지',
+                '은행',
+                '공항',
+                '기업',
+                '정부',
+                '세계 정부',
+                '복제 실험실',
+                '우주정거장',
+                '차원 포털',
+                '블랙홀',
+                '타임머신',
+                '평행 세계',
+                '또 다른 나'
             ],
             [
-                '졸업이 얼마 남지 않은 당신, 총장이 당신을 찾습니다.<br>당신은 원치 않았지만 위원회 활동을 시작하게 됩니다.'
+                '<br>The language can be changed in settings.<br><br>',
+                '텍스트 테스트',
+                '원하는 이름으로 최소 1글자에서 최대 12글자까지 변경할 수 있습니다.<br><br>재미를 위한 것으로, 게임 진행에 영향을 주지 않습니다.<br><br>',
+                '텍스트 테스트',
+                '텍스트 테스트'
             ]
         ],
         popupCloseButton: 'Close',
@@ -380,12 +442,11 @@ const translations = {
 
 // 언어
 const languageSelector = document.getElementById('languageSelector');
-let lang = languageSelector.value;
+let lang = 'KO';
 changeLanguage();
 
-languageSelector.addEventListener('change', changeLanguage);
+// languageSelector.addEventListener('change', changeLanguage);
 function changeLanguage() {
-    lang = languageSelector.value;
 
     document.getElementById('showNewsTitle').innerHTML = translations[lang].newsTitle;
     //document.getElementById('universityNameSuffix').innerHTML = popupInput.value + translations[lang].universityNameSuffix;
@@ -398,20 +459,22 @@ function changeLanguage() {
 // 이름 바꾸기
 document.getElementById('universityName').addEventListener('click', changeUniversityName);
 function changeUniversityName() {
-    createPopupChangeName();
+    appearPopup(1, 2);
 }
 
 // 학교 로고 클릭 이벤트
 let universityLogo = document.getElementById('universityLogo');
 universityLogo.addEventListener('click', (e) => {
+    // 학생 수 더하기
     student += addClickStudent;
+    // 통계
     statsTotalStudent += addClickStudent;
     statsStudent += addClickStudent;
     statsTotalAddClickStudent += addClickStudent;
     statsAddClickStudent += addClickStudent;
     statsClickCount++;
     statsTotalClickCount++;
-    returningExp += addClickStudent;
+    // 갱신
     console.log(student);
     updateStudent();
 
@@ -517,7 +580,7 @@ for(let i = 0 ; i < productLength ; i++) {
         // 반복 제거
         clearInterval(intervalUpdateProductTooltip);
     });
-    // 구매 했다면
+    // 클릭 상호작용
     product.addEventListener('click', () => {
         if(student >= arrProductPrice[i]) {
             // 비용 지불
@@ -529,18 +592,18 @@ for(let i = 0 ; i < productLength ; i++) {
             const forUpgradeIndex = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
             for(let i = 0 ; i < productLength ; i++) {
                 for(let j = 0 ; j < forUpgradeStandardCount.length ; j++) {
-                    if(arrProductGetCount[i] >= forUpgradeStandardCount[j] && arrProductUpgradeEnable[i][forUpgradeIndex[j]] === false) {
-                        arrProductUpgradeEnable[i][forUpgradeIndex[j]] = true;
-                        arrProductUpgradeId.push(i * 100 + forUpgradeIndex[j]);
+                    if(arrProductGetCount[i] >= forUpgradeStandardCount[j] && arrUpgradeEnable[i][forUpgradeIndex[j]] == false) {
+                        arrUpgradeEnable[i][forUpgradeIndex[j]] = true;
+                        arrUpgradeId.push(i * 100 + forUpgradeIndex[j]);
 
                         reorderUpgradeIcon();
                         upgradeExpandButton();
 
-                        if(j == 0) createPopup(0, i);
+                        if(j == 0) appearPopup(0, i); // 처음 구매시 팝업 등장
                     }
                 }
             }
-
+            // 통계
             statsTotalProductCount++;
             statsProductCount++;
             // 초당 추가 값 증가
@@ -558,6 +621,9 @@ for(let i = 0 ; i < productLength ; i++) {
 const popupArea = document.getElementById('popupArea');
 const popupBackground = document.getElementById('popupBackground');
 const popupBox = document.getElementById('popupBox');
+
+const popupCloseButton = document.createElement('div');
+popupCloseButton.id = 'popupCloseButton';
 
 const popupTitle = document.createElement('div'); // 제목
 popupTitle.id = 'popupBoxTitle';
@@ -579,6 +645,9 @@ popupButton.className = 'button';
 
 // 팝업 이벤트 생성
 function popupAddEvent(type) {
+
+    popupCloseButton.addEventListener('click', () => { removePopup(); });
+
     if(type == 'common') {
         popupButton.addEventListener('click',  () => { removePopup(); });
     }
@@ -596,58 +665,128 @@ function popupAddEvent(type) {
             }
         });
     }
-    if(type == returning) {
-        // popupButton.addEventListener('click')
+    if(type == 'returning') {
+        popupButton.addEventListener('click', () => {
+            removePopup();
+            returningAnimation();
+        })
     }
 }
-function createPopup(i, j) { // 일반 팝업창 생성
-    if(arrPopupAppearBool[i][j] == false) {
-        // true로 바꾸기
-        arrPopupAppearBool[i][j] = true;
-        // 초기화
-        popupArea.classList.remove('disabled');
-        popupBackground.classList.remove('disabled');
-        popupBox.style.height = '600px';
-        popupBox.style.width = '960px';
-        popupBox.style.display = 'flex';
-        popupBox.innerHTML = '';
-        // 제목
-        popupTitle.innerHTML = translations[lang].popupTitle[i][j];
-        popupBox.appendChild(popupTitle);
-        // 사진
-        // popupPicture.style.url = 사진 경로
-        //popupBox.appendChild(popupPicture);
-        // 설명
-        popupDescription.innerHTML = translations[lang].popupDescription[i][j];
-        popupBox.appendChild(popupDescription);
-        // 버튼
-        popupButton.innerHTML = translations[lang].popupCloseButton;
-        popupBox.appendChild(popupButton);
-        // 이벤트 추가
-        popupAddEvent('common');
-    }
-}
-function createPopupChangeName() { // 이름 변경창 생성
+function appearPopup(i, j) { // 일반 팝업창 생성
     // 초기화
+    resetPopup();
+    // 제목
+    popupTitle.innerHTML = translations[lang].popupTitle[i][j];
+    popupBox.appendChild(popupTitle);
+
+    if(i == 0) {
+        if(arrAppearPopupBool[i][j] == false) {
+            // true로 바꾸기
+            arrAppearPopupBool[i][j] = true;
+            // 닫기 버튼
+            popupBox.appendChild(popupCloseButton);
+            // 설명
+            popupDescription.innerHTML = translations[lang].popupDescription[i][j];
+            popupBox.appendChild(popupDescription);
+            // 버튼
+            popupButton.innerHTML = translations[lang].popupButton_text[0];
+            popupBox.appendChild(popupButton);
+            // 이벤트 추가
+            popupAddEvent('common');
+        }
+    } else if(i == 1) {
+        if(j == 0) { // 게임 처음 시작 시 언어 변경
+            popupSelectLanguage();
+            // 설명
+            popupDescription.innerHTML = translations[lang].popupDescription[i][j];
+            popupBox.appendChild(popupDescription);
+        }
+        if(j == 1) { // 게임 처음 시작 시
+            // 닫기 버튼
+            popupBox.appendChild(popupCloseButton);
+            // 설명
+            popupDescription.innerHTML = translations[lang].popupDescription[i][j];
+            popupBox.appendChild(popupDescription);
+            // 버튼
+            popupButton.innerHTML = translations[lang].popupButton_text[1];
+            popupBox.appendChild(popupButton);
+            // 이벤트 추가
+            popupAddEvent('common');
+        }
+        if(j == 2) { // 이름 바꾸기 팝업
+            // 닫기 버튼
+            popupBox.appendChild(popupCloseButton);
+            // 입력창
+            popupBox.appendChild(popupInput);
+            // 설명
+            popupDescription.innerHTML = translations[lang].popupDescription[i][j];
+            popupBox.appendChild(popupDescription);
+            // 버튼
+            popupButton.innerHTML = translations[lang].popupButton_text[1];
+            popupBox.appendChild(popupButton);
+            // 이벤트 추가
+            popupAddEvent('name');
+        }
+        if(j == 3) { // 회귀 전 팝업
+            // 닫기 버튼
+            popupBox.appendChild(popupCloseButton);
+            // 설명
+            popupDescription.innerHTML = translations[lang].popupDescription[i][j];
+            popupBox.appendChild(popupDescription);
+            // 버튼
+            popupButton.innerHTML = translations[lang].popupButton_text[2];
+            popupBox.appendChild(popupButton);
+            // 이벤트 추가
+            popupAddEvent('returning');
+        }
+        if(j == 4) { // 회귀 후 팝업
+
+        }
+        if(j == 5) { // 엔딩
+
+        }
+    }
+}
+function popupSelectLanguage() {
+    const popupLanguageBundle = document.createElement('div'); // 제목
+    popupLanguageBundle.id = 'popupLanguageBundle';
+    popupBox.appendChild(popupLanguageBundle);
+
+    // 언어
+    const arrLanguage = ['KO', 'EN', 'JA', 'CS', 'CS'];
+    for(let i = 0 ; i < arrLanguage.length ; i++) {
+        const languageDiv = document.createElement('div');
+        languageDiv.id = `popupLanguage${arrLanguage[i]}`;
+        languageDiv.classList.add('language');
+        languageDiv.style.background = `url('img/language/${arrLanguage[i]}.png')`;
+
+        popupLanguageBundle.appendChild(languageDiv);
+    }
+
+    // const popupLanguageText = document.createElement('div');
+    // popupLanguageText.id = 'popupLanguageText';
+    // popupLanguageText.classList.add('text');
+    // popupBox.appendChild(popupLanguageText);
+
+    document.getElementById('popupLanguageKO').addEventListener('mouseover', () => { lang = 'KO'; changeLanguageText(); });
+    document.getElementById('popupLanguageKO').addEventListener('click', () => { removePopup(); })
+    document.getElementById('popupLanguageEN').addEventListener('mouseover', () => { lang = 'EN'; changeLanguageText(); });
+    document.getElementById('popupLanguageEN').addEventListener('click', () => { removePopup(); })
+
+    document.getElementById('popupLanguageJA').addEventListener('mouseover', () => {
+        popupTitle.innerHTML = '日本語選択';
+        popupLanguageText.innerHTML = '言語は設定で変えることができます。';
+    });
+}
+function changeLanguageText() {
+    popupTitle.innerHTML = translations[lang].popupTitle[1][0];
+    popupDescription.innerHTML = translations[lang].popupDescription[1][0];
+}
+function resetPopup() {
     popupArea.classList.remove('disabled');
     popupBackground.classList.remove('disabled');
-    popupBox.style.height = '400px';
-    popupBox.style.width = '960px';
     popupBox.style.display = 'flex';
     popupBox.innerHTML = '';
-    // 제목
-    popupTitle.innerHTML = translations[lang].popupTitleName;
-    popupBox.appendChild(popupTitle);
-    // 입력창
-    popupBox.appendChild(popupInput);
-    // 설명
-    popupDescription.innerHTML = translations[lang].popupDescriptionName;
-    popupBox.appendChild(popupDescription);
-    // 버튼
-    popupButton.innerHTML = translations[lang].popupChangeButton;
-    popupBox.appendChild(popupButton);
-    // 이벤트 추가
-    popupAddEvent('name');
 }
 function removePopup() { // 제거
     popupArea.classList.add('disabled');
@@ -844,10 +983,12 @@ function pageSetting() {
     document.getElementById('pageSettingTitle').innerHTML = translations[lang].menuSettingText_title;
     document.getElementById('pageSettingCommon').innerHTML = translations[lang].menuSettingText_subtitleCommon;
     document.getElementById('pageSettingDetail').innerHTML = translations[lang].menuStatsText_subtitleDetail;
+    //document.getElementById('buttonChangeLanuage').innerHTML = translations[lang].menuStatsText_;
 
     const buttonSave = document.getElementById('buttonSave');
     const buttonSaveFileExport = document.getElementById('buttonSaveFileExport');
     const buttonSaveFileImport = document.getElementById('buttonSaveFileImport');
+    const buttonChangeLanuage = document.getElementById('buttonChangeLanuage');
 
     buttonSave.addEventListener('click', () => {
         saveCookie();
@@ -858,6 +999,9 @@ function pageSetting() {
     buttonSaveFileImport.addEventListener('click', () => {
         importSaveFile();
     });
+    buttonChangeLanuage.addEventListener('click', () => {
+        appearPopup(1, 0);
+    })
 }
 function exportSaveFile() {
     const textContent = arrProductGetCount[0] + '/' + arrProductGetCount[1] + '저장된 내용을 저장하고 추출\n두번째 줄 테스트 \n 세번 째 줄 테스트\n1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -974,17 +1118,14 @@ function pageInfo() {
 */
 let returningLevelClacSetInterval;
 function pageReturning() {
-    document.getElementById('pageReturningTitle').innerHTML = translations[lang].menuReturningText_title;
+    document.getElementById('pageReturningPanelLevel').innerHTML = translations[lang].menuReturningText_panelLevel(formatNumber(returningCurrentLevel));
+    document.getElementById('pageReturningPanelBonus').innerHTML = `(SpS +${formatNumber(returningCurrentLevel)}%)`;
     document.getElementById('pageReturningLevel').innerHTML = translations[lang].menuReturningText_subtitleLevel;
     document.getElementById('pageReturningAbility').innerHTML = translations[lang].menuReturningText_subtitleAbility;
     
-    returningLevelClacSetInterval = setInterval(() => { returningLevelClac(); }, 10); // 1초에 100번 작동
+    returningLevelClacSetInterval = setInterval(() => { returningLevelClac(); }, 100); // 1초에 100번 작동
 }
 function returningLevelClac() {
-//     returningLevel
-// returningLevelValue
-// returningExp
-// returningExpMax
 
     const expPercent = (returningExp / returningExpMax) * 100;
     document.getElementById('pageReturningExpFilledBar').style.width = `${expPercent}%`;
@@ -992,17 +1133,73 @@ function returningLevelClac() {
 
         returningExp -= returningExpMax
         returningIncreaseLevel++;
-        returningExpMax = ((((returningIncreaseLevel + 1) ** 4) /2 ) * 1e12).toFixed(0);
+        returningExpMax = ((((returningIncreaseLevel + 1) ** 4) /2 ) * 1e12);
 
     }
     
-    document.getElementById('pageReturningIncreaseLevel').innerHTML = `+${returningLevel}`;
-    document.getElementById('pageReturningShowLevel').innerHTML = translations[lang].menuReturningText_showLevel(formatNumber(returningLevel), formatNumber(returningIncreaseLevel));
+    document.getElementById('pageReturningIncreaseLevel').innerHTML = `+${returningCurrentLevel}`;
+    document.getElementById('pageReturningShowLevel').innerHTML = translations[lang].menuReturningText_showLevel(formatNumber(returningCurrentLevel), formatNumber(returningIncreaseLevel));
     document.getElementById('pageReturningShowExp').innerHTML = `경험치: ${formatNumber(returningExp)} / ${formatNumber(returningExpMax)}`;
 }
 document.getElementById('buttonReturning').addEventListener('click', () => {
-    createPopup(2,0);
+    appearPopup(1,3);
 })
+function returningAnimation() {
+    console.log('Returning');
+    popupArea.classList.remove('disabled');
+
+    const createDiv = document.createElement('div');
+    createDiv.id = 'returningBackground';
+    popupArea.appendChild(createDiv);
+
+    setTimeout(() => {
+        document.getElementById('returningBackground').remove();
+        popupArea.classList.add('disabled');
+        returningFunction();
+    }, 1000 * 7.5);
+}
+function returningFunction() {
+    returningLevel += returningIncreaseLevel;
+    returningIncreaseLevel = 0;
+    returningBonus = 1 + returningLevel * 0.01;
+
+    student = 0;
+    addClickStudent = 1;
+    addPerSecondStudent = 0;
+
+    productAddPerSecondTotal = 0;
+
+    arrUpgradeId = [];
+    for(let i = 0 ; i < arrUpgradeEnable.length ; i++) {
+        for(let j = 0 ; j < arrUpgradeEnable[i].length ; j++) {
+            arrUpgradeEnable[i][j] = false;
+        }
+    }
+    
+    document.getElementById('upgradeBundle').innerHTML = '';
+
+    // 생산 관련
+    for(let i = 0 ; i < productLength ; i++) {
+        const productRow = document.getElementById(`productRow_${i}`)
+
+        productRow.querySelector('.background').innerHTML = '';
+        productRow.querySelector('.background').classList.add('disabled');
+        productRow.querySelector('.divisionRow').classList.add('disabled');
+
+        arrProductGetCount[i] = 0;
+        arrProductBackgroundEnable[i] = false;
+        arrProductStateImg[i] = 0;
+        arrProductAddBonusValue[i] = 1;
+        arrProductUnlock[i] = false;
+        arrProductAddTotalValue[i] = 0;
+        arrProductInfoProductionTotal[i] = 0;
+
+        updateProductInfo(i, arrProductGetCount[i])
+    }
+    updateStudent();
+    gameMenuDefaultSetting();
+
+}
 /*
     게임 메뉴
 */
@@ -1088,14 +1285,16 @@ function updateProductInfo(i, j = 1) {
     }
 }
 /* 
-    초당 추가 업데이트
+    증축 초당 추가 업데이트
 */
 function updateAddPerSecond() {
     addPerSecondStudent = 0;
     for(let i = 0 ; i < productLength; i++) {
-        arrProductAddPerSecondTotal[i] = arrProductGetCount[i] * arrProductAddPerSecond[i] * arrProductAddPerSecondBonus[i];
-        addPerSecondStudent += arrProductAddPerSecondTotal[i];
+        // 공식: 증축 개수 * 증축 초당 효율 * 증축 강화 효율 * 효율 배수 * 회귀 효율 배수
+        arrProductAddTotalValue[i] = parseFloat((arrProductGetCount[i] * arrProductAddDefaultValue[i] * arrProductAddBonusValue[i] * productionMultiple * returningProductionMultiple).toFixed(1));
+        addPerSecondStudent += arrProductAddTotalValue[i];
     }
+    // 갱신
     updateStudent();
 }
 /*
@@ -1123,11 +1322,11 @@ function updateTooltip(i) {
     if(arrProductGetCount[i] >= 1) {
         tooltip.querySelector('#centerLine').classList.remove('disabled');
         tooltip.querySelector('#info_1').classList.remove('disabled');
-        tooltip.querySelector('#info_1').innerHTML = translations[lang].productTooltipStat_1(formatNumber(arrProductAddPerSecond[i] * arrProductAddPerSecondBonus[i]));
+        tooltip.querySelector('#info_1').innerHTML = translations[lang].productTooltipStat_1(formatNumber(arrProductAddDefaultValue[i] * arrProductAddBonusValue[i]));
         tooltip.querySelector('#info_2').classList.remove('disabled');
-        tooltip.querySelector('#info_2').innerHTML = translations[lang].productTooltipStat_2(formatNumber(arrProductAddPerSecondTotal[i]));
+        tooltip.querySelector('#info_2').innerHTML = translations[lang].productTooltipStat_2(formatNumber(arrProductAddTotalValue[i]));
         tooltip.querySelector('#info_3').classList.remove('disabled');
-        tooltip.querySelector('#info_3').innerHTML = translations[lang].productTooltipStat_3(formatNumber(arrProductProducedTotal[i]));
+        tooltip.querySelector('#info_3').innerHTML = translations[lang].productTooltipStat_3(formatNumber(arrProductInfoProductionTotal[i]));
     } else { // 비활성화
         tooltip.querySelector('#centerLine').classList.add('disabled');
         tooltip.querySelector('#info_1').classList.add('disabled');
@@ -1191,7 +1390,7 @@ function reorderUpgradeIcon() {
     const upgradeBundle = document.getElementById('upgradeBundle');
     upgradeBundle.innerHTML = '';
 
-    const arrReorder = arrProductUpgradeId.slice().sort((a, b) => a - b);
+    const arrReorder = arrUpgradeId.slice().sort((a, b) => a - b);
 
     arrReorder.forEach(number => {
 
@@ -1229,15 +1428,15 @@ function reorderUpgradeIcon() {
 
         // 클릭
         upgradeIcon.addEventListener('click', () => {
-            if (student >= arrProductUpgradePrice[arr1][arr2]) {
+            if (student >= arrUpgradePrice[arr1][arr2]) {
                 // 비용 지불
-                student -= arrProductUpgradePrice[arr1][arr2];
+                student -= arrUpgradePrice[arr1][arr2];
                 // 배열 갱신
-                arrProductAddPerSecondBonus[arr1] *= 2; // 보너스 적용
+                arrProductAddBonusValue[arr1] *= 2; // 보너스 적용
                 arrProductUpgradeCount[arr1]++; // 카운트 증가
                 arrProductUpgradePurchaseBool[arr1].push(number); // 카운트 증가
                 // 배열 제거
-                arrProductUpgradeId = arrProductUpgradeId.filter(n => n !== number);
+                arrUpgradeId = arrUpgradeId.filter(n => n !== number);
                 // 반복 제거
                 clearInterval(intervalUpdateUpgradeTooltip);
                 // 설명창 가리기
@@ -1280,7 +1479,7 @@ function updateUpgradeTooltip(i, j) {
 
     const tooltip = document.getElementById('upgradeTooltip');
     const tooltipIcon = document.getElementById('upgradeTooltipIcon');
-    tooltip.querySelector('.price').innerHTML = translations[lang].students(formatNumber(arrProductUpgradePrice[i][j]));
+    tooltip.querySelector('.price').innerHTML = translations[lang].students(formatNumber(arrUpgradePrice[i][j]));
 
     document.getElementById('upgradeTooltipIcon');
     
@@ -1288,7 +1487,7 @@ function updateUpgradeTooltip(i, j) {
     tooltipIcon.style.backgroundPositionX = `${-48 * j}px`;
     tooltipIcon.style.backgroundPositionY = `${-48 * i}px`;
     // 구매 가능 여부
-    if(student >= arrProductUpgradePrice[i][j]) {
+    if(student >= arrUpgradePrice[i][j]) {
         tooltip.querySelector('.price').style.color = '#00FF00';
         tooltip.querySelector('.price').style.opacity = 1;
     }
@@ -1374,7 +1573,7 @@ function perSecond() {
     updateStudent();
 
     for(let i = 0 ; i < productLength ; i++) {
-        arrProductProducedTotal[i] += arrProductAddPerSecondTotal[i]
+        arrProductInfoProductionTotal[i] += arrProductAddTotalValue[i]
     }
 }
 /*
@@ -1403,17 +1602,17 @@ function saveCookie() {
     // 초당 추가 학생값
     setCookie('addPerSecondStudent', addPerSecondStudent);
     // 팝업 등장 여부 | 배열
-    setCookie('arrPopupAppearBool', arrPopupAppearBool);
+    setCookie('arrAppearPopupBool', arrAppearPopupBool);
     // 보유한 증축 | 배열
     setCookie('arrProductGetCount', arrProductGetCount);
     
-    setCookie('arrProductAddPerSecondBonus', arrProductAddPerSecondBonus);
-    setCookie('arrProductAddPerSecondTotal', arrProductAddPerSecondTotal);
-    setCookie('arrProductProducedTotal', arrProductProducedTotal);
+    setCookie('arrProductAddBonusValue', arrProductAddBonusValue);
+    setCookie('arrProductAddTotalValue', arrProductAddTotalValue);
+    setCookie('arrProductInfoProductionTotal', arrProductInfoProductionTotal);
     setCookie('productAddPerSecondTotal', productAddPerSecondTotal);
     setCookie('arrProductUnlock', arrProductUnlock);
-    setCookie('arrProductUpgradeId', arrProductUpgradeId);
-    setCookie('arrProductUpgradeEnable', arrProductUpgradeEnable);
+    setCookie('arrUpgradeId', arrUpgradeId);
+    setCookie('arrUpgradeEnable', arrUpgradeEnable);
     setCookie('arrProductUpgradePurchaseBool', arrProductUpgradePurchaseBool);
     setCookie('arrProductUpgradeCount', arrProductUpgradeCount);
 }
@@ -1426,7 +1625,7 @@ function loadCookie() {
     // 초당 추가 학생값
     addPerSecondStudent = getCookie('addPerSecondStudent');
     // 팝업 등장 여부 | 배열
-    arrPopupAppearBool = getCookie('arrPopupAppearBool');
+    arrAppearPopupBool = getCookie('arrAppearPopupBool');
     // 보유한 증축
     arrProductGetCount = getCookie('arrProductGetCount');
     
@@ -1436,17 +1635,17 @@ function loadCookie() {
         updateProductStateImg(i)
     }
     
-    arrProductAddPerSecondBonus = getCookie('arrProductAddPerSecondBonus');
-    arrProductAddPerSecondTotal = getCookie('arrProductAddPerSecondTotal');
-    arrProductProducedTotal = getCookie('arrProductProducedTotal');
+    arrProductAddBonusValue = getCookie('arrProductAddBonusValue');
+    arrProductAddTotalValue = getCookie('arrProductAddTotalValue');
+    arrProductInfoProductionTotal = getCookie('arrProductInfoProductionTotal');
     productAddPerSecondTotal = getCookie('productAddPerSecondTotal');
     arrProductUnlock = getCookie('arrProductUnlock');
     for(let i = 0 ; i < arrProductUnlock.length ; i++) {
         product.querySelector('.name').innerHTML = translations[lang].arrProductName[i];
     }
-    arrProductUpgradeId = getCookie('arrProductUpgradeId');
+    arrUpgradeId = getCookie('arrUpgradeId');
     reorderUpgradeIcon();
-    arrProductUpgradeEnable = getCookie('arrProductUpgradeEnable');
+    arrUpgradeEnable = getCookie('arrUpgradeEnable');
     arrProductUpgradePurchaseBool = getCookie('arrProductUpgradePurchaseBool');
     arrProductUpgradeCount = getCookie('arrProductUpgradeCount');
 
@@ -1487,9 +1686,13 @@ function getCookie(name) {
 // 페이지 로드 시 쿠키 확인 및 메시지 표시
 window.onload = function() {
     const checkCookies = document.cookie;
-    if(checkCookies) loadCookie();
+    if(checkCookies) {
+        loadCookie();
+    } else {
+        appearPopup(1, 0);
+    }
 
-    if(arrPopupAppearBool[1][0] == false) createPopup(1, 0);
+    //if(arrAppearPopupBool[1][0] == false) appearPopup(1, 0);
 
     updateNews();
     gameMenuDefaultSetting();
