@@ -123,10 +123,8 @@ body {
 	margin: 24px 0px;
 }
 #popupArea #popupBox #popupBoxTitle b.returning {
-    background-image: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+    background-image: linear-gradient(135deg, red, orange, yellow, green, blue, indigo, violet);
 	background-clip: text;
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
 	animation: rainbow 3s infinite;
 }
 @keyframes rainbow {
@@ -645,8 +643,8 @@ sectionMiddle
 	min-width: 300px;
 	width: 80%;
 	height: 30px;
-	background-color: #eee;
-	border: 2px solid #ccc;
+	background-color: #EEEEEE;
+	border: 2px solid #CCCCCC;
 	border-radius: 2.5px;
 	margin: 20px 0px;
 }
@@ -654,7 +652,28 @@ sectionMiddle
 	height: 100%;
 	width: 0%;
 	border-radius: 2.5px;
-	background-color: #a276c7;
+	background-color: #B186D4;
+	animation: filledBar 3s infinite;
+}
+@keyframes filledBar {
+	0% {
+		background: #B186D4;
+	}
+	50% {
+		background: #814B8F;
+	}
+	100% {
+		background: #B186D4;
+	}
+}
+#sectionMiddle #pageBundle #pageReturning #returningLevelBundle #pageReturningExpBar #pageReturningExpPercentage {
+	font-size: 140%;
+	color: #000000;
+	text-shadow: 0px 0px 3px #FFFFFF;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
 #sectionMiddle #pageBundle #pageReturning #returningLevelBundle .button {
 	text-align: center;
@@ -665,7 +684,7 @@ sectionMiddle
 	background-color: #000000;
 	border: 2px solid #000000;
 	border-radius: 15px;
-	margin-top: 64px;
+	margin-top: 32px;
 	padding: 4px 8px;
 	cursor: pointer;
 }
@@ -673,6 +692,13 @@ sectionMiddle
 	color: #000000;
 	background-color: #FFFFFF;
 	border: 2px solid #FF0000;
+}
+#sectionMiddle #pageBundle #pageReturning #returningLevelBundle .line {
+	width: 95%;
+	height: 1px;
+	background: linear-gradient(to right,#FFFFFF00 15%, #FFFFFF, #FFFFFF00 85%);
+	border: 0px;
+	margin: 16px 0px;
 }
 /* 
 sectionRight 
@@ -849,6 +875,7 @@ sectionRight
 	border: 2px solid;
 	border-image: linear-gradient(to right bottom, #FFC800, #FF7D00);
 	border-image-slice: 1;
+	display: none;
 }
 .tooltip .price {
 	font-size: 125%;

@@ -219,7 +219,7 @@ const translations = {
                 '<br>설정에서 다른 언어로 변경할 수 있습니다.<br><br>',
                 '텍스트 테스트',
                 '원하는 이름으로 최소 1글자에서 최대 12글자까지 변경할 수 있습니다.<br><br>재미를 위한 것으로, 게임 진행에 영향을 주지 않습니다.<br><br>',
-                '정말 회귀를 진행하시겠습니까?<br><br>지금까지의 기억과 경험을 과거의 나로 계승합니다.<br><br>업적, 경험 등급, 박물관을 제외한 모든 진행 상황을 잃어버리게 됩니다.',
+                '정말 회귀를 진행하시겠습니까?<br><br>지금까지의 기억과 경험을 과거의 나로 계승합니다.<br><br>업적, 경험 등급, 박물관을 제외한 모든 진행 상황을 잃어버립니다.',
                 '텍스트 테스트'
             ]
         ],
@@ -599,7 +599,10 @@ for(let i = 0 ; i < productLength ; i++) {
                         reorderUpgradeIcon();
                         upgradeExpandButton();
 
-                        if(j == 0) appearPopup(0, i); // 처음 구매시 팝업 등장
+                        if(arrAppearPopupBool[0][i] == false && j == 0) {
+                            arrAppearPopupBool[0][i] = true;
+                            appearPopup(0, i); // 처음 구매시 팝업 등장
+                        }
                     }
                 }
             }
@@ -680,20 +683,16 @@ function appearPopup(i, j) { // 일반 팝업창 생성
     popupBox.appendChild(popupTitle);
 
     if(i == 0) {
-        if(arrAppearPopupBool[i][j] == false) {
-            // true로 바꾸기
-            arrAppearPopupBool[i][j] = true;
-            // 닫기 버튼
-            popupBox.appendChild(popupCloseButton);
-            // 설명
-            popupDescription.innerHTML = translations[lang].popupDescription[i][j];
-            popupBox.appendChild(popupDescription);
-            // 버튼
-            popupButton.innerHTML = translations[lang].popupButton_text[0];
-            popupBox.appendChild(popupButton);
-            // 이벤트 추가
-            popupAddEvent('common');
-        }
+        // 닫기 버튼
+        popupBox.appendChild(popupCloseButton);
+        // 설명
+        popupDescription.innerHTML = translations[lang].popupDescription[i][j];
+        popupBox.appendChild(popupDescription);
+        // 버튼
+        popupButton.innerHTML = translations[lang].popupButton_text[0];
+        popupBox.appendChild(popupButton);
+        // 이벤트 추가
+        popupAddEvent('common');
     } else if(i == 1) {
         if(j == 0) { // 게임 처음 시작 시 언어 변경
             popupSelectLanguage();
@@ -1118,6 +1117,7 @@ function pageInfo() {
 */
 let returningLevelClacSetInterval;
 function pageReturning() {
+    document.getElementById('pageReturningTitle').innerHTML = translations[lang].menuReturningText_title;
     document.getElementById('pageReturningPanelLevel').innerHTML = translations[lang].menuReturningText_panelLevel(formatNumber(returningCurrentLevel));
     document.getElementById('pageReturningPanelBonus').innerHTML = `(SpS +${formatNumber(returningCurrentLevel)}%)`;
     document.getElementById('pageReturningLevel').innerHTML = translations[lang].menuReturningText_subtitleLevel;
@@ -1128,7 +1128,8 @@ function pageReturning() {
 function returningLevelClac() {
 
     const expPercent = (returningExp / returningExpMax) * 100;
-    document.getElementById('pageReturningExpFilledBar').style.width = `${expPercent}%`;
+    if(expPercent < 100) document.getElementById('pageReturningExpFilledBar').style.width = `${expPercent}%`;
+    if(expPercent >= 100) document.getElementById('pageReturningExpFilledBar').style.width = `100%`;
     while(returningExp >= returningExpMax) {
 
         returningExp -= returningExpMax
@@ -1136,10 +1137,14 @@ function returningLevelClac() {
         returningExpMax = ((((returningIncreaseLevel + 1) ** 4) /2 ) * 1e12);
 
     }
-    
-    document.getElementById('pageReturningIncreaseLevel').innerHTML = `+${returningCurrentLevel}`;
-    document.getElementById('pageReturningShowLevel').innerHTML = translations[lang].menuReturningText_showLevel(formatNumber(returningCurrentLevel), formatNumber(returningIncreaseLevel));
-    document.getElementById('pageReturningShowExp').innerHTML = `경험치: ${formatNumber(returningExp)} / ${formatNumber(returningExpMax)}`;
+    document.getElementById('pageReturningDate').innerHTML = `위원회가 1일간 운영되었습니다.`;
+    document.getElementById('pageReturningDate_2').innerHTML = `지금 회귀한다면 `;
+    document.getElementById('pageReturningIncreaseLevel').innerHTML = `+${returningIncreaseLevel} 등급(SpS +${formatNumber(returningIncreaseLevel)}%)`;
+    document.getElementById('pageReturningDate_3').innerHTML = `을(를) 얻습니다.`;
+    //document.getElementById('pageReturningShowLevel').innerHTML = translations[lang].menuReturningText_showLevel(formatNumber(returningCurrentLevel), formatNumber(returningIncreaseLevel));
+    //document.getElementById('pageReturningShowExp').innerHTML = `경험치: ${formatNumber(returningExp)} / ${formatNumber(returningExpMax)}`;
+    document.getElementById('pageReturningExpPercentage').innerHTML = `${(expPercent).toFixed(2)}%`;
+    document.getElementById('pageReturningExpEmptyValue').innerHTML = `다음 등급까지 <b>${formatNumber(returningExpMax - returningExp)}</b> 명 입학 필요`
 }
 document.getElementById('buttonReturning').addEventListener('click', () => {
     appearPopup(1,3);
@@ -1159,9 +1164,9 @@ function returningAnimation() {
     }, 1000 * 7.5);
 }
 function returningFunction() {
-    returningLevel += returningIncreaseLevel;
+    returningCurrentLevel += returningIncreaseLevel;
     returningIncreaseLevel = 0;
-    returningBonus = 1 + returningLevel * 0.01;
+    returningBonus = 1 + returningCurrentLevel * 0.01;
 
     student = 0;
     addClickStudent = 1;
@@ -1177,7 +1182,7 @@ function returningFunction() {
     }
     
     document.getElementById('upgradeBundle').innerHTML = '';
-
+arrProductUpgradePurchaseBool
     // 생산 관련
     for(let i = 0 ; i < productLength ; i++) {
         const productRow = document.getElementById(`productRow_${i}`)
@@ -1193,12 +1198,32 @@ function returningFunction() {
         arrProductUnlock[i] = false;
         arrProductAddTotalValue[i] = 0;
         arrProductInfoProductionTotal[i] = 0;
-
-        updateProductInfo(i, arrProductGetCount[i])
+        arrProductUpgradeCount[i] = 0;
     }
+    arrProductUpgradePurchaseBool = [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+    ];
     updateStudent();
     gameMenuDefaultSetting();
 
+    saveCookie();
+    location.reload();
 }
 /*
     게임 메뉴
@@ -1298,7 +1323,7 @@ function updateAddPerSecond() {
     updateStudent();
 }
 /*
-    설명창 갱신
+    증축 설명창 갱신
 */
 function updateTooltip(i) {
     console.log("Product tooltip");
@@ -1367,7 +1392,7 @@ function appendTag(elementById, type) {
 }
 
 /*
-    업그레이드 확장 버튼 활성화 여부
+    강화 확장 버튼 활성화 여부
 */
 function upgradeExpandButton() {
     const upgradeExpand = document.getElementById('upgradeExpand');
@@ -1384,7 +1409,7 @@ function upgradeExpandButton() {
 }
 
 /* 
-    업그레이드 아이콘 재정렬
+    강화 아이콘 재정렬
 */
 function reorderUpgradeIcon() {
     const upgradeBundle = document.getElementById('upgradeBundle');
@@ -1450,8 +1475,7 @@ function reorderUpgradeIcon() {
     upgradeExpandButton();
 }
 /* 
-    FUNCTION
-    업그레이드 아이콘 생성
+    강화 아이콘 생성
 */
 function addProductUpgradeIcon(i) {
     const upgradePurchaseList = document.getElementById('upgradePurchaseList');
@@ -1471,8 +1495,7 @@ function addProductUpgradeIcon(i) {
     });
 }
 /*
-    FUNCTION
-    업그레이드 설명창 갱신
+    강화 설명창 갱신
 */
 function updateUpgradeTooltip(i, j) {
     console.log("Upgrade tooltip");
@@ -1500,7 +1523,6 @@ function updateUpgradeTooltip(i, j) {
     document.getElementById('upgradeTooltipDescription').innerHTML = translations[lang].upgradeDescription[i];
 }
 /*
-    FUNCTION
     자릿수 계산
 */
 function formatNumber(value) {
@@ -1615,6 +1637,13 @@ function saveCookie() {
     setCookie('arrUpgradeEnable', arrUpgradeEnable);
     setCookie('arrProductUpgradePurchaseBool', arrProductUpgradePurchaseBool);
     setCookie('arrProductUpgradeCount', arrProductUpgradeCount);
+    // 회귀
+    setCookie('returningCurrentLevel', returningCurrentLevel);
+    setCookie('returningIncreaseLevel', returningIncreaseLevel);
+    setCookie('returningExp', returningExp);
+    setCookie('returningExpMax', returningExpMax);
+    setCookie('returningProductionMultiple', returningProductionMultiple);
+    
 }
 function loadCookie() {
     console.log('Load cookie');
@@ -1650,6 +1679,12 @@ function loadCookie() {
     arrProductUpgradeCount = getCookie('arrProductUpgradeCount');
 
     updateStudent();
+    // 회귀
+    returningCurrentLevel = getCookie('returningCurrentLevel');
+    returningIncreaseLevel = getCookie('returningIncreaseLevel');
+    returningExp = getCookie('returningExp');
+    returningExpMax = getCookie('returningExpMax');
+    returningProductionMultiple = getCookie('returningProductionMultiple');
 }
 
 function debugMode() {
