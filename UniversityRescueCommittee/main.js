@@ -921,6 +921,7 @@ function settingProductStateImg(i) { // 배경에 아이콘 삽입
             else if(i == 6) { // 기업
                 appendStateImg.style.top = `${32}px`;
                 appendStateImg.style.left = `${80 * j}px`
+                appendStateImg.style.backgroundPositionX = `${-64 * Math.floor(Math.random() * 3)}px`;
 
             }
             else if(i == 7) { // 정부
@@ -1630,9 +1631,6 @@ function productDefaultSetting() { // 증축을 초기 상태로 설정
         const productRow = document.getElementById(`productRow_${i}`);
 
         // 증축 메뉴
-        settingProductMenu('appear');
-        settingProductMenu('name');
-        settingProductMenu('count');
         productMenu.querySelector('.price').innerHTML = translations[lang].students(formatNumber(arrProductPrice[i]));
 
         // 증축 열
@@ -1643,6 +1641,10 @@ function productDefaultSetting() { // 증축을 초기 상태로 설정
         arrProductBackgroundEnable[i] = false;
         arrProductRowIconCount[i] = 0;
     }
+
+    settingProductMenu('appear');
+    settingProductMenu('name');
+    settingProductMenu('count');
 }
 function productOffline() {
     const currentTime = Date.now();
@@ -2108,7 +2110,7 @@ window.onload = function() {
         loadGame();
     } else {
         appearPopup(1, 0);
-        productMenuDefaultSetting();
+        productDefaultSetting();
     }
 
     //if(arrAppearPopupBool[1][0] == false) appearPopup(1, 0);
