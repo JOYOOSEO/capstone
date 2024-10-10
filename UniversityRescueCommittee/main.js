@@ -1169,7 +1169,7 @@ function pageInfo() {
     document.getElementById('pageInfoPatchNote').innerHTML = translations[lang].menuInfoText_subtitlePatchNote;
 }
 /*
-    귀환 메뉴
+    회귀 메뉴
 */
 let returningLevelClacSetInterval;
 let returningMemorySetInterval;
@@ -1230,7 +1230,7 @@ function returningLevelClac() {
     document.getElementById('pageReturningExpEmptyValue').innerHTML = translations[lang].menuReturningText_emptyExp(formatNumber(returningExpMax - returningExp));
 }
 document.getElementById('buttonReturning').addEventListener('click', () => {
-    appearPopup(1,3);
+    appearPopup(1, 1);
 })
 function returningAnimation() { // 회귀 연출
     console.log('Returning');
