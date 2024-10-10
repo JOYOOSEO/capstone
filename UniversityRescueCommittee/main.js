@@ -1,4 +1,12 @@
 /*
+    저장될 쿠키
+*/
+let checkCookies;
+/*
+    언어
+*/
+let ifSelectLanguage = false;
+/*
     학생 수치
 */
 let student = 0; // 현재 보유 학생
@@ -247,7 +255,7 @@ const translations = {
                 '끝'
             ],
             [
-                '언어 선택',
+                '언어는 설정 메뉴에서 바꿀 수 있습니다.',
                 '학교의 이름을 바꿀 수 있습니다!<br><br>학교의 이름을 바꾸는 것은 재미를 위한 것으로, 진행에 영향을 주지 않습니다.<br><br>가급적 부적절한 단어 사용은 삼가시길 바랍니다.',
                 '당신이 없는동안 수많은 학생이 입학했습니다!<br><br><b class="fs200"><b id="showOfflineEarnings"></b> 명 입학</b><br><b class="fcDefault fs75">총 <b id="showOfflineTimeDiff" class="textShadow fcWhite fs110"></b> 초 동안 <b id="showOfflineEfficiency" class="textShadow fcWhite fs110"></b>%의 효율 / 최대 <b id="showMaxOfflineTime" class="textShadow fcWhite fs110"></b>시간</b>',
                 '<b class="returning">돌아갈 시간</b>'
@@ -432,10 +440,10 @@ const translations = {
         windowTitle: (value) => `${value} people - Rescue Committee`,
         popupTitle: [
             [
-                '학생 최초 증축',
+                '최초의 입학생',
                 '학교 시설 최초 증축',
                 '교통 시설 최초 증축',
-                '주거 시설 최초 증축',
+                '주거지 최초 증축',
                 '은행 최초 증축',
                 '공항 최초 증축',
                 '기업 최초 증축',
@@ -450,24 +458,27 @@ const translations = {
                 '또 다른 나 최초 증축'
             ],
             [
-                'Language Select',
                 '대학 구조 위원회',
-                '학교의 이름을 바꿀 수 있습니다!',
-                '회귀할 시간입니다',
-                '과거로 돌아왔습니다. 기억만요.',
+                '과거로 돌아왔습니다.',
                 '끝'
-            ]
+            ],
+            [
+                'Select Language',
+                '이름을 바꾸시겠습니까?',
+                '당신이 없는 동안...',
+                '<b class="returning">돌아갈 시간</b>'
+            ],
         ],
         popupDescription: [
             [
-                '학생',
-                '학교 시설',
+                '당신이 위원장 자리에 앉은 이후 드디어 최초의 입학생이 생겼습니다.<br><br>올해 입학생은 이 학생이 유일하지만, 표정을 보니 앞으로의 행보가 기대되는군요.',
+                '빈약했던 학교에 다양한 시설을 설치했습니다.<br><br>더 많은 시설을 설치하기 위해 당신은 프렌차이즈와 계약할 계획을 세웁니다.',
                 '교통 시설',
                 '주거지',
                 '은행',
                 '공항',
                 '기업',
-                '정부',
+                '현 정부는 우리 학교를 위해 많은 정책을 실시하고 많은 법을 논의할 것입니다.<br><br>참고로 현 대통령은 당신이 위원장 자리에 앉았을 때 최초로 입학했던 학생이였습니다.',
                 '세계 정부',
                 '복제 실험실',
                 '우주정거장',
@@ -478,11 +489,15 @@ const translations = {
                 '또 다른 나'
             ],
             [
-                '<br>The language can be changed in settings.<br><br>',
-                '텍스트 테스트',
-                '원하는 이름으로 최소 1글자에서 최대 12글자까지 변경할 수 있습니다.<br><br>재미를 위한 것으로, 게임 진행에 영향을 주지 않습니다.<br><br>',
-                '텍스트 테스트',
-                '텍스트 테스트'
+                '올해의 유일한 졸업생인 당신은 총장님의 부름에 한걸음 달려갑니다.<br><br>총장님은 당신을 보자 이렇게 말합니다.<br><br><b class="fsItalic fs90">\"학교가 곧 폐교 직전이네. 그래서 대학 구조 위원회를 만들었는데, 네가 위원장을 맡았으면 한다. 거절한다면 졸업장은 주지 않을걸세.\"</b><br><br><br>좋든 싫든 당신은 졸업장을 돌려받기 위한 위원회 활동을 시작합니다.',
+                '갑자기 눈앞에는 위원장 자리를 권하는 총장님이 있습니다. 시계를 보니 날짜도 과거로 왔습니다.<br><br>지금까지의 기억이 생생한데 이 상황이 혼란스럽기만 합니다.<br><br>당신의 반응을 살피던 총장님은 조심스럽게 말을 꺼냈습니다.<br><br><b class="fsItalic fs90">\"그렇게 좋은 기분은 아니지? 익숙해질 거야.\"</b>',
+                '끝'
+            ],
+            [
+                'The language can be changed in settings.',
+                '학교의 이름을 바꿀 수 있습니다!<br><br>학교의 이름을 바꾸는 것은 재미를 위한 것으로, 진행에 영향을 주지 않습니다.<br><br>가급적 부적절한 단어 사용은 삼가시길 바랍니다.',
+                '당신이 없는동안 수많은 학생이 입학했습니다!<br><br><b class="fs200"><b id="showOfflineEarnings"></b> 명 입학</b><br><b class="fcDefault fs75">총 <b id="showOfflineTimeDiff" class="textShadow fcWhite fs110"></b> 초 동안 <b id="showOfflineEfficiency" class="textShadow fcWhite fs110"></b>%의 효율 / 최대 <b id="showMaxOfflineTime" class="textShadow fcWhite fs110"></b>시간</b>',
+                '<b class="returning">돌아갈 시간</b>'
             ]
         ],
         popupCloseButton: 'Close',
@@ -767,18 +782,28 @@ function popupSelectLanguage() {
     // popupBox.appendChild(popupLanguageText);
 
     document.getElementById('popupLanguageKO').addEventListener('mouseover', () => { lang = 'KO'; changeLanguageText(); });
-    document.getElementById('popupLanguageKO').addEventListener('click', () => { removePopup(); })
+    document.getElementById('popupLanguageKO').addEventListener('click', () => { checkSelectLanguage(); });
     document.getElementById('popupLanguageEN').addEventListener('mouseover', () => { lang = 'EN'; changeLanguageText(); });
-    document.getElementById('popupLanguageEN').addEventListener('click', () => { removePopup(); })
-
+    document.getElementById('popupLanguageEN').addEventListener('click', () => { checkSelectLanguage(); });
     document.getElementById('popupLanguageJA').addEventListener('mouseover', () => {
         popupTitle.innerHTML = '日本語選択';
         popupLanguageText.innerHTML = '言語は設定で変えることができます。';
     });
 }
+function checkSelectLanguage() {
+
+    if(ifSelectLanguage == false) {
+        ifSelectLanguage = true;
+        appearPopup(1, 0);
+    }
+    else {
+        removePopup();
+        if(checkCookies) loadGame();
+    }
+}
 function changeLanguageText() {
-    popupTitle.innerHTML = translations[lang].popupTitle[1][0];
-    popupDescription.innerHTML = translations[lang].popupDescription[1][0];
+    popupTitle.innerHTML = translations[lang].popupTitle[2][0];
+    popupDescription.innerHTML = translations[lang].popupDescription[2][0];
 }
 function resetPopup() {
     popupArea.classList.remove('disabled');
@@ -1000,7 +1025,7 @@ function pageSetting() {
         importSaveFile();
     });
     buttonChangeLanuage.addEventListener('click', () => {
-        appearPopup(1, 0);
+        appearPopup(2, 0);
     });
 }
 function exportSaveFile() {
@@ -2016,6 +2041,9 @@ function saveGame() {
     setCookie('arrMemoryEnable', arrMemoryEnable);
     // 도전 과제
     setCookie('arrAchievementEnable', arrAchievementEnable);
+    // 언어
+    setCookie('ifSelectLanguage', ifSelectLanguage);
+    setCookie('lang', lang);
     // 저장된 날짜
     setCookie('lastSaveTime', Date.now());
 }
@@ -2080,6 +2108,9 @@ function loadGame() { // 게임 로드
         settingProductPrice(i, arrProductGetCount[i])
         settingProductStateImg(i)
     }
+    // 언어
+    ifSelectLanguage = getCookie('ifSelectLanguage');
+    lang = getCookie('lang');
     // 저장된 시간
     lastSaveTime = parseInt(getCookie('lastSaveTime'), 10);
     productOffline();
@@ -2119,15 +2150,19 @@ window.onload = function() {
     settingProduct();
 
     // 쿠키
-    const checkCookies = document.cookie;
+
+    checkCookies = document.cookie;
     if(checkCookies) {
-        loadGame();
+        ifSelectLanguage = getCookie('ifSelectLanguage'); // 언어 관련 저장된 쿠키가 있는지 확인
+        if(ifSelectLanguage == false) { // 언어 선택을 하지 않고 쿠키가 저장되었을 경우
+            appearPopup(2, 0);
+            productDefaultSetting();
+        }
+        else loadGame();
     } else {
-        appearPopup(1, 0);
+        appearPopup(2, 0);
         productDefaultSetting();
     }
-
-    //if(arrAppearPopupBool[1][0] == false) appearPopup(1, 0);
 
     updateNews();
     gameMenuDefaultSetting();
