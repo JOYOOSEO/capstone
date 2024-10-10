@@ -1,8 +1,25 @@
-// 학생
+/*
+    학생 수치
+*/
 let student = 0; // 현재 보유 학생
 let addClickStudent = 1e4; // 클릭당 추가 학생
 let addPerSecondStudent = 0; // 초당 추가 학생
-// 통계
+/*
+    팝업
+*/
+let arrAppearPopupBool = [
+    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+    [false]
+]
+
+// Tooltip
+const arrTooltipTagColor = [ // 고정
+    [],
+    ['#ADB5BD,#F8F9FA', 'rgb(82,28,20),rgb(241,183,139)', 'rgb(214,138,46),rgb(242,225,193)', 'rgb(255,61,0),rgb(255,214,0)', 'rgb(102,7,8),rgb(229,56,59)', 'rgb(9,132,0),rgb(118,82,35)', 'rgb(255,255,0),rgb(225,98,110)', 'rgb(0,0,0),rgb(225,255,255)', 'rgb(0,0,0),rgb(225,255,255)', 'rgb(0,0,0),rgb(225,255,255)']
+]
+/*
+    통계 메뉴
+*/
 let statsTotalStudent = 0;
 let statsStudent = 0;
 let statsTotalAddPerSecondStudent = 0;
@@ -14,72 +31,19 @@ let statsClickCount = 0;
 let statsTotalProductCount = 0;
 let statsProductCount = 0;
 let statsReturningCount = 0;
-
-
-let arrPopupAppearBool = [
-    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-    [false]
-]
-// FormatNumber list | 고정
-const arrFormatNumberKr = ['','만','억','조','경','해','자','양','구','간','정','재','극','항하사','아승기','나유타','불가사의','무량대수','무한']
-let arrFormatStandardKr = [1,1e4,1e8,1e12,1e16,1e20,1e24,1e28,1e32,1e36,1e40,1e44,1e48,1e52,1e56,1e60,1e64,1e68,1e72]
-
-// Tooltip
-const arrTooltipTagColor = [
-    [],
-    ['#ADB5BD,#F8F9FA', 'rgb(82,28,20),rgb(241,183,139)', 'rgb(214,138,46),rgb(242,225,193)', 'rgb(255,61,0),rgb(255,214,0)', 'rgb(102,7,8),rgb(229,56,59)', 'rgb(9,132,0),rgb(118,82,35)', 'rgb(255,255,0),rgb(225,98,110)', 'rgb(0,0,0),rgb(225,255,255)', 'rgb(0,0,0),rgb(225,255,255)', 'rgb(0,0,0),rgb(225,255,255)']
-]
-
-// Product list
-let arrProductGetCount = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-let arrProductBackgroundEnable = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
-let arrProductStateImg = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-const productLength = 16; // 증축 개수 | 고정
-let arrProductPrice = [ // 증축 가격 | 고정
-    50, // 50
-    160, // 160
-    2700, // 2700
-    3.9e4, // 3.9만
-    52e4, // 52만
-    670e4, // 670만
-    8500e4, // 8500만
-    10.8e8, // 10.8억
-    229e8, // 229 억
-    3630e8, // 3630 억
-    5.18e12, // 5.18 조
-    70.7e12, // 70.7 조
-    951e12, // 951 조
-    1.29e16, // 1.29 경
-    26.7e16, // 26.7 경
-    428e16 // 428 경
-];
-let arrProductAddPerSecond = [ // 증축 초당 증가량
-    1, // 1
-    10, // 10
-    55, // 55
-    300, // 300
-    2000, // 2000
-    1 * 1e4, // 1만
-    5.5 * 1e4, // 5.5만
-    30 * 1e4, // 30만
-    200 * 1e4, // 200만
-    1500 * 1e4, // 1500만
-    8000 * 1e4, // 8000만
-    5.5 * 1e8, // 5.5억
-    35 * 1e8, // 35억
-    300 * 1e8, // 300억
-    2000 * 1e8, // 2000억
-    1.5 * 1e12 // 1.5조
-];
-let arrProductAddPerSecondBonus = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
-let arrProductAddPerSecondTotal = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-let arrProductProducedTotal = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-let productAddPerSecondTotal = 0;
-
-let arrProductUnlock = [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]
-
-let arrProductUpgradeId = [];
-let arrProductUpgradeEnable = [
+/*
+    회귀 메뉴
+*/
+let returningCurrentLevel = 0; // 현재 레벨
+let returningIncreaseLevel = 0; // 증가된 레벨
+let returningExp = 0; // 현재 경험치
+let returningExpMax = ((1 ** 3) / 2) * 1e12; // 다음 레벨업하기 위한 필요 경험치
+let returningProductionMultiple = 1; // 회귀 입학 효율 배수
+/*
+    업그레이드
+*/
+let arrUpgradeId = []; // 남아있는 숫자가 강화 메뉴에 등장, 구매하면 해당 강화의 숫자는 제거됨
+let arrUpgradeEnable = [ // 강화가 재반복 등장하는 것을 막기 위한 배열
     [false, false, false, false, false, false, false, false, false, false],
     [false, false, false, false, false, false, false, false, false, false],
     [false, false, false, false, false, false, false, false, false, false],
@@ -98,7 +62,7 @@ let arrProductUpgradeEnable = [
     [false, false, false, false, false, false, false, false, false, false],
     [false]
 ];
-let arrProductUpgradePrice = [ // 고정
+let arrUpgradePrice = [ // 강화 가격 | 고정
     [50*10, 50*100, 50*5000, 50*25e4, 50*2500e4, 50*25e8, 50*1.25e12, 50*625e12, 50*62.5e16, 50*6.25e20],
     [160*10, 160*100, 160*5000, 160*25e4, 160*2500e4, 160*25e8, 160*1.25e12, 160*625e12, 160*62.5e16, 160*6.25e20],
     [2700*10, 2700*100, 2700*5000, 2700*25e4, 2700*2500e4, 2700*25e8, 2700*1.25e12, 2700*625e12, 2700*62.5e16, 2700*6.25e200],
@@ -117,7 +81,7 @@ let arrProductUpgradePrice = [ // 고정
     [428e16*10, 428e16*100, 428e16*5000, 428e16*25e4, 428e16*2500e4, 428e16*25e8, 428e16*1.25e12, 428e16*625e12, 428e16*62.5e16, 428e16*6.25e20],
     []
 ];
-let arrProductUpgradePurchaseBool = [
+let arrProductUpgradePurchaseBool = [ // 구매가 완료된 강화 ID 번호
     [],
     [],
     [],
@@ -136,21 +100,103 @@ let arrProductUpgradePurchaseBool = [
     [],
     []
 ];
-let arrProductUpgradeCount = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-let arrProductUpgradeCountMax = [10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10]; // 고정
+/*
+    입학 효율
+*/
+let productionMultiple = 1; // 입학 효율 배수
+/*
+    증축
+*/
+const productLength = 16; // 증축 개수 | 고정
+
+let arrProductAppear = [true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false];
+let arrProductUnlock = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
+let arrProductGetCount = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; // 보유한 증축 개수
+
+let arrProductPrice = [ // 증축 가격 | 고정
+    50, // 50
+    160, // 160
+    2700, // 2700
+    3.9e4, // 3.9만
+    52e4, // 52만
+    670e4, // 670만
+    8500e4, // 8500만
+    10.8e8, // 10.8억
+    229e8, // 229 억
+    3630e8, // 3630 억
+    5.18e12, // 5.18 조
+    70.7e12, // 70.7 조
+    951e12, // 951 조
+    1.29e16, // 1.29 경
+    26.7e16, // 26.7 경
+    428e16 // 428 경
+];
+
+let arrProductAddDefaultValue = [ // 증축 초당 증가량 | 고정
+    1, // 1
+    10, // 10
+    55, // 55
+    300, // 300
+    2000, // 2000
+    1 * 1e4, // 1만
+    5.5 * 1e4, // 5.5만
+    30 * 1e4, // 30만
+    200 * 1e4, // 200만
+    1500 * 1e4, // 1500만
+    8000 * 1e4, // 8000만
+    5.5 * 1e8, // 5.5억
+    35 * 1e8, // 35억
+    300 * 1e8, // 300억
+    2000 * 1e8, // 2000억
+    1.5 * 1e12 // 1.5조
+];
+let arrProductAddBonusValue = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]; // 증축 초당 증가량 배율 보너스
+let arrProductAddTotalValue = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; // 증축 최종 초당 증가량 | 공식: 기본 * 보너스 * 효율 배수 * 회귀 효율 배수
+
+let arrProductStatsProductionTotal = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; // 증축 정보: 지금까지 입학한 학생 수
+let productAddPerSecondTotal = 0; // 모든 증축의 초당 증가량을 합한 값
+
+let arrProductUpgradeCount = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; // 증축 업그레이드 완료된 개수
+let arrProductUpgradeCountMax = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10]; // 증축 업그레이드 최대 개수
+
+let arrProductBackgroundEnable = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false] // 고정
+let arrProductRowIconCount = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+// 오프라인 생산
+let lastSaveTime;
+let offlineTimeDiff;
+let offlineEfficiency = 0.05;
+let maxOfflineTime = 3600 * 24;
+let offlineEarnings;
+// 기억 왜곡
+let arrMemoryId = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // 고정
+let arrMemoryEnable = [false, false, false, false, false, false, false, false, false, false, false];
+let arrMemoryPrice = [1, 5, 100, 500, 1000, 2500, 10000, 25000, 100000, 250000]; // 고정
+// 도전 과제
+let arrAchievementId = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119]
+let arrAchievementEnable = [
+    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+];
+
+// FormatNumber list | 고정
+const arrFormatNumberKr = ['','만','억','조','경','해','자','양','구','간','정','재','극','항하사','아승기','나유타','불가사의','무량대수','무한']
+let arrFormatStandardKr = [1,1e4,1e8,1e12,1e16,1e20,1e24,1e28,1e32,1e36,1e40,1e44,1e48,1e52,1e56,1e60,1e64,1e68,1e72]
+
 
 /*
     언어
 */
 const translations = {
-    ko: {
+    KO: {
         windowTitle: (value) => `${value} 명 - 대학 구조 위원회`,
+        popupLanguageText_description: '',
         popupTitle: [
             [
-                '학생 최초 증축',
+                '최초의 입학생',
                 '학교 시설 최초 증축',
                 '교통 시설 최초 증축',
-                '주거 시설 최초 증축',
+                '주거지 최초 증축',
                 '은행 최초 증축',
                 '공항 최초 증축',
                 '기업 최초 증축',
@@ -166,22 +212,48 @@ const translations = {
             ],
             [
                 '대학 구조 위원회',
+                '과거로 돌아왔습니다.',
                 '끝'
-            ]
-        ],
-        popupTitleName: '학교의 이름을 바꿀 수 있습니다!',
-        popupDescription: [
-            [
-
             ],
             [
-                '텍스트 테스트',
-
+                '언어 선택',
+                '이름을 바꾸시겠습니까?',
+                '당신이 없는 동안...',
+                '<b class="returning">돌아갈 시간</b>'
+            ],
+        ],
+        popupDescription: [
+            [
+                '당신이 위원장 자리에 앉은 이후 드디어 최초의 입학생이 생겼습니다.<br><br>올해 입학생은 이 학생이 유일하지만, 표정을 보니 앞으로의 행보가 기대되는군요.',
+                '빈약했던 학교에 다양한 시설을 설치했습니다.<br><br>더 많은 시설을 설치하기 위해 당신은 프렌차이즈와 계약할 계획을 세웁니다.',
+                '교통 시설',
+                '주거지',
+                '은행',
+                '공항',
+                '기업',
+                '현 정부는 우리 학교를 위해 많은 정책을 실시하고 많은 법을 논의할 것입니다.<br><br>참고로 현 대통령은 당신이 위원장 자리에 앉았을 때 최초로 입학했던 학생이였습니다.',
+                '세계 정부',
+                '복제 실험실',
+                '우주정거장',
+                '차원 포털',
+                '블랙홀',
+                '타임머신',
+                '평행 세계',
+                '또 다른 나'
+            ],
+            [
+                '올해의 유일한 졸업생인 당신은 총장님의 부름에 한걸음 달려갑니다.<br><br>총장님은 당신을 보자 이렇게 말합니다.<br><br><b class="fsItalic fs90">\"학교가 곧 폐교 직전이네. 그래서 대학 구조 위원회를 만들었는데, 네가 위원장을 맡았으면 한다. 거절한다면 졸업장은 주지 않을걸세.\"</b><br><br><br>좋든 싫든 당신은 졸업장을 돌려받기 위한 위원회 활동을 시작합니다.',
+                '갑자기 눈앞에는 위원장 자리를 권하는 총장님이 있습니다. 시계를 보니 날짜도 과거로 왔습니다.<br><br>지금까지의 기억이 생생한데 이 상황이 혼란스럽기만 합니다.<br><br>당신의 반응을 살피던 총장님은 조심스럽게 말을 꺼냈습니다.<br><br><b class="fsItalic fs90">\"그렇게 좋은 기분은 아니지? 익숙해질 거야.\"</b>',
+                '끝'
+            ],
+            [
+                '언어 선택',
+                '학교의 이름을 바꿀 수 있습니다!<br><br>학교의 이름을 바꾸는 것은 재미를 위한 것으로, 진행에 영향을 주지 않습니다.<br><br>가급적 부적절한 단어 사용은 삼가시길 바랍니다.',
+                '당신이 없는동안 수많은 학생이 입학했습니다!<br><br><b class="fs200"><b id="showOfflineEarnings"></b> 명 입학</b><br><b class="fcDefault fs75">총 <b id="showOfflineTimeDiff" class="textShadow fcWhite fs110"></b> 초 동안 <b id="showOfflineEfficiency" class="textShadow fcWhite fs110"></b>%의 효율 / 최대 <b id="showMaxOfflineTime" class="textShadow fcWhite fs110"></b>시간</b>',
+                '<b class="returning">돌아갈 시간</b>'
             ]
         ],
-        popupDescriptionName: '원하는 이름으로 최소 1글자에서 최대 12글자까지 변경할 수 있습니다.<br><br>재미를 위한 것으로, 게임 진행에 영향을 주지 않습니다.',
-        popupCloseButton: '닫기',
-        popupChangeButton: '바꾸기',
+        popupButton_text: ['닫기', '바꾸기', '과거로 돌아가기'],
         universityMyName: '대림',
         universityNameSuffix: ' 대학교',
         students: (value) => `${value} 명`,
@@ -204,19 +276,19 @@ const translations = {
         menuStatsText_title: '통계',
         menuStatsText_subtitleCommon: '기본',
         menuStatsText_subtitleDetail: '세부',
-        menuStatsText_statsTotalStudent: (value) => `누적된 총 입학 학생 (전체): <b>${value}</b>`,
-        menuStatsText_statsStudent: (value1, value2) => `누적된 총 입학 학생 (이번 회귀): <b>${value1} (${value2}%)</b>`,
-        menuStatsText_showPerSecondStudent: (value) => `초당 입학 학생: <b>${value}</b>`,
-        menuStatsText_statsTotalPerSecondStudent: (value) => `누적된 초당 입학 학생 (전체): <b>${value}</b>`,
-        menuStatsText_statsPerSecondStudent: (value1, value2) => `누적된 초당 입학 학생 (이번 회귀): <b>${value1} (${value2}%)</b>`,
-        menuStatsText_showClickStudent: (value) => `클릭당 입학 학생: <b>${value}</b>`,
-        menuStatsText_statsTotalClickStudent: (value) => `누적된 클릭당 입학 학생 (전체): <b>${value}</b>`,
-        menuStatsText_statsClickStudent: (value1, value2) => `누적된 클릭당 입학 학생 (이번 회귀): <b>${value1} (${value2}%)</b>`,
-        menuStatsText_statsTotalClickCount: (value) => `누적된 클릭 횟수 (전체): <b>${value}</b>`,
-        menuStatsText_statsClickCount: (value1, value2) => `누적된 클릭 횟수 (이번 회귀): <b>${value1} (${value2}%)</b>`,
-        menuStatsText_statsTotalProductCount: (value) => `누적된 증축 횟수 (전체): <b>${value}</b>`,
-        menuStatsText_statsProductCount: (value1, value2) => `누적된 증축 횟수 (이번 회귀): <b>${value1} (${value2}%)</b>`,
-        menuStatsText_statsReturningCount: (value1) => `누적된 회귀 횟수: <b>${value1}</b>`,
+        menuStatsText_statsTotalStudent: (value) => `누적된 총 입학 학생 (전체): <b class="fcWhite">${value}</b>`,
+        menuStatsText_statsStudent: (value1, value2) => `누적된 총 입학 학생 (이번 회귀): <b class="fcWhite">${value1} (${value2}%)</b>`,
+        menuStatsText_showPerSecondStudent: (value) => `초당 입학 학생: <b class="fcWhite">${value}</b>`,
+        menuStatsText_statsTotalPerSecondStudent: (value) => `누적된 초당 입학 학생 (전체): <b class="fcWhite">${value}</b>`,
+        menuStatsText_statsPerSecondStudent: (value1, value2) => `누적된 초당 입학 학생 (이번 회귀): <b class="fcWhite">${value1} (${value2}%)</b>`,
+        menuStatsText_showClickStudent: (value) => `클릭당 입학 학생: <b class="fcWhite">${value}</b>`,
+        menuStatsText_statsTotalClickStudent: (value) => `누적된 클릭당 입학 학생 (전체): <b class="fcWhite">${value}</b>`,
+        menuStatsText_statsClickStudent: (value1, value2) => `누적된 클릭당 입학 학생 (이번 회귀): <b class="fcWhite">${value1} (${value2}%)</b>`,
+        menuStatsText_statsTotalClickCount: (value) => `누적된 클릭 횟수 (전체): <b class="fcWhite">${value}</b>`,
+        menuStatsText_statsClickCount: (value1, value2) => `누적된 클릭 횟수 (이번 회귀): <b class="fcWhite">${value1} (${value2}%)</b>`,
+        menuStatsText_statsTotalProductCount: (value) => `누적된 증축 횟수 (전체): <b class="fcWhite">${value}</b>`,
+        menuStatsText_statsProductCount: (value1, value2) => `누적된 증축 횟수 (이번 회귀): <b class="fcWhite">${value1} (${value2}%)</b>`,
+        menuStatsText_statsReturningCount: (value1) => `누적된 회귀 횟수: <b class="fcWhite">${value1}</b>`,
         menuStatsText_subtitleUpgrade: '강화',
         menuStatsText_subtitleAchievement: '도전 과제',
         menuSubtitleProduct: '증축',
@@ -227,10 +299,21 @@ const translations = {
         menuInfoText_subtitleCredit: '개발자',
         menuInfoText_subtitlePatchNote: '패치 노트',
         menuReturningText_title: '회귀',
-        arrProductName: ['학생','학교 시설','교통 시설','주거 시설','은행','공항','기업','정부','세계 정부','복제 실험실','우주정거장','차원 포털','블랙홀','타임머신','평행 세계','또 다른 나'],
+        menuReturningText_panelLevel: (value) => `경험 등급 <b class="fcWhite">${value}</b>`,
+        menuReturningText_timeDate: (value) => `위원회가 <b class="fcWhite">${value}</b> 일간 운영되었습니다`,
+        menuReturningText_nowReturningText_1: '지금 회귀한다면',
+        menuReturningText_nowReturningIncreaseLevel: (value1, value2) => `등급 +${value1}<b class="fcDefault fs75 fsItalic">(SpS +${value2}%)</b>`,
+        menuReturningText_nowReturningText_2: '을(를) 얻습니다.',
+        menuReturningText_emptyExp: (value) => `다음 등급까지 <b class="fcWhite">${value}</b> 명 입학 필요`,
+        menuReturningText_subtitleLevel: '회귀 레벨',
+        menuReturningText_subtitleAbility: '기억 왜곡',
+        arrProductName: ['학생','학교 시설','교통 시설','주거지','은행','공항','기업','정부','세계 정부','복제 실험실','우주정거장','차원 포털','블랙홀','타임머신','평행 세계','또 다른 나'],
         tooltipTagName: [
-            ['증축', '강화'],
-            ['금속', '초콜릿', '호박꿀', '오렌지 즙', '경고등', '짙은 나무', '불꽃', '다이아몬드', '4차원', '공허']
+            ['증축', '강화', '기억 왜곡', '도전 과제'],
+            ['금속', '초콜릿', '호박꿀', '오렌지 즙', '경고등', '짙은 나무', '불꽃', '다이아몬드', '4차원', '공허'],
+            [],
+            ['비활성화', '활성화'],
+            ['잠김', '해금']
         ],
         productTooltipDescription: [
             '학생 한 명 한 명이 소중한 법입니다.',
@@ -251,21 +334,21 @@ const translations = {
             '당신은 혼자가 아닙니다. 그리고 또 다른 당신도 혼자가 아니죠.'
         ],
         productTooltipGetCount: (value) => `${value} 보유`,
-        productTooltipStat_1: (value) => `보유마다 <b>${value} 명</b> 입학`,
-        productTooltipStat_2: (value) => `초당 총 <b>${value} 명</b> 입학`,
-        productTooltipStat_3: (value) => `지금까지 <b>${value} 명</b> 입학`,
+        productTooltipStats_1: (value) => `보유마다 <b class="fcWhite fs110">${value} 명</b> 입학`,
+        productTooltipStats_2: (value) => `초당 총 <b class="fcWhite fs110">${value} 명</b> 입학`,
+        productTooltipStats_3: (value) => `지금까지 <b class="fcWhite fs110">${value} 명</b> 입학`,
         productTooltipUpgradeDone: '강화 완료 목록',
         menuSubtitleUpgrade: '강화',
         upgradeMenuButtonExpand: '펼치기',
         upgradeMenuButtonFold: '접기',
         upgradeName: [
             ['학습의 경로', '10년제 대학교', '식사 지원', '인생 항해자', '지식 공유', '지혜의 서재', '원주율 끝까지 외우기 대회', '하루에 42시간 7분 공부', '고대의 마법서', '외계 학문 연구'],
-            ['교내 상가', '탐구실', '토론의 방', '창의력 공방', '비상 대응소', '1천 제곱 킬로미터 운동장', '연금술 실험실', '지식의 사원 건설', '현실 조작', '미지의 지하실'],
-            ['', '', '', '', '', '', '', '', '', ''],
+            ['교내 상가', '탐구실', '토론의 방', '창의력 공방', '비상 대응소', '1천 제곱 킬로미터 운동장', '연금술 실험실', '지식의 사원', '현실 조작', '미지의 지하실'],
+            ['교통비 무료', '다인승차량', '속도 규제 해제', '초고속 환승', '전용 초고속도로', '', '', '', '', ''],
             ['보금자리', '인프라 확대', '영혼의 안식처', '삶의 거처', '관리비 무료', '1인 1채', '뿌리의 공간', '쾌적한 공간', '', ''],
             ['자산의 금고', '환율 고정', '이익의 전당', '신용카드', '인터넷 뱅킹 지원', '수업료 전액 대출', '부의 창고', '자본의 정원', '고리대금', '금전의 흐름'],
             ['비상 연결지', '하늘 도로', '공중 교차로', '관제탑', '24시간 운행', '공중 급유', '지평선 거점', '응급상황 대비', '초고속 비행', '무료 면세점 확대'],
-            ['', '', '', '', '', '', '', '', '', ''],
+            ['', '', '', '당일 답신', '졸업생 우대 입사', '', '', '', '', ''],
             ['', '', '', '', '', '', '', '', '', ''],
             ['', '', '', '', '', '', '', '', '', ''],
             ['복제인간', '생명 재구성', '정체성 조작', '인체 재구성 프로젝트', '복사기', '이중 존재', '존재 변형', '새로운 쌍둥이', '유전자 조작', '복제 재활용 처리소'],
@@ -278,25 +361,74 @@ const translations = {
         
         ],
         upgradeDescription: [
-            ['학생의 입학 효율 <b>두 배</b> 증가'],
-            ['학교 시설의 입학 효율 <b>두 배</b> 증가'],
-            ['교통 시설의 입학 효율 <b>두 배</b> 증가'],
-            ['주거 시설의 입학 효율 <b>두 배</b> 증가'],
-            ['은행의 입학 효율 <b>두 배</b> 증가'],
-            ['공항의 입학 효율 <b>두 배</b> 증가'],
-            ['기업의 입학 효율 <b>두 배</b> 증가'],
-            ['정부의 입학 효율 <b>두 배</b> 증가'],
-            ['세계 정부의 입학 효율 <b>두 배</b> 증가'],
-            ['복제 실험실의 입학 효율 <b>두 배</b> 증가'],
-            ['우주정거장의 입학 효율 <b>두 배</b> 증가'],
-            ['차원 포털의 입학 효율 <b>두 배</b> 증가'],
-            ['블랙홀의 입학 효율 <b>두 배</b> 증가'],
-            ['타임머신의 입학 효율 <b>두 배</b> 증가'],
-            ['평행 세계의 입학 효율 <b>두 배</b> 증가'],
-            ['또 다른 나의 입학 효율 <b>두 배</b> 증가']
-        ]
+            ['학생의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
+            ['학교 시설의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
+            ['교통 시설의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
+            ['주거 시설의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
+            ['은행의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
+            ['공항의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
+            ['기업의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
+            ['정부의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
+            ['세계 정부의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
+            ['복제 실험실의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
+            ['우주정거장의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
+            ['차원 포털의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
+            ['블랙홀의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
+            ['타임머신의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
+            ['평행 세계의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
+            ['또 다른 나의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
+            ['클릭의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가']
+        ],
+        memoryPrice: (value) => `기억 등급 ${value}`,
+        memoryName: ['기억 축적', '경험적 사고', '무의식', '초장기 기억력', '해마 2개', '머릿속 저장소', '절대 기억', '악마랑 기억력 시험보기', '천사랑 기억력 시험보기', '10', '11', '', '', '', '', '', '', '', '', ''],
+        memoryDescription: [
+            '기억 등급 1당 영구적으로 <b class="fcWhite fs110">SpS +1%</b>',
+            '입학 효율 배수 <b class="fcWhite fs110">+5%</b>',
+            '클릭 효율 <b class="fcWhite fs110">두 배</b> 증가',
+            '비접속 효율 <b class="fcWhite fs110">+10%로 상향</b>',
+            '금속 등급의 강화 비용 <b class="fcWhite fs110">-25%</b>',
+            '비접속 효율 <b class="fcWhite fs110">+20%로 상향</b>',
+            '학생의 효율 <b class="fcWhite fs110">+50%</b>',
+            '비접속 최대 시간을 <b class="fcWhite fs110">36시간으로 증가</b>',
+            '입학 효율 배수 <b class="fcWhite fs110">+5%</b>',
+            '학교 시설 효율 <b class="fcWhite fs110">+50%</b>',
+            '',
+            '111',
+            '112',
+            '113',
+            '114',
+            '115',
+            '',
+            '',
+            '',
+            ''
+        ],
+        memoryFlavorText: [
+            '123',
+            '11',
+            '1010',
+            '01010',
+            '101010',
+            '10101',
+            '10101',
+            '010',
+            '1010',
+            '10',
+            '10101',
+            '010',
+            '101',
+            '0101',
+            '0101',
+            '01010',
+            '101',
+            '010101',
+            '0101',
+            '010101'
+        ],
+        achievementName: [],
+        achievementDescription: []
     },
-    en: {
+    EN: {
         windowTitle: (value) => `${value} people - Rescue Committee`,
         popupTitle: [
             [
@@ -318,15 +450,39 @@ const translations = {
                 '또 다른 나 최초 증축'
             ],
             [
-                '대학 구조 위원회'
+                'Language Select',
+                '대학 구조 위원회',
+                '학교의 이름을 바꿀 수 있습니다!',
+                '회귀할 시간입니다',
+                '과거로 돌아왔습니다. 기억만요.',
+                '끝'
             ]
         ],
         popupDescription: [
             [
-
+                '학생',
+                '학교 시설',
+                '교통 시설',
+                '주거지',
+                '은행',
+                '공항',
+                '기업',
+                '정부',
+                '세계 정부',
+                '복제 실험실',
+                '우주정거장',
+                '차원 포털',
+                '블랙홀',
+                '타임머신',
+                '평행 세계',
+                '또 다른 나'
             ],
             [
-                '졸업이 얼마 남지 않은 당신, 총장이 당신을 찾습니다.<br>당신은 원치 않았지만 위원회 활동을 시작하게 됩니다.'
+                '<br>The language can be changed in settings.<br><br>',
+                '텍스트 테스트',
+                '원하는 이름으로 최소 1글자에서 최대 12글자까지 변경할 수 있습니다.<br><br>재미를 위한 것으로, 게임 진행에 영향을 주지 않습니다.<br><br>',
+                '텍스트 테스트',
+                '텍스트 테스트'
             ]
         ],
         popupCloseButton: 'Close',
@@ -360,9 +516,9 @@ const translations = {
         ],
         productTooltipUpgradeDone: 'Upgrade complete list',
         productTooltipGetCount: (value) => `Have ${value} `,
-        productTooltipStat_1: (value) => `<b>${value} people</b> per holding for school admission`,
-        productTooltipStat_2: (value) => `<b>${value} people</b> students admitted as per second`,
-        productTooltipStat_3: (value) => `<b>${value} people</b> admitted as students so far`
+        productTooltipStats_1: (value) => `<b>${value} people</b> per holding for school admission`,
+        productTooltipStats_2: (value) => `<b>${value} people</b> students admitted as per second`,
+        productTooltipStats_3: (value) => `<b>${value} people</b> admitted as students so far`
 
     }
 }
@@ -370,176 +526,67 @@ const translations = {
 
 // 언어
 const languageSelector = document.getElementById('languageSelector');
-let lang = languageSelector.value;
+let lang = 'KO';
 changeLanguage();
 
-languageSelector.addEventListener('change', changeLanguage);
+// languageSelector.addEventListener('change', changeLanguage);
 function changeLanguage() {
-    lang = languageSelector.value;
 
     document.getElementById('showNewsTitle').innerHTML = translations[lang].newsTitle;
     //document.getElementById('universityNameSuffix').innerHTML = popupInput.value + translations[lang].universityNameSuffix;
     document.getElementById('upgradeSubtitle').innerHTML = translations[lang].menuSubtitleUpgrade;
     document.getElementById('productSubtitle').innerHTML = translations[lang].menuSubtitleProduct;
 
-    updateStudent();
+    updateShowStudent();
     updateUpgradeMenuButton();
 }
 // 이름 바꾸기
 document.getElementById('universityName').addEventListener('click', changeUniversityName);
 function changeUniversityName() {
-    createPopupChangeName();
+    appearPopup(2, 1);
 }
 
 // 학교 로고 클릭 이벤트
 let universityLogo = document.getElementById('universityLogo');
-universityLogo.addEventListener('click', function(event) {
+universityLogo.addEventListener('click', (e) => {
+    // 학생 수 더하기
     student += addClickStudent;
+    // 통계
     statsTotalStudent += addClickStudent;
     statsStudent += addClickStudent;
     statsTotalAddClickStudent += addClickStudent;
     statsAddClickStudent += addClickStudent;
     statsClickCount++;
     statsTotalClickCount++;
+    // 갱신
     console.log(student);
-    updateStudent();
+    updateShowStudent();
 
-    createFloatingText();
+    void universityLogo.offsetWidth;
+    universityLogo.classList.add('bounce');
+    universityLogo.addEventListener('animationend', () => {
+        universityLogo.classList.remove('bounce');
+    })
+
+    setTimeout(() => {
+        console.log(e.pageX + ' / ' + e.pageY);
+        const floatingText = document.createElement('div');
+        floatingText.classList.add('floatingUp');
+        floatingText.innerHTML = '+' + formatNumber(addClickStudent);
+
+        floatingText.style.left = `${e.offsetX}px`;
+        floatingText.style.top = `${e.offsetY}px`;
+        universityLogo.appendChild(floatingText);
+
+        floatingText.addEventListener('animationend', () => {
+            floatingText.remove();
+        });
+    }, 1);
+    
 })
 universityLogo.addEventListener('mousedown', () => {
     
-})
-function createFloatingText(event) {
-    const floatingText = document.createElement('div');
-    floatingText.classList.add('floatingUp');
-    floatingText.innerHTML = '+' + formatNumber(addClickStudent);
-
-    floatingText.style.left = `${event.pageX}px`;
-    floatingText.style.top = `${event.pageY}px`;
-
-    universityLogo.appendChild(floatingText);
-
-    floatingText.addEventListener('animationend', () => {
-        floatingText.remove();
-    })
-    console.log(
-        'pageX: ', event.pageX, 'pageY: ', event.pageY,
-        'clientX: ', event.clientX, 'clientY:', event.clientY)
-  }
-  
-  //window.addEventListener('mousemove', mousemove);
-
-for(let i = 0 ; i < productLength ; i++) {
-    // 처음 작동
-    const product = document.getElementById(`product_${i}`);
-    const tooltip = document.getElementById('productTooltip');
-    let intervalUpdateProductTooltip;
-
-    product.querySelector('.name').innerHTML = '???';
-    product.querySelector('.price').innerHTML = translations[lang].students(formatNumber(arrProductPrice[i]));
-
-    // 마우스가 들어왔을 때 >설명창< 
-    product.addEventListener('mouseenter', () => {
-        // 증축 설명창 위치 조절
-        tooltip.style.top = `${product.getBoundingClientRect().top + 10}px`;
-        // 만약 맨 위를 벗어났다면
-        if(product.getBoundingClientRect().top <= 0) tooltip.style.top = `5px`;
-        // 만약 맨 아래에서 벗어났다면 | setTimeout으로 tooltip의 위치 갱신
-        setTimeout(() => { if(tooltip.getBoundingClientRect().bottom > window.innerHeight) tooltip.style.top = `${window.innerHeight - tooltip.getBoundingClientRect().height - 10}px`; },0);
-
-        if(arrProductUnlock[i] == true) { // 해금되었다면
-            // 이름 재설정
-            tooltip.querySelector('.name').textContent = translations[lang].arrProductName[i];
-            // 설명 재설정
-            tooltip.querySelector('.description').textContent = translations[lang].productTooltipDescription[i];
-            // 태그 재설정
-            tooltip.querySelector('.tagList').innerHTML = ''; // 태그 지우기
-            if(arrProductGetCount[i] >= 1) {
-                appendTag('product', 'normal');
-
-                for(let j = 0 ; j < arrProductUpgradeCountMax[i] ; j++) {
-                    if(arrProductUpgradeCount[i] == `${j}`) appendTag('product', `upgradeLevel_${j}`);
-                }
-            }
-            // 강화 현황 활성화
-            if(arrProductUpgradeCount[i] >= 1) { // 강화 최소 1개 이상 했을 시
-                tooltip.querySelector('#bottomLine').classList.remove('disabled');
-                tooltip.querySelector('#productUpgradeDone').classList.remove('disabled');
-                tooltip.querySelector('#productUpgradeDone').innerHTML = translations[lang].productTooltipUpgradeDone;
-                tooltip.querySelector('#progressUpgrade').classList.remove('disabled');
-                tooltip.querySelector('#progressUpgrade').innerHTML = '(' + arrProductUpgradeCount[i] + '/' + arrProductUpgradeCountMax[i] + ')';
-                tooltip.querySelector('#upgradePurchaseList').classList.remove('disabled');
-                tooltip.querySelector('#upgradePurchaseList').innerHTML = '';
-                addProductUpgradeIcon(i);
-            } else { // 아니라면
-                tooltip.querySelector('#bottomLine').classList.add('disabled');
-                tooltip.querySelector('#productUpgradeDone').classList.add('disabled');
-                tooltip.querySelector('#progressUpgrade').classList.add('disabled');
-                tooltip.querySelector('#upgradePurchaseList').innerHTML = '';
-                tooltip.querySelector('#upgradePurchaseList').classList.add('disabled');
-            }
-        } else { // 해금 안 됐다면
-            tooltip.src = "/img/icon_lock.png";
-            tooltip.querySelector('.name').textContent = '???';
-            tooltip.querySelector('.price').textContent = '';
-            tooltip.querySelector('.getCount').textContent = '';
-            tooltip.querySelector('.tagList').textContent = '';
-            tooltip.querySelector('.description').textContent = '???';
-            tooltip.querySelector('#centerLine').classList.add('disabled');
-            tooltip.querySelector('#info_1').classList.add('disabled');
-            tooltip.querySelector('#info_2').classList.add('disabled');
-            tooltip.querySelector('#info_3').classList.add('disabled');
-            tooltip.querySelector('#bottomLine').classList.add('disabled');
-            tooltip.querySelector('#productUpgradeDone').classList.add('disabled');
-            tooltip.querySelector('#progressUpgrade').classList.add('disabled');
-        }
-        // 설명창 보이기
-        tooltip.style.display = 'block';
-        // 갱신 함수 || 최적화를 위해 1초에 100번 작동
-        intervalUpdateProductTooltip = setInterval(() => { updateTooltip(i); }, 10);
-    });
-    // 마우스가 바깥으로 나갔을 때
-    product.addEventListener('mouseleave', (e) => {
-        // 설명창 가리기
-        tooltip.style.display = 'none';
-        // 반복 제거
-        clearInterval(intervalUpdateProductTooltip);
-    });
-    // 구매 했다면
-    product.addEventListener('click', () => {
-        if(student >= arrProductPrice[i]) {
-            // 비용 지불
-            student -= arrProductPrice[i];
-            // 생산품 증가
-            arrProductGetCount[i]++;
-            // 일정 개수 이상이라면 강화 추가
-            const forUpgradeStandardCount = [1, 10, 25, 50, 100, 150, 200, 250, 300, 350];
-            const forUpgradeIndex = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-            for(let i = 0 ; i < productLength ; i++) {
-                for(let j = 0 ; j < forUpgradeStandardCount.length ; j++) {
-                    if(arrProductGetCount[i] >= forUpgradeStandardCount[j] && arrProductUpgradeEnable[i][forUpgradeIndex[j]] === false) {
-                        arrProductUpgradeEnable[i][forUpgradeIndex[j]] = true;
-                        arrProductUpgradeId.push(i * 100 + forUpgradeIndex[j]);
-
-                        reorderUpgradeIcon();
-                        upgradeExpandButton();
-
-                        if(j == 0) createPopup(0, i);
-                    }
-                }
-            }
-
-            statsTotalProductCount++;
-            statsProductCount++;
-            // 초당 추가 값 증가
-            updateAddPerSecond();
-            updateProductInfo(i);
-            updateProductBackground();
-            updateStudent();
-            updateProductStateImg(i);
-        }
-    });
-}
+});
 /*
     팝업
 */
@@ -547,12 +594,15 @@ const popupArea = document.getElementById('popupArea');
 const popupBackground = document.getElementById('popupBackground');
 const popupBox = document.getElementById('popupBox');
 
+const popupCloseButton = document.createElement('div');
+popupCloseButton.id = 'popupCloseButton';
+
 const popupTitle = document.createElement('div'); // 제목
 popupTitle.id = 'popupBoxTitle';
 popupTitle.className = 'title';
-const popupPicture = document.createElement('div'); // 사진
-popupPicture.id = 'popupBoxPicture';
-popupPicture.className = 'picture';
+//const popupPicture = document.createElement('div'); // 사진
+//popupPicture.id = 'popupBoxPicture';
+//popupPicture.className = 'picture';
 const popupInput = document.createElement('input'); // 입력창
 popupInput.id = 'popupBoxInput';
 popupInput.className = 'input';
@@ -567,6 +617,9 @@ popupButton.className = 'button';
 
 // 팝업 이벤트 생성
 function popupAddEvent(type) {
+
+    popupCloseButton.addEventListener('click', () => { removePopup(); });
+
     if(type == 'common') {
         popupButton.addEventListener('click',  () => { removePopup(); });
     }
@@ -584,60 +637,159 @@ function popupAddEvent(type) {
             }
         });
     }
+    if(type == 'returning') {
+        popupButton.addEventListener('click', () => {
+            removePopup();
+            returningAnimation();
+        })
+    }
 }
-function createPopup(i, j) { // 일반 팝업창 생성
-    if(arrPopupAppearBool[i][j] == false) {
-        // true로 바꾸기
-        arrPopupAppearBool[i][j] = true;
-        // 초기화
-        popupArea.classList.remove('disabled');
-        popupBackground.classList.remove('disabled');
-        popupBox.style.height = '600px';
-        popupBox.style.width = '960px';
-        popupBox.style.display = 'flex';
-        popupBox.innerHTML = '';
-        // 제목
-        popupTitle.innerHTML = translations[lang].popupTitle[i][j];
-        popupBox.appendChild(popupTitle);
-        // 사진
-        // popupPicture.style.url = 사진 경로
-        popupBox.appendChild(popupPicture);
+function appearPopup(i, j) { // 팝업창 생성
+    console.log('popup' + i + ' ' + j);
+    // 초기화
+    resetPopup();
+    // 제목
+    popupTitle.innerHTML = translations[lang].popupTitle[i][j];
+    popupBox.appendChild(popupTitle);
+
+    if(i == 0) {
+        // 닫기 버튼
+        popupBox.appendChild(popupCloseButton);
         // 설명
         popupDescription.innerHTML = translations[lang].popupDescription[i][j];
         popupBox.appendChild(popupDescription);
         // 버튼
-        popupButton.innerHTML = translations[lang].popupCloseButton;
+        popupButton.innerHTML = translations[lang].popupButton_text[0];
         popupBox.appendChild(popupButton);
         // 이벤트 추가
         popupAddEvent('common');
+    } else if(i == 1) {
+        if(j == 0) { // 처음 시작 시
+            //닫기 버튼
+            popupBox.appendChild(popupCloseButton);
+            // 설명
+            popupDescription.innerHTML = translations[lang].popupDescription[i][j];
+            popupBox.appendChild(popupDescription);
+            // 버튼
+            popupButton.innerHTML = translations[lang].popupButton_text[0];
+            popupBox.appendChild(popupButton);
+            // 이벤트 추가
+            popupAddEvent('common');
+        }
+        if(j == 1) { // 최초 회귀
+            //닫기 버튼
+            popupBox.appendChild(popupCloseButton);
+            // 설명
+            popupDescription.innerHTML = translations[lang].popupDescription[i][j];
+            popupBox.appendChild(popupDescription);
+            // 버튼
+            popupButton.innerHTML = translations[lang].popupButton_text[0];
+            popupBox.appendChild(popupButton);
+            // 이벤트 추가
+            popupAddEvent('common');
+        }
+        if(j == 2) { // 엔딩
+            //닫기 버튼
+            popupBox.appendChild(popupCloseButton);
+            // 설명
+            popupDescription.innerHTML = translations[lang].popupDescription[i][j];
+            popupBox.appendChild(popupDescription);
+            // 버튼
+            popupButton.innerHTML = translations[lang].popupButton_text[0];
+            popupBox.appendChild(popupButton);
+            // 이벤트 추가
+            popupAddEvent('common');
+        }
+    } else if(i == 2) {
+        if(j == 0) { // 언어 변경
+            popupSelectLanguage();
+            // 설명
+            popupDescription.innerHTML = translations[lang].popupDescription[i][j];
+            popupBox.appendChild(popupDescription);
+        }
+        if(j == 1) { // 이름 바꾸기
+            // 닫기 버튼
+            popupBox.appendChild(popupCloseButton);
+            // 입력창
+            popupBox.appendChild(popupInput);
+            // 설명
+            popupDescription.innerHTML = translations[lang].popupDescription[i][j];
+            popupBox.appendChild(popupDescription);
+            // 버튼
+            popupButton.innerHTML = translations[lang].popupButton_text[1];
+            popupBox.appendChild(popupButton);
+            // 이벤트 추가
+            popupAddEvent('name');
+        }
+        if(j == 2) { // 잠수
+            // 닫기 버튼
+            popupBox.appendChild(popupCloseButton);
+            // 설명
+            popupDescription.innerHTML = translations[lang].popupDescription[i][j];
+            popupBox.appendChild(popupDescription);
+            popupDescription.querySelector('#showOfflineEarnings').innerHTML = `${formatNumber(offlineEarnings)}`;
+            popupDescription.querySelector('#showOfflineTimeDiff').innerHTML = `${offlineTimeDiff}`;
+            popupDescription.querySelector('#showOfflineEfficiency').innerHTML = `${Math.floor(offlineEfficiency * 100)}`;
+            popupDescription.querySelector('#showMaxOfflineTime').innerHTML = `${Math.floor(maxOfflineTime / 3600)}`;
+            // 버튼
+            popupButton.innerHTML = translations[lang].popupButton_text[0];
+            popupBox.appendChild(popupButton);
+            // 이벤트 추가
+            popupAddEvent('common');
+        }
+        if(j == 3) { // 회귀
+
+        }
+        if(j == 4) { // 회귀 후 팝업
+
+        }
     }
 }
-function createPopupChangeName() { // 이름 변경창 생성
-    // 초기화
+function popupSelectLanguage() {
+    const popupLanguageBundle = document.createElement('div'); // 제목
+    popupLanguageBundle.id = 'popupLanguageBundle';
+    popupBox.appendChild(popupLanguageBundle);
+
+    // 언어
+    const arrLanguage = ['KO', 'EN', 'JA', 'CS', 'CS'];
+    for(let i = 0 ; i < arrLanguage.length ; i++) {
+        const languageDiv = document.createElement('div');
+        languageDiv.id = `popupLanguage${arrLanguage[i]}`;
+        languageDiv.classList.add('language');
+        languageDiv.style.background = `url('img/language/${arrLanguage[i]}.png')`;
+
+        popupLanguageBundle.appendChild(languageDiv);
+    }
+
+    // const popupLanguageText = document.createElement('div');
+    // popupLanguageText.id = 'popupLanguageText';
+    // popupLanguageText.classList.add('text');
+    // popupBox.appendChild(popupLanguageText);
+
+    document.getElementById('popupLanguageKO').addEventListener('mouseover', () => { lang = 'KO'; changeLanguageText(); });
+    document.getElementById('popupLanguageKO').addEventListener('click', () => { removePopup(); })
+    document.getElementById('popupLanguageEN').addEventListener('mouseover', () => { lang = 'EN'; changeLanguageText(); });
+    document.getElementById('popupLanguageEN').addEventListener('click', () => { removePopup(); })
+
+    document.getElementById('popupLanguageJA').addEventListener('mouseover', () => {
+        popupTitle.innerHTML = '日本語選択';
+        popupLanguageText.innerHTML = '言語は設定で変えることができます。';
+    });
+}
+function changeLanguageText() {
+    popupTitle.innerHTML = translations[lang].popupTitle[1][0];
+    popupDescription.innerHTML = translations[lang].popupDescription[1][0];
+}
+function resetPopup() {
     popupArea.classList.remove('disabled');
     popupBackground.classList.remove('disabled');
-    popupBox.style.height = '400px';
-    popupBox.style.width = '960px';
-    popupBox.style.display = 'flex';
+    popupBox.classList.remove('disabled');
     popupBox.innerHTML = '';
-    // 제목
-    popupTitle.innerHTML = translations[lang].popupTitleName;
-    popupBox.appendChild(popupTitle);
-    // 입력창
-    popupBox.appendChild(popupInput);
-    // 설명
-    popupDescription.innerHTML = translations[lang].popupDescriptionName;
-    popupBox.appendChild(popupDescription);
-    // 버튼
-    popupButton.innerHTML = translations[lang].popupChangeButton;
-    popupBox.appendChild(popupButton);
-    // 이벤트 추가
-    popupAddEvent('name');
 }
 function removePopup() { // 제거
     popupArea.classList.add('disabled');
     popupBackground.classList.add('disabled');
-    popupBox.style.display = 'none';
+    popupBox.classList.add('disabled');
     popupBox.innerHTML = '';
 }
 /*
@@ -680,7 +832,7 @@ let productBackgroundNumber_2 = 0;
 let productBackgroundNumber_5 = 0;
 let productBackgroundNumber_14 = 0;
 let productBackgroundNumber_15 = 0;
-function updateProductBackground() {
+function settingProductBackground() { // 배경 설정
     for(let i = 0; i < productLength; i++) {
         const productBackground = document.getElementById(`productRow_${i}`);
 
@@ -730,9 +882,9 @@ function updateBackgroundVariation(i) { // 배경 베리에이션
     if(i == 14) for(let j = 0 ; j < 2 ; j++) if(productBackgroundNumber_14 == `${j}`) document.getElementById('productRow_14').style.background = `url('img/background/product/14_${j}.png') repeat-x`;
     if(i == 15) for(let j = 0 ; j < 4 ; j++) if(productBackgroundNumber_15 == `${j}`) document.getElementById('productRow_15').style.background = `url('img/background/product/15_${j}.png') repeat-x`;
 }
-function updateProductStateImg(i) { // 배경에 아이콘 삽입
-    if(arrProductStateImg[i] < arrProductGetCount[i]) {
-        for(let j = arrProductStateImg[i] ; j < arrProductGetCount[i] ; j++) {
+function settingProductStateImg(i) { // 배경에 아이콘 삽입
+    if(arrProductRowIconCount[i] < arrProductGetCount[i]) {
+        for(let j = arrProductRowIconCount[i] ; j < arrProductGetCount[i] ; j++) {
             const appendStateImg = document.createElement('div');
             appendStateImg.classList.add('stateImg');
             appendStateImg.style.background = `url('img/state/product_${i}.png') repeat-x`;
@@ -759,33 +911,34 @@ function updateProductStateImg(i) { // 배경에 아이콘 삽입
                 appendStateImg.style.left = `${80 * j}px`
             }
             else if(i == 5) { // 공항
-                const topRandom = Math.floor(Math.random() * 40);
-                appendStateImg.style.top = `${64 - topRandom}px`;
-                appendStateImg.style.left = `${48 * j}px`
+                appendStateImg.style.top = `${32 + Math.floor(Math.random() * 49) - 24}px`;
+                appendStateImg.style.left = `${16 + 64 * j}px`
+                appendStateImg.style.backgroundPositionX = `${-64 * Math.floor(Math.random() * 4)}px`;
                 
             }
             else if(i == 6) { // 기업
                 appendStateImg.style.top = `${32}px`;
                 appendStateImg.style.left = `${80 * j}px`
+                appendStateImg.style.backgroundPositionX = `${-64 * Math.floor(Math.random() * 3)}px`;
 
             }
             else if(i == 7) { // 정부
-                appendStateImg.style.top = `${32}px`;
-                appendStateImg.style.left = `${80 * j}px`
+                appendStateImg.style.top = `${64}px`;
+                appendStateImg.style.left = `${16 + 96 * j}px`
 
             }
             else if(i == 8) { // 세계 정부
-                appendStateImg.style.top = `${32}px`;
-                appendStateImg.style.left = `${80 * j}px`
+                appendStateImg.style.top = `${56}px`;
+                appendStateImg.style.left = `${16 + 96 * j}px`
 
             }
             else if(i == 9) { // 복제 실험실
                 appendStateImg.style.top = `${32}px`;
-                appendStateImg.style.left = `${80 * j}px`
+                appendStateImg.style.left = `${48 * j}px`
 
             }
             else if(i == 10) { // 우주 정거장
-                appendStateImg.style.top = `${32}px`;
+                appendStateImg.style.top = `${48}px`;
                 appendStateImg.style.left = `${80 * j}px`
 
             }
@@ -807,8 +960,9 @@ function updateProductStateImg(i) { // 배경에 아이콘 삽입
 
             }
             else if(i == 14) { // 평행 세계
-                appendStateImg.style.top = `${32}px`;
-                appendStateImg.style.left = `${80 * j}px`
+                appendStateImg.style.top = `${32 + Math.floor(Math.random() * 49) - 24}px`;
+                appendStateImg.style.left = `${16 + 32 * j}px`
+                appendStateImg.style.backgroundPositionX = `${-64 * Math.floor(Math.random() * 6)}px`;
 
             }
             else if(i == 15) { // 또 다른 나
@@ -819,12 +973,83 @@ function updateProductStateImg(i) { // 배경에 아이콘 삽입
 
             document.getElementById(`productBackground_${i}`).appendChild(appendStateImg);
         }
-        arrProductStateImg[i] = arrProductGetCount[i];
+        arrProductRowIconCount[i] = arrProductGetCount[i];
     }
 }
 /*
-    통계창 메뉴
+    설정 메뉴
 */
+function pageSetting() {
+    document.getElementById('pageSettingTitle').innerHTML = translations[lang].menuSettingText_title;
+    document.getElementById('pageSettingCommon').innerHTML = translations[lang].menuSettingText_subtitleCommon;
+    document.getElementById('pageSettingDetail').innerHTML = translations[lang].menuStatsText_subtitleDetail;
+    //document.getElementById('buttonChangeLanuage').innerHTML = translations[lang].menuStatsText_;
+
+    const buttonSave = document.getElementById('buttonSave');
+    const buttonSaveFileExport = document.getElementById('buttonSaveFileExport');
+    const buttonSaveFileImport = document.getElementById('buttonSaveFileImport');
+    const buttonChangeLanuage = document.getElementById('buttonChangeLanuage');
+
+    buttonSave.addEventListener('click', () => {
+        saveGame();
+    });
+    buttonSaveFileExport.addEventListener('click', () => {
+        exportSaveFile();
+    });
+    buttonSaveFileImport.addEventListener('click', () => {
+        importSaveFile();
+    });
+    buttonChangeLanuage.addEventListener('click', () => {
+        appearPopup(1, 0);
+    });
+}
+function exportSaveFile() {
+    const textContent = arrProductGetCount[0] + '/' + arrProductGetCount[1] + '저장된 내용을 저장하고 추출\n두번째 줄 테스트 \n 세번 째 줄 테스트\n1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+    // Blob 객체를 생성(파일의 내용을 포함)
+    const blob = new Blob([textContent], { type: 'text/plain' });
+
+    // 링크 생성
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    // 다운로드할 파일의 이름
+    a.download = 'URC SaveFile.txt';
+
+    // 클릭하여 다운로드를시작
+    document.body.appendChild(a);
+    a.click();
+
+    // 다운로드 링크를 제거
+    document.body.removeChild(a);
+    // 메모리를 반환
+    URL.revokeObjectURL(URL.createObjectURL(blob));
+}
+// function importSaveFile(event) {
+//     const file = event.target.files[0];
+    
+//     if (file) { 
+//         const reader = new FileReader();
+        
+//         reader.onload = function(e) {
+//             const text = e.target.result;
+//             const values = extractValues(text); // 필요한 값들을 추출하는 함수
+            
+//             // 값을 div에 표시
+//             document.getElementById('output').innerText = values.join(', ');
+//         };
+
+//         reader.readAsText(file);
+//     }
+// }
+/*
+    통계 메뉴
+*/
+function pageStats() {
+    document.getElementById('pageStatsTitle').innerHTML = translations[lang].menuStatsText_title;
+    document.getElementById('pageStatsCommon').innerHTML = translations[lang].menuStatsText_subtitleCommon;
+    document.getElementById('pageStatsUpgrade').innerHTML = translations[lang].menuStatsText_subtitleUpgrade;
+    document.getElementById('pageStatsAchievement').innerHTML = translations[lang].menuStatsText_subtitleAchievement;
+}
 let updatePageStatsSetTimeout;
 function updatePageStats() { // 업데이트
     // 기본 항목
@@ -845,7 +1070,7 @@ function updatePageStats() { // 업데이트
     // 강화 메뉴 갱신
     const statsUpgradeBundle = document.getElementById('statsUpgradeBundle');
     statsUpgradeBundle.innerHTML = '';
-    for(let i = 0 ; i < arrProductUpgradePurchaseBool.length ; i++ ) {
+    for(let i = 0 ; i < arrProductUpgradePurchaseBool.length ; i++) {
         for(let j = 0 ; j < arrProductUpgradePurchaseBool[i].length ; j++) {
 
             const value = arrProductUpgradePurchaseBool[i][j];
@@ -855,21 +1080,36 @@ function updatePageStats() { // 업데이트
 
             const statsUpgradeIcon = document.createElement('div');
             statsUpgradeIcon.classList.add('statsUpgradeIcon');
-            statsUpgradeIcon.style.background = `url('img/icons_upgrade.png') repeat-x`;
+            statsUpgradeIcon.style.background = `url('img/icons_upgrade.png')`;
             statsUpgradeIcon.style.backgroundPositionX = `${-48 * arr2}px`;
             statsUpgradeIcon.style.backgroundPositionY = `${-48 * arr1}px`;
 
             statsUpgradeBundle.appendChild(statsUpgradeIcon);
-            // } else {
-            //     const statsUpgradeIcon = document.createElement('div');
-            //     statsUpgradeIcon.classList.add('statsUpgradeIcon');
-            //     statsUpgradeIcon.style.background = `url('img/icon_lock.png') no-repeat`;
-            
-            //     statsUpgradeBundle.appendChild(statsUpgradeIcon);
-            // }
         }
     }
     // 도전 과제 갱신
+    const statsAchievementBundle = document.getElementById('statsAchievementBundle');
+    statsAchievementBundle.innerHTML = '';
+    arrAchievementId.forEach(number => {
+        // 선언
+        const arr1 = Math.floor(number / 100);
+        const arr2 = number % 100;
+
+        const createDiv = document.createElement('div');
+        createDiv.id = `achievement_${number}`;
+        createDiv.className = `statsAchievementIcon ${number}`;
+        createDiv.style.background = `url('img/icons_achievement.png')`;
+        createDiv.style.backgroundPositionX = `${-48 * arr2}px`;
+        createDiv.style.backgroundPositionY = `${-48 * arr1}px`;
+
+        statsAchievementBundle.appendChild(createDiv);
+
+        const achievementIcon = document.getElementById(`achievement_${number}`);
+        // 업그레이드 설명창 마우스가 들어왔을 때
+        achievementIcon.addEventListener('mouseenter', () => settingAchievementTooltp(arr1, arr2, number));
+        // 업그레이드 설명창 마우스가 떠났을 때
+        achievementIcon.addEventListener('mouseleave', () => removeAchievementTooltip());
+    });
 
     // 페이지 갱신
     updatePageStatsSetTimeout = setTimeout(() => { updatePageStats(); }, 1000 * 5); // 5초마다 갱신
@@ -877,7 +1117,254 @@ function updatePageStats() { // 업데이트
 function percentageClac(i, j) { // 퍼센트 계산
     return (i > 0 ? ( j / i) * 100 : 0).toFixed(2);
 }
+function settingAchievementTooltp(i, j, number) {
+    // 선언
+    const tooltip = document.getElementById('specialTooltip');
+    const achievement = document.getElementById(`achievement_${i}`);
 
+    // 아이콘
+    tooltip.querySelector('.icon').style.background = `url('img/icons_achievement.png')`;
+    tooltip.querySelector('.icon').style.backgroundPositionX = `${-48 * j}px`;
+    tooltip.querySelector('.icon').style.backgroundPositionY = `${-48 * i}px`;
+    // 가격
+    tooltip.querySelector('.price').innerHTML = '';
+    // 이름
+    tooltip.querySelector('.name').innerHTML = translations[lang].memoryName[number];
+    // 태그
+    tooltip.querySelector('.tagList').innerHTML = '';
+    if(arrAchievementEnable[i] == true) {
+        appendTag('special', 'a_normal');
+        appendTag('special', 'a_lock');
+    } else {
+        appendTag('special', 'a_normal');
+        appendTag('special', 'a_unlock');
+    }
+    // 설명
+    tooltip.querySelector('.description').innerHTML = translations[lang].achievementDescription[number];
+    // 배경담
+    //tooltip.querySelector('.flavorText').innerHTML = translations[lang].achi[number];
+
+    // 설명창 보이기
+    tooltip.style.display = 'block';
+
+    // 증축 설명창 위치 조절
+    tooltip.style.top = `${achievement.getBoundingClientRect().top - tooltip.offsetHeight - 10}px`;
+    tooltip.style.left = `${achievement.getBoundingClientRect().left + (achievement.offsetWidth / 2) - (tooltip.offsetWidth / 2)}px`;
+
+}
+function removeAchievementTooltip() {
+    // 선언
+    const tooltip = document.getElementById('specialTooltip');
+    // 설명창 제거
+    tooltip.style.display = 'none';
+}
+/*
+    정보 메뉴
+*/
+function pageInfo() {
+    document.getElementById('pageInfoTitle').innerHTML = translations[lang].menuInfoText_title;
+    document.getElementById('pageInfoIntroduce').innerHTML = translations[lang].menuInfoText_subtitleIntroduce;
+    document.getElementById('introductText_1').innerHTML = translations[lang].menuInfoText_introduceText_1;
+    document.getElementById('introductText_2').innerHTML = translations[lang].menuInfoText_introduceText_2;
+    document.getElementById('pageInfoCredit').innerHTML = translations[lang].menuInfoText_subtitleCredit;
+    document.getElementById('pageInfoPatchNote').innerHTML = translations[lang].menuInfoText_subtitlePatchNote;
+}
+/*
+    귀환 메뉴
+*/
+let returningLevelClacSetInterval;
+let returningMemorySetInterval;
+function pageReturning() {
+    document.getElementById('pageReturningTitle').innerHTML = translations[lang].menuReturningText_title;
+    document.getElementById('pageReturningPanelLevel').innerHTML = translations[lang].menuReturningText_panelLevel(formatNumber(returningCurrentLevel));
+    document.getElementById('pageReturningPanelBonus').innerHTML = `(SpS +${formatNumber(returningCurrentLevel)}%)`;
+    document.getElementById('pageReturningLevel').innerHTML = translations[lang].menuReturningText_subtitleLevel;
+    document.getElementById('pageReturningAbility').innerHTML = translations[lang].menuReturningText_subtitleAbility;
+    
+    returningLevelClacSetInterval = setInterval(() => { returningLevelClac(); }, 100); // 1초에 100번 작동
+
+    // 기억 왜곡
+    const returningMemoryBundle = document.getElementById('returningMemoryBundle');
+    returningMemoryBundle.innerHTML = '';
+    arrMemoryId.forEach(number => {
+
+        const createDiv = document.createElement('div');
+        createDiv.id = `memory_${number}`;
+        createDiv.className = `returningMemoryIcon ${number}`;
+        createDiv.style.background = `url('img/icons_memory.png') no-repeat`;
+        createDiv.style.backgroundPositionX = `${-48 * number}px`;
+
+        if(arrMemoryEnable[number] == true) {
+            createDiv.style.outline = '3px solid #F51A1A';
+            createDiv.style.filter = 'drop-shadow(0px 1px 2px #B2B2B2)';
+        } else {
+            createDiv.style.outline = '3px solid #6E0E0E';
+            createDiv.style.filter = 'drop-shadow(0px 3px 2px #000000)';
+        }
+
+        returningMemoryBundle.appendChild(createDiv);
+
+        const memoryIcon = document.getElementById(`memory_${number}`);
+        // 업그레이드 설명창 마우스가 들어왔을 때
+        memoryIcon.addEventListener('mouseenter', () => settingMemoryTooltip(number));
+        // 업그레이드 설명창 마우스가 떠났을 때
+        memoryIcon.addEventListener('mouseleave', () => removeMemoryTooltip());
+    });
+}
+function returningLevelClac() {
+
+    const expPercent = (returningExp / returningExpMax) * 100;
+    if(expPercent < 100) document.getElementById('pageReturningExpFilledBar').style.width = `${expPercent}%`;
+    if(expPercent >= 100) document.getElementById('pageReturningExpFilledBar').style.width = `100%`;
+    while(returningExp >= returningExpMax) {
+
+        returningExp -= returningExpMax
+        returningIncreaseLevel++;
+        returningExpMax = ((((returningIncreaseLevel + 1) ** 4) /2 ) * 1e12);
+
+    }
+    document.getElementById('pageReturningTimeDate').innerHTML = translations[lang].menuReturningText_timeDate(15000);
+    document.getElementById('pageReturningNowReturningText_1').innerHTML = translations[lang].menuReturningText_nowReturningText_1;
+    document.getElementById('pageReturningNowReturningIncreaseLevel').innerHTML = translations[lang].menuReturningText_nowReturningIncreaseLevel(formatNumber(returningIncreaseLevel), formatNumber(returningIncreaseLevel));
+    document.getElementById('pageReturningNowReturningText_2').innerHTML = translations[lang].menuReturningText_nowReturningText_2;
+    document.getElementById('pageReturningExpPercentage').innerHTML = `${(expPercent).toFixed(2)}%`;
+    document.getElementById('pageReturningExpEmptyValue').innerHTML = translations[lang].menuReturningText_emptyExp(formatNumber(returningExpMax - returningExp));
+}
+document.getElementById('buttonReturning').addEventListener('click', () => {
+    appearPopup(1,3);
+})
+function returningAnimation() { // 회귀 연출
+    console.log('Returning');
+    popupArea.classList.remove('disabled');
+
+    const createDiv = document.createElement('div');
+    createDiv.id = 'returningBackground';
+    popupArea.appendChild(createDiv);
+
+    setTimeout(() => {
+        document.getElementById('returningBackground').remove();
+        popupArea.classList.add('disabled');
+        returningFunction();
+    }, 1000 * 7.5);
+}
+function returningFunction() { // 회귀 완료
+    // 회귀
+    returningCurrentLevel += returningIncreaseLevel; // 등급 증가
+    returningIncreaseLevel = 0; // 증가된 등급 초기화
+    returningProductionMultiple = 1 + returningCurrentLevel * 0.01; // 회귀 배율값 추가
+    returningExp = 0; // 경험치 초기화
+
+    // 학생 수 초기화
+    student = 0;
+    addClickStudent = 1;
+    addPerSecondStudent = 0;
+
+    // 통계
+    statsStudent = 0;
+    statsAddPerSecondStudent = 0;
+    statsAddClickStudent = 0;
+    statsClickCount = 0;
+    statsProductCount = 0;
+    statsReturningCount++;
+
+    // 증축 관련
+    productAddPerSecondTotal = 0;
+
+    // 강화
+    document.getElementById('upgradeBundle').innerHTML = '';
+    arrUpgradeId = [];
+    for(let i = 0 ; i < arrUpgradeEnable.length ; i++) {
+        for(let j = 0 ; j < arrUpgradeEnable[i].length ; j++) {
+            arrUpgradeEnable[i][j] = false;
+        }
+    }
+
+    // 생산 관련
+    
+    arrProductUpgradePurchaseBool = [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+    ];
+    updateShowStudent();
+    gameMenuDefaultSetting();
+    settingProduct();
+    productDefaultSetting(); // 증축 관련 초기화
+    saveGame(); // 저장
+}
+function settingMemoryTooltip(i) {
+    // 선언
+    const tooltip = document.getElementById('specialTooltip');
+    const memory = document.getElementById(`memory_${i}`);
+
+    // 아이콘
+    tooltip.querySelector('.icon').style.background = `url('img/icons_memory.png')`;
+    tooltip.querySelector('.icon').style.backgroundPositionX = `${-48 * i}px`;
+    // 가격
+    tooltip.querySelector('.price').innerHTML = translations[lang].memoryPrice(formatNumber(arrMemoryPrice[i]));
+    if(arrMemoryEnable[i] == true) {
+        tooltip.querySelector('.price').style.color = '#9933FF';
+        tooltip.querySelector('.price').style.opacity = 1;
+    } else {
+        tooltip.querySelector('.price').style.color = '#FF0000';
+        tooltip.querySelector('.price').style.opacity = 0.5;
+    }
+    // 이름
+    tooltip.querySelector('.name').innerHTML = translations[lang].memoryName[i];
+    // 태그
+    tooltip.querySelector('.tagList').innerHTML = '';
+    if(arrMemoryEnable[i] == true) {
+        appendTag('special', 'm_normal');
+        appendTag('special', 'm_activate');
+    } else {
+        appendTag('special', 'm_normal');
+        appendTag('special', 'm_deactivate');
+    }
+    // 설명
+    tooltip.querySelector('.description').innerHTML = translations[lang].memoryDescription[i];
+    // 배경담
+    tooltip.querySelector('.flavorText').innerHTML = translations[lang].memoryFlavorText[i];
+
+    // 설명창 보이기
+    tooltip.style.display = 'block';
+
+    // 증축 설명창 위치 조절
+    tooltip.style.top = `${memory.getBoundingClientRect().top - tooltip.offsetHeight - 10}px`;
+    tooltip.style.left = `${memory.getBoundingClientRect().left + (memory.offsetWidth / 2) - (tooltip.offsetWidth / 2)}px`;
+    
+}
+// function updateMemoryTooltip() {
+
+// }
+function removeMemoryTooltip() { // 기억 왜곡 설명창 제거
+    // 선언
+    const tooltip = document.getElementById('specialTooltip');
+    // 설명창 숨기기
+    tooltip.style.display = 'none';
+}
+function activateMemory() {
+    console.log('act')
+    for(let i = 0 ; i < arrMemoryEnable.length ; i++) {
+        if(returningCurrentLevel >= arrMemoryPrice[i]) {
+            arrMemoryEnable[i] = true;
+            console.log(arrMemoryEnable)
+        }
+    }
+}
 /*
     게임 메뉴
 */
@@ -891,7 +1378,8 @@ menuPageButton.forEach(div => {
 
         const isSelected = div.classList.toggle('select');
         clearTimeout(updatePageStatsSetTimeout);
-
+        clearInterval(returningLevelClacSetInterval)
+        // 기본 설정
         if(isSelected) {
             document.getElementById('productStateList').style.display = 'none';
             document.getElementById('pageSetting').style.display = div.id == 'menuSetting' ? '' : 'none';
@@ -899,35 +1387,17 @@ menuPageButton.forEach(div => {
             document.getElementById('pageInfo').style.display = div.id == 'menuInfo' ? '' : 'none';
             document.getElementById('pageReturning').style.display = div.id == 'menuReturning' ? '' : 'none';
         } else gameMenuDefaultSetting();
-
-        if(document.getElementById('menuSetting').classList.contains('select')) {
-            document.getElementById('pageSettingTitle').innerHTML = translations[lang].menuSettingText_title;
-            document.getElementById('pageSettingCommon').innerHTML = translations[lang].menuSettingText_subtitleCommon;
-            document.getElementById('pageSettingDetail').innerHTML = translations[lang].menuStatsText_subtitleDetail;
-            
-
-        }
+        // 설정 메뉴
+        if(document.getElementById('menuSetting').classList.contains('select')) pageSetting();
+        // 통계 메뉴
         if(document.getElementById('menuStats').classList.contains('select')) {
-            document.getElementById('pageStatsTitle').innerHTML = translations[lang].menuStatsText_title;
-            document.getElementById('pageStatsCommon').innerHTML = translations[lang].menuStatsText_subtitleCommon;
-            document.getElementById('pageStatsUpgrade').innerHTML = translations[lang].menuStatsText_subtitleUpgrade;
-            document.getElementById('pageStatsAchievement').innerHTML = translations[lang].menuStatsText_subtitleAchievement;
-
+            pageStats();
             updatePageStats();
         }
-        if(document.getElementById('menuInfo').classList.contains('select')) {
-            document.getElementById('pageInfoTitle').innerHTML = translations[lang].menuInfoText_title;
-            document.getElementById('pageInfoIntroduce').innerHTML = translations[lang].menuInfoText_subtitleIntroduce;
-            document.getElementById('introductText_1').innerHTML = translations[lang].menuInfoText_introduceText_1;
-            document.getElementById('introductText_2').innerHTML = translations[lang].menuInfoText_introduceText_2;
-            document.getElementById('pageInfoCredit').innerHTML = translations[lang].menuInfoText_subtitleCredit;
-            document.getElementById('pageInfoPatchNote').innerHTML = translations[lang].menuInfoText_subtitlePatchNote;
-                        
-        }
-        if(document.getElementById('menuReturning').classList.contains('select')) {
-            document.getElementById('pageReturningTitle').innerHTML = translations[lang].menuReturningText_title;
-
-        }
+        // 정보 메뉴
+        if(document.getElementById('menuInfo').classList.contains('select')) pageInfo();
+        // 회귀 메뉴
+        if(document.getElementById('menuReturning').classList.contains('select')) pageReturning();
     });
 
     const closeButton = document.querySelectorAll('.pageCloseButton');
@@ -961,52 +1431,120 @@ function updateUpgradeMenuButton() {
     else upgradeExpand.textContent = translations[lang].upgradeMenuButtonExpand;
 }
 /* 
-    증축 이름 갱신
+    증축
 */
-function updateProductName() {
+const tooltip = document.getElementById('productTooltip');
+let intervalsettingProductTooltip;
+function settingProduct() {
+    console.log('setting product');
     for(let i = 0 ; i < productLength ; i++) {
+        // 처음 작동
         const product = document.getElementById(`product_${i}`);
-
-        if(arrProductUnlock[i] == true) product.innerHTML = translations[lang].arrProductName[i];
+    
+        // 마우스가 들어왔을 때 >설명창<
+        product.addEventListener('mouseenter', () => settingProductTooltip(i));
+        // 마우스가 바깥으로 나갔을 때
+        product.addEventListener('mouseleave', () => removeProductTooltip());
+        // 클릭 상호작용
+        product.addEventListener('click', () => {
+            if(student >= arrProductPrice[i]) {
+                // 비용 지불
+                student -= arrProductPrice[i];
+                // 생산품 증가
+                arrProductGetCount[i]++;
+                // 일정 개수 이상이라면 강화 추가
+                const forUpgradeStandardCount = [1, 10, 25, 50, 100, 150, 200, 250, 300, 350];
+                const forUpgradeIndex = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+                for(let i = 0 ; i < productLength ; i++) {
+                    for(let j = 0 ; j < forUpgradeStandardCount.length ; j++) {
+                        if(arrProductGetCount[i] >= forUpgradeStandardCount[j] && arrUpgradeEnable[i][forUpgradeIndex[j]] == false) {
+                            arrUpgradeEnable[i][forUpgradeIndex[j]] = true;
+                            arrUpgradeId.push(i * 100 + forUpgradeIndex[j]);
+    
+                            reorderUpgradeIcon();
+                            upgradeExpandButton();
+    
+                            if(arrAppearPopupBool[0][i] == false && j == 0) {
+                                arrAppearPopupBool[0][i] = true;
+                                appearPopup(0, i); // 처음 구매시 팝업 등장
+                            }
+                        }
+                    }
+                }
+                // 통계
+                statsTotalProductCount++;
+                statsProductCount++;
+                // 초당 추가 값 증가
+                settingProductAddPerSecond();
+                settingProductBackground();
+                settingProductStateImg(i);
+                settingProductMenu('count');
+                settingProductPrice(i);
+                updateShowStudent();
+            }
+        });
     }
 }
-function updateProductInfo(i, j = 1) {
-    for(let k = 0 ; k < j ; k++) {
-        // 비용
-        arrProductPrice[i] = Math.floor(arrProductPrice[i] * 1.15);
-        document.getElementById(`product_${i}_price`).innerHTML = translations[lang].students(formatNumber(arrProductPrice[i]));
-        // 보유 개수
-        document.getElementById(`product_${i}_getCount`).innerHTML = arrProductGetCount[i];
-    }
-}
-/* 
-    FUNCTION
-    초당 추가 업데이트
-*/
-function updateAddPerSecond() {
-    addPerSecondStudent = 0;
-    for(let i = 0 ; i < productLength; i++) {
-        arrProductAddPerSecondTotal[i] = arrProductGetCount[i] * arrProductAddPerSecond[i] * arrProductAddPerSecondBonus[i];
-        addPerSecondStudent += arrProductAddPerSecondTotal[i];
-    }
-    updateStudent();
-}
+function settingProductTooltip(i) {
+    // 선언
+    const product = document.getElementById(`product_${i}`);
 
-/*
-    FUNCTION
-    설명창 갱신
-*/
-function updateTooltip(i) {
-    console.log("Product tooltip");
+    // 증축 설명창 위치 조절
+    tooltip.style.top = `${product.getBoundingClientRect().top + 10}px`;
+    // 만약 맨 위를 벗어났다면
+    if(product.getBoundingClientRect().top <= 0) tooltip.style.top = `5px`;
+    // 만약 맨 아래에서 벗어났다면 | setTimeout으로 tooltip의 위치 갱신
+    setTimeout(() => { if(tooltip.getBoundingClientRect().bottom > window.innerHeight) tooltip.style.top = `${window.innerHeight - tooltip.getBoundingClientRect().height - 10}px`; }, 1);
 
+    if(arrProductUnlock[i] == true) { // 해금되었다면
+        // 이름
+        tooltip.querySelector('.name').textContent = translations[lang].arrProductName[i];
+        // 설명
+        tooltip.querySelector('.description').textContent = translations[lang].productTooltipDescription[i];
+        tooltip.querySelector('#centerLine').classList.remove('disabled');
+        
+        // 태그
+        tooltip.querySelector('.tagList').innerHTML = ''; // 태그 지우기
+        if(arrProductGetCount[i] >= 1) {
+            // 증축 기본 태그
+            appendTag('product', 'normal');
+            // 증축 강화 상태 태그
+            if(arrProductUpgradeCount[i] >= 1) appendTag('product', `upgrade_${arrProductUpgradeCount[i]}`);
+        }
+        
+        // 강화 현황 활성화
+        if(arrProductUpgradeCount[i] >= 1) { // 강화 최소 1개 이상 했을 시
+            tooltip.querySelector('#productTooltipUpgradeEnableBundle').classList.remove('disabled');
+            tooltip.querySelector('#productUpgradeDone').innerHTML = translations[lang].productTooltipUpgradeDone;
+            tooltip.querySelector('#progressUpgrade').innerHTML = '(' + arrProductUpgradeCount[i] + '/' + arrProductUpgradeCountMax[i] + ')';
+            tooltip.querySelector('#upgradePurchaseList').innerHTML = '';
+            addProductUpgradeIcon(i);
+        } else tooltip.querySelector('#productTooltipUpgradeEnableBundle').classList.add('disabled');
+    } else { // 해금 안 됐다면
+        tooltip.src = "/img/icon_lock.png";
+        tooltip.querySelector('.name').innerHTML = '???';
+        tooltip.querySelector('.price').innerHTML = '';
+        tooltip.querySelector('.getCount').innerHTML = '';
+        tooltip.querySelector('.tagList').innerHTML = '';
+        tooltip.querySelector('.description').innerHTML = '???';
+        tooltip.querySelector('#productTooltipStatsBundle').classList.add('disabled');
+        tooltip.querySelector('#productTooltipUpgradeEnableBundle').classList.add('disabled');
+    }
+    // 설명창 보이기
+    tooltip.style.display = 'block';
+    // 갱신 함수 || 최적화를 위해 1초에 100번 작동
+    intervalsettingProductTooltip = setInterval(() => { updateProductTooltip(i); }, 10);
+}
+function updateProductTooltip(i) {
+    console.log("Product tooltip " + i);
+
+    // 선언
     const tooltip = document.getElementById('productTooltip');
     tooltip.querySelector('.price').textContent = translations[lang].students(formatNumber(arrProductPrice[i]));
 
     // 보유
-    if(arrProductGetCount[i] >= 1) {
-        tooltip.querySelector('.getCount').textContent = translations[lang].productTooltipGetCount(arrProductGetCount[i]);
-    }
-    // 구매 가능 여부
+    if(arrProductGetCount[i] >= 1) tooltip.querySelector('.getCount').innerHTML = translations[lang].productTooltipGetCount(arrProductGetCount[i]);
+    // 가격색
     if(student >= arrProductPrice[i]) {
         document.getElementById('productTooltipPrice').style.color = '#00FF00';
         document.getElementById('productTooltipPrice').style.opacity = 1;
@@ -1016,58 +1554,124 @@ function updateTooltip(i) {
     }
     // 통계 활성화
     if(arrProductGetCount[i] >= 1) {
-        tooltip.querySelector('#centerLine').classList.remove('disabled');
-        tooltip.querySelector('#info_1').classList.remove('disabled');
-        tooltip.querySelector('#info_1').innerHTML = translations[lang].productTooltipStat_1(formatNumber(arrProductAddPerSecond[i] * arrProductAddPerSecondBonus[i]));
-        tooltip.querySelector('#info_2').classList.remove('disabled');
-        tooltip.querySelector('#info_2').innerHTML = translations[lang].productTooltipStat_2(formatNumber(arrProductAddPerSecondTotal[i]));
-        tooltip.querySelector('#info_3').classList.remove('disabled');
-        tooltip.querySelector('#info_3').innerHTML = translations[lang].productTooltipStat_3(formatNumber(arrProductProducedTotal[i]));
-    } else { // 비활성화
-        tooltip.querySelector('#centerLine').classList.add('disabled');
-        tooltip.querySelector('#info_1').classList.add('disabled');
-        tooltip.querySelector('#info_2').classList.add('disabled');
-        tooltip.querySelector('#info_3').classList.add('disabled');
+        tooltip.querySelector('#productTooltipStatsBundle').classList.remove('disabled');
+        tooltip.querySelector('#productTooltipStats_1').innerHTML = translations[lang].productTooltipStats_1(formatNumber(arrProductAddDefaultValue[i] * arrProductAddBonusValue[i]));
+        tooltip.querySelector('#productTooltipStats_2').innerHTML = translations[lang].productTooltipStats_2(formatNumber(arrProductAddTotalValue[i]));
+        tooltip.querySelector('#productTooltipStats_3').innerHTML = translations[lang].productTooltipStats_3(formatNumber(arrProductStatsProductionTotal[i]));
+    } else tooltip.querySelector('#productTooltipStatsBundle').classList.add('disabled');
+}
+function removeProductTooltip() { // 설명창 제거
+    const tooltip = document.getElementById('productTooltip');
+    // 설명창 가리기
+    tooltip.style.display = 'none';
+    // 반복 제거
+    clearInterval(intervalsettingProductTooltip);
+}
+function settingProductMenu(type) {
+    for(let i = 0 ; i < productLength ; i++) {
+        const product = document.getElementById(`product_${i}`);
+
+        if(type == 'appear') {
+            if(arrProductAppear[i] == false) product.classList.add('disabled');
+            else if(arrProductAppear[i] == true)  product.classList.remove('disabled');
+        }
+        if(type == 'icon') {
+            const product = document.getElementById(`product_${i}`);
+            product.querySelector('.icon').style.background = `url('img/icons_product.png')`;
+            if(arrProductUnlock[i] == false) {
+                product.querySelector('.icon').style.backgroundPositionX = `0px`;
+                product.querySelector('.icon').style.backgroundPositionY = `${-64 * i}px`;
+            } else {
+                product.querySelector('.icon').style.backgroundPositionX = `-64px`;
+                product.querySelector('.icon').style.backgroundPositionY = `${-64 * i}px`;
+            }
+        }
+        if(type == 'name') {
+            if(arrProductUnlock[i] == false) product.querySelector('.name').innerHTML = '???';
+            else if(arrProductUnlock[i] == true) product.querySelector('.name').innerHTML = translations[lang].arrProductName[i];
+        }
+        if(type == 'count') {
+            if(arrProductGetCount[i] == 0) product.querySelector('.getCount').innerHTML = '';
+            if(arrProductGetCount[i] >= 1) product.querySelector('.getCount').innerHTML = arrProductGetCount[i];
+        }
+        if(type == 'price') {
+            product.querySelector('.price').innerHTML = translations[lang].students(formatNumber(arrProductPrice[i]));
+        }
     }
 }
-
-/*
-    FUNCTION
-    학생 수 갱신
-*/
-function updateStudent() {
+function settingProductPrice(i, j = 1) {
+    for(let k = 0 ; k < j ; k++) {
+        arrProductPrice[i] = Math.floor(arrProductPrice[i] * 1.15);
+        document.getElementById(`product_${i}_price`).innerHTML = translations[lang].students(formatNumber(arrProductPrice[i]));
+    }
+}
+function settingProductAddPerSecond() { // 갱신 : 증축 초당 추가
+    addPerSecondStudent = 0;
+    for(let i = 0 ; i < productLength; i++) {
+        // 공식: 증축 개수 * 증축 초당 효율 * 증축 강화 효율 * 효율 배수 * 회귀 효율 배수
+        arrProductAddTotalValue[i] = parseFloat((arrProductGetCount[i] * arrProductAddDefaultValue[i] * arrProductAddBonusValue[i] * productionMultiple * returningProductionMultiple).toFixed(1));
+        addPerSecondStudent += arrProductAddTotalValue[i];
+    }
+    // 갱신
+    updateShowStudent();
+}
+function updateShowStudent() { // 학생 수 갱신
     // 보유 중인 학생 갱신
     document.getElementById('getStudent').innerHTML = translations[lang].students(formatNumber(student));
     // 초당 학생 갱신
     document.getElementById('perSecondStudent').innerHTML = translations[lang].perSecond(formatNumber(addPerSecondStudent));
 }
+function productDefaultSetting() { // 증축을 초기 상태로 설정
+    for(let i = 0 ; i < productLength; i++) {
+        // 변수 및 배열 초기화
+        arrProductAppear[i] = false;
+        arrProductUnlock[i] = false;
+        arrProductGetCount[i] = 0;
+        arrProductAddBonusValue[i] = 1;
+        arrProductAddTotalValue[i] = 0;
+        arrProductStatsProductionTotal[i] = 0;
+        arrProductUpgradeCount[i] = 0;
 
-/*
-    FUNCTION
-    태그 추가
-*/
-function appendTag(elementById, type) {
-    const appendTag = document.createElement('div');
-    appendTag.className = 'tag';
-
-    if(type == 'normal') {
-        if(elementById == 'product') appendTag.innerHTML = translations[lang].tooltipTagName[0][0];
-        if(elementById == 'upgrade') appendTag.innerHTML = translations[lang].tooltipTagName[0][1];
-        appendTag.style.background = 'linear-gradient(to right,#ABBAAB,#FFFFFF)';
-        appendTag.style.color = '#000000';
-    }
-    for(let i = 0 ; i < arrProductUpgradeCountMax[i] ; i++) {
-        if(type == `upgradeLevel_${i}`) {
-            appendTag.innerHTML = translations[lang].tooltipTagName[1][i-1];
-            appendTag.style.background = `linear-gradient(to right,${arrTooltipTagColor[1][i-1]})`;
+        if(2 >= i && i >= 0) {
+            arrProductAppear[i] = true;
         }
-    }
-    document.getElementById(`${elementById}TooltipTagList`).appendChild(appendTag);
-}
 
+        // 선언
+        const productMenu = document.getElementById(`product_${i}`);
+        const productRow = document.getElementById(`productRow_${i}`);
+
+        // 증축 메뉴
+        productMenu.querySelector('.price').innerHTML = translations[lang].students(formatNumber(arrProductPrice[i]));
+
+        // 증축 열
+        productRow.querySelector('.background').innerHTML = '';
+        productRow.querySelector('.background').classList.add('disabled');
+        productRow.querySelector('.divisionRow').classList.add('disabled');
+        // 배열 초기화
+        arrProductBackgroundEnable[i] = false;
+        arrProductRowIconCount[i] = 0;
+    }
+
+    settingProductMenu('appear');
+    settingProductMenu('icon');
+    settingProductMenu('name');
+    settingProductMenu('count');
+}
+function productOffline() {
+    
+    const currentTime = Date.now();
+    offlineTimeDiff = Math.floor((currentTime - lastSaveTime) / 1000);
+
+    if(offlineTimeDiff >= 60) { // 오프라인 시간이 60초 이상일 경우
+        const validTime = Math.min(offlineTimeDiff, maxOfflineTime);
+        offlineEarnings = Math.floor(addPerSecondStudent * validTime * offlineEfficiency);
+        student += offlineEarnings;
+
+        appearPopup(2, 2);
+    }
+}
 /*
-    FUNCTION
-    업그레이드 확장 버튼 활성화 여부
+    강화 확장 버튼 활성화 여부
 */
 function upgradeExpandButton() {
     const upgradeExpand = document.getElementById('upgradeExpand');
@@ -1084,14 +1688,16 @@ function upgradeExpandButton() {
 }
 
 /* 
-    FUNCTION
-    업그레이드 아이콘 재정렬
+    강화 아이콘 재정렬
 */
+let intervalUpdateUpgradeTooltip;
 function reorderUpgradeIcon() {
+    // 선언
     const upgradeBundle = document.getElementById('upgradeBundle');
+    // 초기화
     upgradeBundle.innerHTML = '';
-
-    const arrReorder = arrProductUpgradeId.slice().sort((a, b) => a - b);
+    // 정렬
+    const arrReorder = arrUpgradeId.slice().sort((a, b) => a - b);
 
     arrReorder.forEach(number => {
 
@@ -1107,43 +1713,31 @@ function reorderUpgradeIcon() {
 
         upgradeBundle.appendChild(addUpgradeDiv);
 
-        let intervalUpdateUpgradeTooltip;
 
         const upgradeTooltip = document.getElementById('upgradeTooltip');
         const upgradeIcon = document.getElementById(`upgrade_${number}`);
         // 업그레이드 설명창 마우스가 들어왔을 때
-        upgradeIcon.addEventListener('mouseenter', () => {
-            upgradeTooltip.style.display = 'block';
-
-            upgradeTooltip.style.top = `${upgradeIcon.getBoundingClientRect().top + 10}px`;
-            if (upgradeIcon.getBoundingClientRect().top <= 0) {
-                upgradeTooltip.style.top = `5px`;
-            }
-            intervalUpdateUpgradeTooltip = setInterval(() => { updateUpgradeTooltip(arr1, arr2); }, 10);
-        });
+        upgradeIcon.addEventListener('mouseenter', () => settingUpgradeTooltip(arr1, arr2, number));
         // 업그레이드 설명창 마우스가 떠났을 때
-        upgradeIcon.addEventListener('mouseleave', () => {
-            upgradeTooltip.style.display = 'none';
-            clearInterval(intervalUpdateUpgradeTooltip);
-        });
+        upgradeIcon.addEventListener('mouseleave', () => removeUpgradeTooltip());
 
         // 클릭
         upgradeIcon.addEventListener('click', () => {
-            if (student >= arrProductUpgradePrice[arr1][arr2]) {
+            if(student >= arrUpgradePrice[arr1][arr2]) {
                 // 비용 지불
-                student -= arrProductUpgradePrice[arr1][arr2];
+                student -= arrUpgradePrice[arr1][arr2];
                 // 배열 갱신
-                arrProductAddPerSecondBonus[arr1] *= 2; // 보너스 적용
+                arrProductAddBonusValue[arr1] *= 2; // 보너스 적용
                 arrProductUpgradeCount[arr1]++; // 카운트 증가
                 arrProductUpgradePurchaseBool[arr1].push(number); // 카운트 증가
                 // 배열 제거
-                arrProductUpgradeId = arrProductUpgradeId.filter(n => n !== number);
+                arrUpgradeId = arrUpgradeId.filter(n => n !== number);
                 // 반복 제거
                 clearInterval(intervalUpdateUpgradeTooltip);
                 // 설명창 가리기
                 upgradeTooltip.style.display = 'none';
-                updateAddPerSecond();
-                updateStudent(); // 학생 수 갱신
+                settingProductAddPerSecond();
+                updateShowStudent(); // 학생 수 갱신
                 reorderUpgradeIcon(); // 아이콘 재정렬
             }
         });
@@ -1151,8 +1745,7 @@ function reorderUpgradeIcon() {
     upgradeExpandButton();
 }
 /* 
-    FUNCTION
-    업그레이드 아이콘 생성
+    강화 아이콘 생성
 */
 function addProductUpgradeIcon(i) {
     const upgradePurchaseList = document.getElementById('upgradePurchaseList');
@@ -1172,36 +1765,119 @@ function addProductUpgradeIcon(i) {
     });
 }
 /*
-    FUNCTION
-    업그레이드 설명창 갱신
+    강화 설명창 갱신
 */
-function updateUpgradeTooltip(i, j) {
+function settingUpgradeTooltip(i, j, k) { // 강화 설명창 설정
+
+    const tooltip = document.getElementById('upgradeTooltip');
+    const upgradeIcon = document.getElementById(`upgrade_${k}`);
+
+    tooltip.style.display = 'block';
+
+    // 설명창 위치 조절
+    tooltip.style.top = `${upgradeIcon.getBoundingClientRect().top + 10}px`;
+    if(upgradeIcon.getBoundingClientRect().top <= 0) tooltip.style.top = `5px`;
+    
+    // 아이콘 이미지
+    tooltip.querySelector('.icon').style.background = `url('img/icons_upgrade.png') no-repeat`;
+    tooltip.querySelector('.icon').style.backgroundPositionX = `${-48 * j}px`;
+    tooltip.querySelector('.icon').style.backgroundPositionY = `${-48 * i}px`;
+    // 가격
+    tooltip.querySelector('.price').innerHTML = translations[lang].students(formatNumber(arrUpgradePrice[i][j]));
+    // 이름
+    document.getElementById('upgradeTooltipName').innerHTML = translations[lang].upgradeName[i][j];
+    // 설명
+    document.getElementById('upgradeTooltipDescription').innerHTML = translations[lang].upgradeDescription[i];
+
+    // 반복
+    intervalUpdateUpgradeTooltip = setInterval(() => { updateUpgradeTooltip(i, j); }, 10);
+
+}
+function updateUpgradeTooltip(i, j) { // 강화 설명창 갱신
     console.log("Upgrade tooltip");
 
     const tooltip = document.getElementById('upgradeTooltip');
-    const tooltipIcon = document.getElementById('upgradeTooltipIcon');
-    tooltip.querySelector('.price').innerHTML = translations[lang].students(formatNumber(arrProductUpgradePrice[i][j]));
-
-    document.getElementById('upgradeTooltipIcon');
     
-    tooltipIcon.style.background = `url('img/icons_upgrade.png') no-repeat`;
-    tooltipIcon.style.backgroundPositionX = `${-48 * j}px`;
-    tooltipIcon.style.backgroundPositionY = `${-48 * i}px`;
     // 구매 가능 여부
-    if(student >= arrProductUpgradePrice[i][j]) {
+    if(student >= arrUpgradePrice[i][j]) {
         tooltip.querySelector('.price').style.color = '#00FF00';
         tooltip.querySelector('.price').style.opacity = 1;
-    }
-    else {
+    } else {
         tooltip.querySelector('.price').style.color = '#FF0000';
         tooltip.querySelector('.price').style.opacity = 0.5;
     }
+}
+function removeUpgradeTooltip() { // 강화 설명창 제거
 
-    document.getElementById('upgradeTooltipName').innerHTML = translations[lang].upgradeName[i][j];
-    document.getElementById('upgradeTooltipDescription').innerHTML = translations[lang].upgradeDescription[i];
+    const tooltip = document.getElementById('upgradeTooltip');
+    // 숨기기
+    tooltip.style.display = 'none';
+    // 반복 제거
+    clearInterval(intervalUpdateUpgradeTooltip);
 }
 /*
-    FUNCTION
+    태그 추가
+*/
+function appendTag(elementById, type) {
+    const appendTag = document.createElement('div');
+    appendTag.className = 'tag';
+
+    if(elementById == 'product') { // product
+        if(type == 'normal') {
+            appendTag.innerHTML = translations[lang].tooltipTagName[0][0];
+            appendTag.style.background = 'linear-gradient(to right, #ABBAAB, #FFFFFF)';
+        }
+
+        const upgradeIndex = type.split('_')[1] - 1;
+        if(upgradeIndex >= 0) {
+            appendTag.innerHTML = translations[lang].tooltipTagName[1][upgradeIndex];
+            appendTag.style.background = `linear-gradient(to right,${arrTooltipTagColor[1][upgradeIndex]})`;
+        }
+        appendTag.style.color = '#000000';
+    }
+    if(elementById == 'upgrade') { // upgrade
+        if(type == 'normal') {
+            appendTag.innerHTML = translations[lang].tooltipTagName[0][1];
+            appendTag.style.background = 'linear-gradient(to right,#ABBAAB,#FFFFFF)';
+            appendTag.style.color = '#000000';
+        }
+    }
+    if(elementById == 'special') {
+        if(type == 'm_normal') {
+            appendTag.innerHTML = translations[lang].tooltipTagName[0][2];
+            appendTag.style.background = 'linear-gradient(to right,#ABBAAB,#FFFFFF)';
+            appendTag.style.color = '#000000';
+        }
+        if(type == 'm_deactivate') {
+            appendTag.innerHTML = translations[lang].tooltipTagName[3][0];
+            appendTag.style.background = 'linear-gradient(to right,#ABBAAB,#FFFFFF)';
+            appendTag.style.color = '#000000';
+        }
+        if(type == 'm_activate') {
+            appendTag.innerHTML = translations[lang].tooltipTagName[3][1];
+            appendTag.style.background = 'linear-gradient(to right,#ABBAAB,#FFFFFF)';
+            appendTag.style.color = '#000000';
+        }
+        if(type == 'a_normal') {
+            appendTag.innerHTML = translations[lang].tooltipTagName[0][3];
+            appendTag.style.background = 'linear-gradient(to right,#ABBAAB,#FFFFFF)';
+            appendTag.style.color = '#000000';
+        }
+        if(type == 'a_unlock') {
+            appendTag.innerHTML = translations[lang].tooltipTagName[4][0];
+            appendTag.style.background = 'linear-gradient(to right,#ABBAAB,#FFFFFF)';
+            appendTag.style.color = '#000000';
+        }
+        if(type == 'a_lock') {
+            appendTag.innerHTML = translations[lang].tooltipTagName[4][1];
+            appendTag.style.background = 'linear-gradient(to right,#ABBAAB,#FFFFFF)';
+            appendTag.style.color = '#000000';
+        }
+    }
+    document.getElementById(`${elementById}TooltipTagList`).appendChild(appendTag);
+}
+
+/*
     자릿수 계산
 */
 function formatNumber(value) {
@@ -1229,30 +1905,28 @@ function formatNumber(value) {
 setInterval(() => {  
     for(let i = 0 ; i < productLength ; i++) {
 
-        // 해금
         const product = document.getElementById(`product_${i}`);
-        if(arrProductGetCount[i-1] >= 1) {
-            product.classList.remove('disabled');
+        // 한 단계 전 증축을 최소 1개 이상 구매시 등장
+        if(arrProductAppear[i] == false && arrProductGetCount[i-1] >= 1) {
+            arrProductAppear[i] = true;
+            settingProductMenu('appear');
         }
-        if(arrProductUnlock[i] == false || student >= arrProductPrice[i] * 0.8) {
-            product.querySelector('.name').innerHTML = translations[lang].arrProductName[i];
+        // 이름 변경 & 해금
+        if(arrProductAppear[i] == true && arrProductUnlock[i] == false && student >= arrProductPrice[i] * 0.8) {
             arrProductUnlock[i] = true;
-            //updateProductName();
+            settingProductMenu('icon');
+            settingProductMenu('name');
         }
 
         // 학생이 충분, 불충분할 때 색 변환
-        let priceElement = document.getElementById(`product_${i}_price`);
-        let productElement = document.getElementById(`product_${i}`);
+        let productPrice = document.getElementById(`product_${i}_price`);
 
-        if(priceElement) {
-            if(student >= arrProductPrice[i]) {
-                priceElement.style.color = "#00ff00";
-                productElement.style.opacity = 1;
-            }
-            else {
-                priceElement.style.color = "#ff0000";
-                productElement.style.opacity = 0.5;
-            }
+        if(student >= arrProductPrice[i]) {
+            productPrice.style.color = "#00ff00";
+            product.style.opacity = 1;
+        } else {
+            productPrice.style.color = "#ff0000";
+            product.style.opacity = 0.5;
         }
     }
 
@@ -1270,10 +1944,11 @@ function perSecond() {
     statsStudent += addPerSecondStudent;
     statsTotalAddPerSecondStudent += addPerSecondStudent;
     statsAddPerSecondStudent += addPerSecondStudent;
-    updateStudent();
+    returningExp += addPerSecondStudent;
+    updateShowStudent();
 
     for(let i = 0 ; i < productLength ; i++) {
-        arrProductProducedTotal[i] += arrProductAddPerSecondTotal[i]
+        arrProductStatsProductionTotal[i] += arrProductAddTotalValue[i]
     }
 }
 /*
@@ -1290,92 +1965,126 @@ setInterval(() => {
 */
 setInterval(() => {
     // 진행상황은 쿠키에 저장
-    saveCookie();
+    saveGame();
 }, 1000*30);
-// 쿠키에 저장
-function saveCookie() {
-    console.log('Save cookie');
-    // 보유한 학생
+// 게임 저장
+function saveGame() {
+    console.log('Save Game');
+    // 학생
     setCookie('student', student);
-    // 클릭 추가 학생값
     setCookie('addClickStudent', addClickStudent);
-    // 초당 추가 학생값
     setCookie('addPerSecondStudent', addPerSecondStudent);
     // 팝업 등장 여부 | 배열
-    setCookie('arrPopupAppearBool', arrPopupAppearBool);
-    // 보유한 증축 | 배열
-    setCookie('arrProductGetCount', arrProductGetCount);
+    setCookie('arrAppearPopupBool', arrAppearPopupBool);
     
-    setCookie('arrProductAddPerSecondBonus', arrProductAddPerSecondBonus);
-    setCookie('arrProductAddPerSecondTotal', arrProductAddPerSecondTotal);
-    setCookie('arrProductProducedTotal', arrProductProducedTotal);
-    setCookie('productAddPerSecondTotal', productAddPerSecondTotal);
+    // 증축
+    setCookie('arrProductAppear', arrProductAppear);
     setCookie('arrProductUnlock', arrProductUnlock);
-    setCookie('arrProductUpgradeId', arrProductUpgradeId);
-    setCookie('arrProductUpgradeEnable', arrProductUpgradeEnable);
-    setCookie('arrProductUpgradePurchaseBool', arrProductUpgradePurchaseBool);
+    setCookie('arrProductGetCount', arrProductGetCount);
+    setCookie('arrProductAddBonusValue', arrProductAddBonusValue);
+    setCookie('arrProductAddTotalValue', arrProductAddTotalValue);
+    setCookie('arrProductStatsProductionTotal', arrProductStatsProductionTotal);
+    setCookie('productAddPerSecondTotal', productAddPerSecondTotal);
     setCookie('arrProductUpgradeCount', arrProductUpgradeCount);
+    // 강화
+    setCookie('arrUpgradeId', arrUpgradeId);
+    setCookie('arrUpgradeEnable', arrUpgradeEnable);
+    setCookie('arrProductUpgradePurchaseBool', arrProductUpgradePurchaseBool);
+    // 설정
+    /*
+        설정 관련 변수
+    */
+    // 통계
+    setCookie('statsTotalStudent', statsTotalStudent);
+    setCookie('statsStudent', statsStudent);
+    setCookie('statsTotalAddPerSecondStudent', statsTotalAddPerSecondStudent);
+    setCookie('statsAddPerSecondStudent', statsAddPerSecondStudent);
+    setCookie('statsTotalAddClickStudent', statsTotalAddClickStudent);
+    setCookie('statsAddClickStudent', statsAddClickStudent);
+    setCookie('statsTotalClickCount', statsTotalClickCount);
+    setCookie('statsClickCount', statsClickCount);
+    setCookie('statsTotalProductCount', statsTotalProductCount);
+    setCookie('statsProductCount', statsProductCount);
+    setCookie('statsReturningCount', statsReturningCount);
+    // 회귀
+    setCookie('returningCurrentLevel', returningCurrentLevel);
+    setCookie('returningIncreaseLevel', returningIncreaseLevel);
+    setCookie('returningExp', returningExp);
+    setCookie('returningExpMax', returningExpMax);
+    setCookie('returningProductionMultiple', returningProductionMultiple);
+    // 기억 왜곡
+    setCookie('arrMemoryEnable', arrMemoryEnable);
+    // 도전 과제
+    setCookie('arrAchievementEnable', arrAchievementEnable);
+    // 저장된 날짜
+    setCookie('lastSaveTime', Date.now());
 }
-function loadCookie() {
+function loadGame() { // 게임 로드
     console.log('Load cookie');
-    // 보유한 학생
+    // 학생
     student = getCookie('student');
-    // 클릭 추가 학생값
     addClickStudent = getCookie('addClickStudent');
-    // 초당 추가 학생값
     addPerSecondStudent = getCookie('addPerSecondStudent');
     // 팝업 등장 여부 | 배열
-    arrPopupAppearBool = getCookie('arrPopupAppearBool');
-    // 보유한 증축
-    arrProductGetCount = getCookie('arrProductGetCount');
+    arrAppearPopupBool = getCookie('arrAppearPopupBool');
     
-    updateProductBackground();
-    for(let i = 0 ; i < arrProductGetCount.length ; i++) {
-        updateProductInfo(i,arrProductGetCount[i])
-        updateProductStateImg(i)
-    }
-    
-    arrProductAddPerSecondBonus = getCookie('arrProductAddPerSecondBonus');
-    arrProductAddPerSecondTotal = getCookie('arrProductAddPerSecondTotal');
-    arrProductProducedTotal = getCookie('arrProductProducedTotal');
-    productAddPerSecondTotal = getCookie('productAddPerSecondTotal');
+    // 증축
+    arrProductAppear = getCookie('arrProductAppear');
     arrProductUnlock = getCookie('arrProductUnlock');
-    for(let i = 0 ; i < arrProductUnlock.length ; i++) {
-        product.querySelector('.name').innerHTML = translations[lang].arrProductName[i];
-    }
-    arrProductUpgradeId = getCookie('arrProductUpgradeId');
-    reorderUpgradeIcon();
-    arrProductUpgradeEnable = getCookie('arrProductUpgradeEnable');
-    arrProductUpgradePurchaseBool = getCookie('arrProductUpgradePurchaseBool');
+    arrProductGetCount = getCookie('arrProductGetCount');
+    arrProductAddBonusValue = getCookie('arrProductAddBonusValue');
+    arrProductAddTotalValue = getCookie('arrProductAddTotalValue');
+    arrProductStatsProductionTotal = getCookie('arrProductStatsProductionTotal');
+    productAddPerSecondTotal = getCookie('productAddPerSecondTotal');
     arrProductUpgradeCount = getCookie('arrProductUpgradeCount');
+    // 강화
+    arrUpgradeId = getCookie('arrUpgradeId');
+    reorderUpgradeIcon();
+    arrUpgradeEnable = getCookie('arrUpgradeEnable');
+    arrProductUpgradePurchaseBool = getCookie('arrProductUpgradePurchaseBool');
+    // 설정
+    /*
+        설정 관련 변수
+    */
+    // 통계
+    statsTotalStudent = getCookie('statsTotalStudent');
+    statsStudent = getCookie('statsStudent');
+    statsTotalAddPerSecondStudent = getCookie('statsTotalAddPerSecondStudent');
+    statsAddPerSecondStudent = getCookie('statsAddPerSecondStudent');
+    statsTotalAddClickStudent = getCookie('statsTotalAddClickStudent');
+    statsAddClickStudent = getCookie('statsAddClickStudent');
+    statsTotalClickCount = getCookie('statsTotalClickCount');
+    statsClickCount = getCookie('statsClickCount');
+    statsTotalProductCount = getCookie('statsTotalProductCount');
+    statsProductCount = getCookie('statsProductCount');
+    statsReturningCount = getCookie('statsReturningCount');
+    // 회귀
+    returningCurrentLevel = getCookie('returningCurrentLevel');
+    returningIncreaseLevel = getCookie('returningIncreaseLevel');
+    returningExp = getCookie('returningExp');
+    returningExpMax = getCookie('returningExpMax');
+    returningProductionMultiple = getCookie('returningProductionMultiple');
+    // 기억 왜곡
+    arrMemoryEnable = getCookie('arrMemoryEnable');
+    // 도전 과제
+    arrAchievementEnable = getCookie('arrAchievementEnable');
 
-    updateStudent();
+    // 함수 실행
+    settingProductMenu('appear');
+    settingProductMenu('icon');
+    settingProductMenu('name');
+    settingProductMenu('count');
+    settingProductMenu('price');
+    settingProductBackground();
+    for(let i = 0 ; i < productLength ; i++) {
+        settingProductPrice(i, arrProductGetCount[i])
+        settingProductStateImg(i)
+    }
+    // 저장된 시간
+    lastSaveTime = parseInt(getCookie('lastSaveTime'), 10);
+    productOffline();
 }
 
-/* 
-    텍스트 파일 추출
-*/
-document.getElementById('downloadButton').addEventListener('click', function() {
-    const textContent = arrProductGetCount[0] + '/' + arrProductGetCount[1] + '저장된 내용을 저장하고 추출\n두번째 줄 테스트 \n 세번 째 줄 테스트\n1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
-    // Blob 객체를 생성(파일의 내용을 포함)
-    const blob = new Blob([textContent], { type: 'text/plain' });
-
-    // 링크 생성
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    // 다운로드할 파일의 이름
-    a.download = 'example.txt';
-
-    // 클릭하여 다운로드를시작
-    document.body.appendChild(a);
-    a.click();
-
-    // 다운로드 링크를 제거
-    document.body.removeChild(a);
-    // 메모리를 반환
-    URL.revokeObjectURL(URL.createObjectURL(blob));
-});
 
 function debugMode() {
     student = 1e58;
@@ -1384,20 +2093,15 @@ function debugMode() {
     }
 }
 /*
-    FUNCTION
     쿠키 설정
 */
-function setCookie(name, value) {
+function setCookie(name, value) { // 쿠키 저장하기
     // JSON 문자열로 변환 | 받은 값이 배열일 경우 불러오기 편하게 하기 위함
     value = JSON.stringify(value);
     // 쿠키에 저장
     document.cookie = `${name}=${encodeURIComponent(value)}; max-age=${3.156e+8}; path=/`;
 }
-/*
-    FUNCTION
-    쿠키 가져오기
-*/
-function getCookie(name) {
+function getCookie(name) { // 쿠키 가져오기
     const cookieData = document.cookie.split('; ');
     let cookieValue;
 
@@ -1412,10 +2116,18 @@ function getCookie(name) {
 
 // 페이지 로드 시 쿠키 확인 및 메시지 표시
 window.onload = function() {
-    const checkCookies = document.cookie;
-    if(checkCookies) loadCookie();
+    settingProduct();
 
-    if(arrPopupAppearBool[1][0] == false) createPopup(1, 0);
+    // 쿠키
+    const checkCookies = document.cookie;
+    if(checkCookies) {
+        loadGame();
+    } else {
+        appearPopup(1, 0);
+        productDefaultSetting();
+    }
+
+    //if(arrAppearPopupBool[1][0] == false) appearPopup(1, 0);
 
     updateNews();
     gameMenuDefaultSetting();

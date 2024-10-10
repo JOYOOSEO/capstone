@@ -118,14 +118,15 @@
                     <div id="pageSettingCommon" class="subtitle"></div>
                     <div id="settingCommonBundle" class="bundle">
                         <div>저장하기</div>
-                        <div>저장하기 버튼</div>
-                        <div>저장된 파일 내보내기 버튼</div>
-                        <div>저장된 파일 불러오기 버튼</div>
+                        <div id="buttonSave" class="button">저장하기</div>
+                        <div id="buttonSaveFileExport" class="button">파일 내보내기</div>
+                        <div id="buttonSaveFileImport" class="button">파일 불러오기</div>
                         <div id="text">언어설정</div>
-                        <select id="languageSelector">
+                        <div id="buttonChangeLanuage" class="button">언어 변경</div>
+                        <!-- <select id="languageSelector">
                             <option value="ko">한국어</option>
                             <option value="en">English</option>
-                        </select>
+                        </select> -->
                     </div>
                     <div id="pageSettingDetail" class="subtitle"></div>
                     <div id="settingDetailBundle" class="bundle"></div>
@@ -135,25 +136,25 @@
                     <div class="pageCloseButton"></div>
                     <div id="pageStatsTitle" class="title"></div>
                     <div id="pageStatsCommon" class="subtitle"></div>
-                    <div id="statsCommonBundle" class="bundle">
-                        <div id="statsTotalStudent" class="text"></div>
-                        <div id="statsStudent" class="text"></div>
-                        <div id="showPerSecondStudent" class="text topMargin"></div>
-                        <div id="statsTotalPerSecondStudent" class="text"></div>
-                        <div id="statsPerSecondStudent" class="text"></div>
-                        <div id="showClickStudent" class="text topMargin"></div>
-                        <div id="statsTotalClickStudent" class="text"></div>
-                        <div id="statsClickStudent" class="text"></div>
-                        <div id="statsTotalClickCount" class="text topMargin"></div>
-                        <div id="statsClickCount" class="text"></div>
-                        <div id="statsTotalProductCount" class="text topMargin"></div>
-                        <div id="statsProductCount" class="text"></div>
-                        <div id="statsReturningCount" class="text topMargin"></div>
+                    <div id="statsCommonBundle" class="bundle fs125">
+                        <div id="statsTotalStudent"></div>
+                        <div id="statsStudent"></div>
+                        <div id="showPerSecondStudent" class="topMargin"></div>
+                        <div id="statsTotalPerSecondStudent"></div>
+                        <div id="statsPerSecondStudent"></div>
+                        <div id="showClickStudent" class="topMargin"></div>
+                        <div id="statsTotalClickStudent"></div>
+                        <div id="statsClickStudent"></div>
+                        <div id="statsTotalClickCount" class="topMargin"></div>
+                        <div id="statsClickCount"></div>
+                        <div id="statsTotalProductCount" class="topMargin"></div>
+                        <div id="statsProductCount"></div>
+                        <div id="statsReturningCount" class="topMargin"></div>
                     </div>
                     <div id="pageStatsUpgrade" class="subtitle"></div>
                     <div id="statsUpgradeBundle" class="bundle"></div>
                     <div id="pageStatsAchievement" class="subtitle"></div>
-                    <div id="statsAchievementBundle" class="bundle"></div>
+                    <div id="statsAchievementBundle" class="bundle"> <!-- Div add here --> </div>
                     <div class="blankArea">DUMMY</div>
                 </div>
                 <div id="pageInfo" class="pageMenu">
@@ -206,7 +207,28 @@
                 <div id="pageReturning" class="pageMenu">
                     <div class="pageCloseButton"></div>
                     <div id="pageReturningTitle" class="title"></div>
-                    <div>귀환 어쩌구</div>
+                    <div id="pageReturningPanel" class="panel">
+                        <div id="pageReturningPanelLevel" class="panelText fs200"></div>
+                        <div id="pageReturningPanelBonus" class="panelText fs125 fsItalic"></div>
+                    </div>
+                    <div id="pageReturningLevel" class="subtitle"></div>
+                    <div id="returningLevelBundle" class="bundle">
+                        <div id="pageReturningTimeDate" class="fs125"></div>
+                        <div class="line"></div>
+                        <div id="pageReturningNowReturningText_1" class="fs125"></div>
+                        <div id="pageReturningNowReturningIncreaseLevel" class="fcWhite fs200"></div>
+                        <div id="pageReturningNowReturningText_2" class="fs125"></div>
+                        <div class="line"></div>
+                        <div id="pageReturningExpBar">
+                            <div id="pageReturningExpFilledBar"></div>
+                            <div id="pageReturningExpPercentage" class="fcBlack fs140"></div>
+                        </div>
+                        <div id="pageReturningExpEmptyValue" class="fs125"></div>
+                        <div class="line"></div>
+                        <div id="buttonReturning" class="button">과거로 돌아가기</div>
+                    </div>
+                    <div id="pageReturningAbility" class="subtitle"></div>
+                    <div id="returningMemoryBundle" class="bundle"> <!-- Div add here --> </div>
                     <div class="blankArea">DUMMY</div>
                 </div>
             </div>
@@ -362,40 +384,51 @@
                             <div id="product_15_getCount" class="getCount"></div>
                         </div>
                     </div>
-                    <button id="downloadButton">텍스트 파일 추출</button>
                     <button id="debugMode" onclick="debugMode()">디버그모드</button>
                     <button id="debugMode" onclick="saveCookie()">쿠키 저장</button>
                     <div id="blankArea"></div>
                 </div>
             </div>
         </div>
-        
+        <!-- Tooltip -->
         <div id="productTooltip" class="tooltip">
             <div id="productTooltipIcon" class="icon"></div>
-            <div id="productTooltipPrice" class="price"></div>
-            <div id="productTooltipName" class="name"></div>
+            <div id="productTooltipPrice" class="price fs125"></div>
+            <div id="productTooltipName" class="name fcWhite fs130"></div>
             <div id="productTooltipGetCount" class="getCount"></div>
-            <div id="productTooltipTagList" class="tagList"></div>
+            <div id="productTooltipTagList" class="tagList"> <!-- Div add here --> </div>
             <hr id="topLine" class="line" />
-            <div class="description"></div>
-            <hr id="centerLine" class="line" />
-            <div id="infoBundle" class="infoBundle">
-                <div id="info_1" class="info"></div>
-                <div id="info_2" class="info"></div>
-                <div id="info_3" class="info"></div>
+            <div id="productTooltipDescription" class="description fs100"></div>
+            <div id="productTooltipStatsBundle" class="columnBundle fs110">
+                <hr id="centerLine" class="line" />
+                <div id="productTooltipStats_1" class="stats"></div>
+                <div id="productTooltipStats_2" class="stats"></div>
+                <div id="productTooltipStats_3" class="stats"></div>
             </div>
-            <hr id="bottomLine" class="line" />
-            <div id="productUpgradeDone" class="productUpgradeDone upgradeList"></div>
-            <div id="progressUpgrade" class="progressUpgrade upgradeList"></div>
-            <div id="upgradePurchaseList" class="progressUpgrade upgradeList"></div>
+            <div id="productTooltipUpgradeEnableBundle" class="columnBundle">
+                <hr id="bottomLine" class="line" />
+                <div id="productUpgradeDone" class="productUpgradeDone fcWhite fs120"></div>
+                <div id="progressUpgrade" class="progressUpgrade fs100"></div>
+                <div id="upgradePurchaseList" class="progressUpgrade"> <!-- Div add here --> </div>
+            </div>
         </div>
         <div id="upgradeTooltip" class="tooltip">
             <div id="upgradeTooltipIcon" class="icon"></div>
-            <div id="upgradeTooltipPrice" class="price"></div>
-            <div id="upgradeTooltipName" class="name"></div>
-            <div id="upgradeTooltipTagList" class="tagList"></div>
+            <div id="upgradeTooltipPrice" class="price fs125"></div>
+            <div id="upgradeTooltipName" class="name fcWhite fs130"></div>
+            <div id="upgradeTooltipTagList" class="tagList"> <!-- Div add here --> </div>
             <hr id="upgradeTooltipMainLine" class="line">
-            <div id="upgradeTooltipDescription" class="description"></div>
+            <div id="upgradeTooltipDescription" class="description fs120"></div>
+        </div>
+        <div id="specialTooltip" class="tooltip">
+            <div id="specialTooltipIcon" class="icon"></div>
+            <div id="specialTooltipPrice" class="price fs125"></div>
+            <div id="specialTooltipName" class="name fcWhite fs130"></div>
+            <div id="specialTooltipTagList" class="tagList"> <!-- Div add here --> </div>
+            <hr id="specialTooltipTopLine" class="line">
+            <div id="specialTooltipDescription" class="description fs120"></div>
+            <hr id="specialTooltipBottomLine" class="line">
+            <div id="specialTooltipFlavorText" class="flavorText fs110"></div>
         </div>
     </div>
     <script type="text/javascript" src="main.js"></script>

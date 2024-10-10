@@ -6,7 +6,12 @@ del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, va
 	font: inherit;
 	vertical-align: baseline;
 }
-
+/* @font-face {
+    font-family: 'KoddiUDOnGothic-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/KoddiUDOnGothic-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+} */
 body {
 	font-family: "Do Hyeon", sans-serif;
 	font-weight: 400;
@@ -40,6 +45,23 @@ body {
 	background: #000000;
 	opacity: 0.6;
 }
+#popupArea #returningBackground {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+	width: 100%;
+	background-color: #000000;
+	animation: returningBackground 5s ease;
+}	
+@keyframes returningBackground {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
 #popupArea #popupBox {
 	position: absolute;
 	display: flex;
@@ -47,11 +69,50 @@ body {
 	align-items: center;
 	top: 50%;
 	left: 50%;
+	width: 960px;
+	min-height: 400px;
+	height: auto;
 	transform: translate(-50%, -50%);
 	background: linear-gradient(315deg, #2B2B2B 80%, #4B4B4B 100%);
 	border: 4px solid;
 	border-image: linear-gradient(315deg, #00E4FF, #69FF97);
 	border-image-slice: 1;
+}
+#popupArea #popupBox #popupLanguageBundle {
+	text-align: center;
+	display: flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+	width: 100%;
+	margin-bottom: 16px;
+}
+#popupArea #popupBox #popupLanguageBundle .language {
+	width: 128px;
+	height: 128px;
+	border: 1px solid #FFFFFF;
+}
+#popupArea #popupBox #popupLanguageBundle .language:hover {
+	background: #FFFFFF33;
+	filter: drop-shadow(0px 2px 4px #000000);
+	transform: translateY(-2px);
+}
+#popupArea #popupBox #popupLanguageText {
+	color: #FFFFFF;
+	font-size: 200%;
+	margin-top: 48px;
+}
+#popupArea #popupBox #popupCloseButton {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	width: 48px;
+	height: 48px;
+	background-color: gray;
+	border-radius: 10px;
+	margin: 8px;
+}
+#popupArea #popupBox #popupCloseButton:hover {
+	filter: brightness(115%);
 }
 #popupArea #popupBox #popupBoxTitle {
 	font-size: 250%;
@@ -59,9 +120,19 @@ body {
 	background-clip: text;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
-	margin: 16px;
+	margin: 24px 0px;
 }
-#popupArea #popupBox #popupBoxPicture {
+#popupArea #popupBox #popupBoxTitle b.returning {
+    background-image: linear-gradient(135deg, red, orange, yellow, green, blue, indigo, violet);
+	background-clip: text;
+	animation: rainbow 3s infinite;
+}
+@keyframes rainbow {
+	0% { background-position: 0% 50%; }
+	50% { background-position: 100% 50%; }
+	100% { background-position: 0% 50%; }
+}
+/* #popupArea #popupBox #popupBoxPicture {
 	height: 225px;
 	width: 400px;
 	background: url('img/popup/test.png');
@@ -69,7 +140,7 @@ body {
 	border-image: linear-gradient(to right, #2F80ED, #56CCF2);;
 	border-image-slice: 1;
 	margin: 0px 8px 16px 8px;
-}
+} */
 #popupArea #popupBox #popupBoxInput {
 	color: #000000;
 	font-family: "Do Hyeon", sans-serif;
@@ -90,16 +161,24 @@ body {
 	background: #4A4A4A;
 	border-radius: 10px;
 	padding: 8px;
+	margin: 12px 0px;
+}
+#popupArea #popupBox #popupBoxDescription b#showOfflineEarnings {
+	filter: drop-shadow(0px 0px 4px #3399FF);
+}
+#popupArea #popupBox #popupBoxDescription b.textShadow {
+	text-shadow: 0px 0px 2px #000000;
 }
 #popupArea #popupBox #popupBoxButton {
 	color: #FFFFFF;
 	text-align: center;
 	font-size: 150%;
+	min-width: 150px;
 	width: 150px;
 	background: linear-gradient(to right, #4CA1AF, #2C3E50);
 	box-shadow: 0px 5px 5px 0px #FFFFFF80 inset;
 	border-radius: 20px;
-	padding: 4px 0px;
+	padding: 4px 16px;
 	margin: 16px;
 	cursor: pointer;
 }
@@ -166,9 +245,7 @@ body {
 	color: #FFFFFF;
 	text-shadow: 0px 0px 8px #FFFFFF;
 }
-
-#sectionLeft #logoBundle
-{
+#sectionLeft #logoBundle {
 	position: absolute;
 	left: 50%;
 	top: 40%;
@@ -188,14 +265,26 @@ body {
 	cursor: pointer;
 }
 #sectionLeft #logoBundle #universityLogo:hover {
-	transform: scale(1.15);
+	transform: scale(1.05);
 	transition: transform 0.15s;
+}
+#sectionLeft #logoBundle #universityLogo.bounce {
+	animation: bounce 0.5s ease;
+}
+@keyframes bounce {
+	0%, 100% {
+		transform: scale(1.05);
+	}
+	50% {
+		transform: scale(1.25);
+	}
 }
 #sectionLeft #logoBundle #universityLogo .floatingUp {
 	color: #FFFFFF;
 	font-size: 250%;
 	position: absolute;
-	animation: floatUp 10s forwards;
+	transform: translate(-50%, -50%);
+	animation: floatUp 1s forwards;
 }
 @keyframes floatUp {
 	0% {
@@ -385,13 +474,32 @@ sectionMiddle
 #sectionMiddle #pageBundle .bundle:hover {
 	box-shadow: 0px 0px 5px #FFFFFF;
 }
-#sectionMiddle #pageBundle .text {
+/* #sectionMiddle #pageBundle .text {
 	font-size: 110%;
 	margin: 2px;
 }
 #sectionMiddle #pageBundle b {
 	font-size: 125%;
 	color: #FFFFFF;
+} */
+#sectionMiddle #pageBundle #pageSetting #settingCommonBundle .button {
+	color: white;
+	font-size: 150%;
+	text-align: center;
+	width: 250px;
+	height: auto;
+	background-color: green;
+	border: 1px solid green;
+	padding: 5px;
+	cursor: pointer;
+}
+#sectionMiddle #pageBundle #pageSetting #settingCommonBundle .button:hover {
+	color: green;
+	background: white;
+	border: 1px solid white;
+}
+#sectionMiddle #pageBundle #pageStats #statsCommonBundle {
+	padding: 24px 20px;
 }
 #sectionMiddle #pageBundle #pageStats #statsCommonBundle .topMargin {
 	margin-top: 16px;
@@ -409,6 +517,19 @@ sectionMiddle
 	margin: 6px;
 }
 #sectionMiddle #pageBundle #pageStats #statsUpgradeBundle .statsUpgradeIcon:hover {
+	transform: translateY(-2px);
+}
+#sectionMiddle #pageBundle #pageStats #statsAchievementBundle .statsAchievementIcon {
+	display: inline-block;
+	width: 48px;
+	height: 48px;
+	filter: drop-shadow(0px 3px 2px #000000);
+	background-size: cover;
+	border: 1px solid #FFFFFF;
+	object-fit: cover;
+	margin: 6px;
+}
+#sectionMiddle #pageBundle #pageStats #statsAchievementBundle .statsAchievementIcon:hover {
 	transform: translateY(-2px);
 }
 #sectionMiddle #pageBundle #pageInfo #infoIntroduce .text {
@@ -494,7 +615,103 @@ sectionMiddle
 	font-size: 110%;
 	margin: 4px 8px;
 }
-
+#sectionMiddle #pageBundle #pageReturning #pageReturningPanel {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: 85%;
+	width: 350px;
+	background: linear-gradient(to right, #9400D3, #4B0082, #8E4585);
+	border: 2px solid;
+    border-image: linear-gradient(315deg, #E6E6FA, #4B0082, #D3D3D3);
+    border-image-slice: 1;
+	box-sizing: border-box;
+	padding: 12px;
+	margin-top: 64px;
+}
+#sectionMiddle #pageBundle #pageReturning #returningLevelBundle {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 16px;
+}
+#sectionMiddle #pageBundle #pageReturning #returningLevelBundle #pageReturningNowReturningIncreaseLevel {
+	margin: 4px;
+}
+#sectionMiddle #pageBundle #pageReturning #returningLevelBundle #pageReturningExpBar {
+	position: relative;
+	min-width: 300px;
+	width: 80%;
+	height: 30px;
+	background-color: #EEEEEE;
+	border: 2px solid #CCCCCC;
+	border-radius: 2.5px;
+	margin: 12px 0px;
+}
+#sectionMiddle #pageBundle #pageReturning #returningLevelBundle #pageReturningExpBar #pageReturningExpFilledBar {
+	height: 100%;
+	width: 0%;
+	border-radius: 2.5px;
+	animation: filledBar 3s infinite;
+}
+@keyframes filledBar {
+	0% { background: #B186D4; }
+	50% { background: #814B8F; }
+	100% { background: #B186D4; }
+}
+#sectionMiddle #pageBundle #pageReturning #returningLevelBundle #pageReturningExpBar #pageReturningExpPercentage {
+	text-shadow: 0px 0px 4px #FFFFFF;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+#sectionMiddle #pageBundle #pageReturning #returningLevelBundle .button {
+	text-align: center;
+	font-size: 175%;
+	width: 256px;
+	height: auto;
+	background-color: #000000;
+	border: 2px solid #000000;
+	border-radius: 15px;
+	margin-top: 16px;
+	padding: 4px 8px;
+	cursor: pointer;
+	animation: returningRainbow 14s infinite;
+}
+@keyframes returningRainbow {
+	14% { color: #ff0000; }
+	28% { color: #ffa500; }
+	42% { color: #ffff00; }
+	56% { color: #008000; }
+	70% { color: #0000ff; }
+	84% { color: #4b0082; }
+	100% { color: #800080; }
+}
+#sectionMiddle #pageBundle #pageReturning #returningLevelBundle .button:hover {
+	color: #000000;
+	background-color: #FFFFFF;
+	border: 2px solid #FF0000;
+}
+#sectionMiddle #pageBundle #pageReturning #returningLevelBundle .line {
+	width: 95%;
+	height: 1px;
+	background: linear-gradient(to right,#FFFFFF00 15%, #FFFFFF, #FFFFFF00 85%);
+	border: 0px;
+	margin: 24px 0px;
+}
+#sectionMiddle #pageBundle #pageReturning #returningMemoryBundle .returningMemoryIcon {
+	display: inline-block;
+	width: 48px;
+	height: 48px;
+	background-size: cover;
+	object-fit: cover;
+	margin: 16px;
+}
+#sectionMiddle #pageBundle #pageReturning #returningMemoryBundle .returningMemoryIcon:hover {
+	filter: brightness(115%);
+	transform: translateY(-2px);
+}
 /* 
 sectionRight 
 */
@@ -578,10 +795,9 @@ sectionRight
 	display: inline-block;
 	width: 48px;
 	height: 48px;
-	background: gray;
-	background-size: cover;
 	outline: 2px solid #FFFFFF;
 	margin: 5px;
+	filter: drop-shadow(0px 1px 2px #000000);
 }
 .upgradeIcon:hover {
 	filter: brightness(115%);
@@ -595,13 +811,13 @@ sectionRight
 	min-height:60px;
 }
 .product {
+	display: flex;
 	position: relative;
 	width: 100%;
 	height: 64px;
 	background: url(img/purchaseTile.png) 0 -64px;
-	cursor: pointer;
-	display: flex;
 	margin-bottom: 2.5px;
+	cursor: pointer;
 }
 .product:hover {
 	transition-duration: 0.1s;
@@ -649,37 +865,30 @@ sectionRight
 #blankArea {
 	margin-bottom: 250px;
 }
-.disabled {
-	display: none;
-}
-
 /*
 	tooltip common
 
 */
 .tooltip {
+	display: none;
 	font-size: 16px;
-    display: block;
     position: absolute;
     right: 320px;
     height: auto;
     width: 350px;
     background-color: #2B2B2B;
-    padding: 10px;
-    z-index: 99;
-	overflow: hidden;
 	border: 2px solid;
 	border-image: linear-gradient(to right bottom, #FFC800, #FF7D00);
 	border-image-slice: 1;
+    padding: 10px;
+	overflow: hidden;
+    z-index: 99;
 }
 .tooltip .price {
-	font-size: 125%;
 	float: right;
 }
 .tooltip .name {
-	color: #ffffff;
-	text-shadow:0px 0px 4px #ffffff;
-	font-size: 130%;	
+	text-shadow:0px 0px 4px #FFFFFF;
 }
 .tooltip .tagList .tag {
 	font-size: 95%;
@@ -713,20 +922,14 @@ sectionRight
 	height: 1px;
 	background: linear-gradient(to right,#FFFFFF00,#FFFFFF,#FFFFFF00);
 	border: 0px;
+	margin: 12px 0px;
 }
-#productTooltip .description {
+#productTooltip #productTooltipDescription {
 	color: #C5C5C5;
-	font-size: 100%;
 	text-align: center;
 }
-#productTooltip .infoBundle {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-#productTooltip .infoBundle .info {
+#productTooltip #productTooltipStatsBundle .stats {
 	color: #D0D0D0;
-	font-size: 110%;
 	width: 90%;
 	height: auto;
 	background-color: #4A4A4A;
@@ -734,22 +937,20 @@ sectionRight
 	margin: 3px;
 	padding-left: 5px;
 }
-#productTooltip .infoBundle .info b {
-	color: #FFFFFF;
-	font-size: 105%;
+#productTooltip #productTooltipStatsBundle .info b {
 	text-shadow: 0px 0px 2px #000000;
 }
-#productTooltip .productUpgradeDone {
-	color: #FFFFFF;
-	font-size: 120%;
+#productTooltip #upgradeEnableBundle {
 	text-align: center;
 }
-#productTooltip .progressUpgrade {
+#productTooltip #productTooltipUpgradeEnableBundle .progressUpgrade {
 	color: #E0E0E0;
-	font-size: 90%;
-	text-align: center;
 }
-
+.columnBundle {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
 /*
 	Upgrade Tooltip
 */
@@ -773,20 +974,46 @@ sectionRight
 }
 #upgradeTooltip .description {
 	color: #A9A9A9;
-	font-size: 120%;
 	text-align: left;
 
 }
-#upgradeTooltip .description b {
-	font-size: 110%;
-	color: #FFFFFF;
+/*
+	Special Tooltip
+*/
+#specialTooltip {
+	width: 400px;
+	border: 2px solid;
+	border-image: linear-gradient(to right bottom, #EC1919, #870E0E);
+	border-image-slice: 1;
+}
+#specialTooltip .icon {
+	float: left;
+	width: 48px;
+	height: 48px;
+	background-size: cover;
+	object-fit: cover;
+	margin-right: 8px;
+	margin-bottom: 4px;
+	overflow: hidden;
+}
+#specialTooltip .description {
+	color: #A9A9A9;
+	text-align: left;
 
 }
+#specialTooltip .flavorText {
+	color: #202020;
+	text-shadow: 0px 0px 2px #FFFFFF;
+	text-align: right;
 
-#languageSelector {
-	font-size: 200%;
-	z-index: 99;
 }
+#specialTooltip .line {
+	width: 95%;
+	height: 1px;
+	background: linear-gradient(to right,#FFFFFF00,#8367FF,#FFFFFF00);
+	border: 0px;
+}
+
 /* divisionLine */
 .divisionLine {
 	z-index: 50;
@@ -818,3 +1045,23 @@ sectionRight
 	color: #00000000;
 	margin-top: 128px;
 }
+/* font size */
+.fs50 { font-size: 50%; }
+.fs75 { font-size: 75%; }
+.fs100 { font-size: 100%; }
+.fs110 { font-size: 110%; }
+.fs120 { font-size: 120%; }
+.fs125 { font-size: 125%; }
+.fs130 { font-size: 130%; }
+.fs140 { font-size: 140%; }
+.fs150 { font-size: 150%; }
+.fs175 { font-size: 175%; }
+.fs200 { font-size: 200%; }
+/* font color */
+.fcDefault { color: #D0D0D0 }
+.fcWhite { color: #FFFFFF }
+.fcBlack { color: #000000 }
+/* font style */
+.fsItalic { font-style: italic; }
+/* ETC */
+.disabled { display: none !important; }
