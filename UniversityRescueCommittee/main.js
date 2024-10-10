@@ -1013,6 +1013,7 @@ function pageSetting() {
     const buttonSave = document.getElementById('buttonSave');
     const buttonSaveFileExport = document.getElementById('buttonSaveFileExport');
     const buttonSaveFileImport = document.getElementById('buttonSaveFileImport');
+    const InputSaveFileImport = document.getElementById('inputImportSaveFile');
     const buttonChangeLanuage = document.getElementById('buttonChangeLanuage');
 
     buttonSave.addEventListener('click', () => {
@@ -1028,44 +1029,40 @@ function pageSetting() {
         appearPopup(2, 0);
     });
 }
-function exportSaveFile() {
-    const textContent = arrProductGetCount[0] + '/' + arrProductGetCount[1] + '저장된 내용을 저장하고 추출\n두번째 줄 테스트 \n 세번 째 줄 테스트\n1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
+function exportSaveFile() {    
     // Blob 객체를 생성(파일의 내용을 포함)
-    const blob = new Blob([textContent], { type: 'text/plain' });
+    const blob = new Blob([document.cookie], { type: 'text/plain' });
 
     // 링크 생성
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    // 다운로드할 파일의 이름
-    a.download = 'URC SaveFile.txt';
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'URCSaveFile.txt'; // 텍스트 파일 이름
 
-    // 클릭하여 다운로드를시작
-    document.body.appendChild(a);
-    a.click();
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 
-    // 다운로드 링크를 제거
-    document.body.removeChild(a);
-    // 메모리를 반환
-    URL.revokeObjectURL(URL.createObjectURL(blob));
+    URL.revokeObjectURL(URL.createObjectURL(blob)); // 메모리를 반환
 }
-// function importSaveFile(event) {
-//     const file = event.target.files[0];
-    
-//     if (file) { 
-//         const reader = new FileReader();
+function importSaveFile() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.txt'; // 파일 형식 수정 가능
+    input.onchange = e => { 
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onload = event => {
+            const content = event.target.result;
+            setCookies(JSON.parse(content)); // 쿠키 설정
+            alert('전체 쿠키 값이 업데이트되었습니다.');
+            location.reload();
+        };
+        reader.readAsText(file);
         
-//         reader.onload = function(e) {
-//             const text = e.target.result;
-//             const values = extractValues(text); // 필요한 값들을 추출하는 함수
-            
-//             // 값을 div에 표시
-//             document.getElementById('output').innerText = values.join(', ');
-//         };
+    };
+    input.click(); // 자동으로 파일 선택창 열기
+}
 
-//         reader.readAsText(file);
-//     }
-// }
 /*
     통계 메뉴
 */
@@ -2131,6 +2128,12 @@ function setCookie(name, value) { // 쿠키 저장하기
     value = JSON.stringify(value);
     // 쿠키에 저장
     document.cookie = `${name}=${encodeURIComponent(value)}; max-age=${3.156e+8}; path=/`;
+}
+function setCookies(cookies) {
+    for (const [name, value] of Object.entries(cookies)) {
+        const cookieValue = JSON.stringify(value);
+        document.cookie = `${name}=${encodeURIComponent(cookieValue)}; max-age=${3.156e+8}; path=/`;
+    }
 }
 function getCookie(name) { // 쿠키 가져오기
     const cookieData = document.cookie.split('; ');
