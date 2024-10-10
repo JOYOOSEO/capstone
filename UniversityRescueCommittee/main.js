@@ -894,31 +894,31 @@ function settingProductStateImg(i) { // 배경에 아이콘 삽입
                 appendStateImg.style.left = `${16 * j}px`
             }
             else if(i == 1) { // 학교 시설
-                appendStateImg.style.top = `${32}px`;
+                appendStateImg.style.top = `${40}px`;
                 appendStateImg.style.left = `${64 * j}px`
             }
             else if(i == 2) { // 교통 시설
                 const topRandom = Math.floor(Math.random() * 16);
                 appendStateImg.style.top = `${64 - topRandom}px`;
-                appendStateImg.style.left = `${60 * j}px`
+                appendStateImg.style.left = `${8 + 64 * j}px`
             }
             else if(i == 3) { // 주거 시설
                 appendStateImg.style.top = `${32}px`;
-                appendStateImg.style.left = `${80 * j}px`
+                appendStateImg.style.left = `${16 + 80 * j}px`
             }
             else if(i == 4) { // 은행
                 appendStateImg.style.top = `${32}px`;
-                appendStateImg.style.left = `${80 * j}px`
+                appendStateImg.style.left = `${16 + 80 * j}px`
             }
             else if(i == 5) { // 공항
                 appendStateImg.style.top = `${32 + Math.floor(Math.random() * 49) - 24}px`;
-                appendStateImg.style.left = `${16 + 64 * j}px`
+                appendStateImg.style.left = `${8 + 64 * j}px`
                 appendStateImg.style.backgroundPositionX = `${-64 * Math.floor(Math.random() * 4)}px`;
                 
             }
             else if(i == 6) { // 기업
                 appendStateImg.style.top = `${32}px`;
-                appendStateImg.style.left = `${80 * j}px`
+                appendStateImg.style.left = `${16 + 80 * j}px`
                 appendStateImg.style.backgroundPositionX = `${-64 * Math.floor(Math.random() * 3)}px`;
 
             }
@@ -1076,7 +1076,6 @@ function updatePageStats() { // 업데이트
             const value = arrProductUpgradePurchaseBool[i][j];
             const arr1 = Math.floor(value / 100);
             const arr2 = value % 100;
-            console.log(value + '/' + arr1 + '/' + arr2);
 
             const statsUpgradeIcon = document.createElement('div');
             statsUpgradeIcon.classList.add('statsUpgradeIcon');
@@ -1433,7 +1432,6 @@ function updateUpgradeMenuButton() {
 /* 
     증축
 */
-const tooltip = document.getElementById('productTooltip');
 let intervalsettingProductTooltip;
 function settingProduct() {
     console.log('setting product');
@@ -1485,6 +1483,7 @@ function settingProduct() {
         });
     }
 }
+const tooltip = document.getElementById('productTooltip');
 function settingProductTooltip(i) {
     // 선언
     const product = document.getElementById(`product_${i}`);
@@ -1496,11 +1495,17 @@ function settingProductTooltip(i) {
     // 만약 맨 아래에서 벗어났다면 | setTimeout으로 tooltip의 위치 갱신
     setTimeout(() => { if(tooltip.getBoundingClientRect().bottom > window.innerHeight) tooltip.style.top = `${window.innerHeight - tooltip.getBoundingClientRect().height - 10}px`; }, 1);
 
+    // 아이콘 공통
+    tooltip.querySelector('.icon').style.background = `url('img/icons_product.png')`;
+    tooltip.querySelector('.icon').style.backgroundPositionY = `${-64 * i}px`;
+
     if(arrProductUnlock[i] == true) { // 해금되었다면
+        // 아이콘
+        tooltip.querySelector('.icon').style.backgroundPositionX = `-64px`;
         // 이름
-        tooltip.querySelector('.name').textContent = translations[lang].arrProductName[i];
+        tooltip.querySelector('.name').innerHTML = translations[lang].arrProductName[i];
         // 설명
-        tooltip.querySelector('.description').textContent = translations[lang].productTooltipDescription[i];
+        tooltip.querySelector('.description').innerHTML = translations[lang].productTooltipDescription[i];
         tooltip.querySelector('#centerLine').classList.remove('disabled');
         
         // 태그
@@ -1521,7 +1526,6 @@ function settingProductTooltip(i) {
             addProductUpgradeIcon(i);
         } else tooltip.querySelector('#productTooltipUpgradeEnableBundle').classList.add('disabled');
     } else { // 해금 안 됐다면
-        tooltip.src = "/img/icon_lock.png";
         tooltip.querySelector('.name').innerHTML = '???';
         tooltip.querySelector('.price').innerHTML = '';
         tooltip.querySelector('.getCount').innerHTML = '';
@@ -1578,13 +1582,9 @@ function settingProductMenu(type) {
         if(type == 'icon') {
             const product = document.getElementById(`product_${i}`);
             product.querySelector('.icon').style.background = `url('img/icons_product.png')`;
-            if(arrProductUnlock[i] == false) {
-                product.querySelector('.icon').style.backgroundPositionX = `0px`;
-                product.querySelector('.icon').style.backgroundPositionY = `${-64 * i}px`;
-            } else {
-                product.querySelector('.icon').style.backgroundPositionX = `-64px`;
-                product.querySelector('.icon').style.backgroundPositionY = `${-64 * i}px`;
-            }
+            product.querySelector('.icon').style.backgroundPositionY = `${-64 * i}px`;
+            if(arrProductUnlock[i] == false) product.querySelector('.icon').style.backgroundPositionX = `0px`;
+            else product.querySelector('.icon').style.backgroundPositionX = `-64px`;
         }
         if(type == 'name') {
             if(arrProductUnlock[i] == false) product.querySelector('.name').innerHTML = '???';
