@@ -10,7 +10,11 @@ let ifSelectLanguage = false;
     학생 수치
 */
 let student = 0; // 현재 보유 학생
-let addClickStudent = 1e4; // 클릭당 추가 학생
+
+let addClickDefaultValue = 1;
+let addClickBonusValue = 1.00;
+let addClickTotalValue = 1; // 클릭당 추가 학생
+
 let addPerSecondStudent = 0; // 초당 추가 학생
 /*
     팝업
@@ -47,6 +51,7 @@ let returningIncreaseLevel = 0; // 증가된 레벨
 let returningExp = 0; // 현재 경험치
 let returningExpMax = ((1 ** 3) / 2) * 1e12; // 다음 레벨업하기 위한 필요 경험치
 let returningProductionMultiple = 1; // 회귀 입학 효율 배수
+let returningLastTime = 0;
 /*
     업그레이드
 */
@@ -160,6 +165,7 @@ let arrProductAddDefaultValue = [ // 증축 초당 증가량 | 고정
 ];
 let arrProductAddBonusValue = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]; // 증축 초당 증가량 배율 보너스
 let arrProductAddTotalValue = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; // 증축 최종 초당 증가량 | 공식: 기본 * 보너스 * 효율 배수 * 회귀 효율 배수
+let arrProductAddFinalValue = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; // 배율 적용된 초당 증가량 * 개수
 
 let arrProductStatsProductionTotal = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; // 증축 정보: 지금까지 입학한 학생 수
 let productAddPerSecondTotal = 0; // 모든 증축의 초당 증가량을 합한 값
@@ -258,7 +264,7 @@ const translations = {
                 '언어는 설정 메뉴에서 바꿀 수 있습니다.',
                 '학교의 이름을 바꿀 수 있습니다!<br><br>학교의 이름을 바꾸는 것은 재미를 위한 것으로, 진행에 영향을 주지 않습니다.<br><br>가급적 부적절한 단어 사용은 삼가시길 바랍니다.',
                 '당신이 없는동안 수많은 학생이 입학했습니다!<br><br><b class="fs200"><b id="showOfflineEarnings"></b> 명 입학</b><br><b class="fcDefault fs75">총 <b id="showOfflineTimeDiff" class="textShadow fcWhite fs110"></b> 초 동안 <b id="showOfflineEfficiency" class="textShadow fcWhite fs110"></b>%의 효율 / 최대 <b id="showMaxOfflineTime" class="textShadow fcWhite fs110"></b>시간</b>',
-                '<b class="returning">돌아갈 시간</b>'
+                '기억 등급, 도전 과제를 제외한 모든 진행상황을 잃어버립니다. 경험 등급이 높을수록 영구적인 추가 효과를 부여합니다.'
             ]
         ],
         popupButton_text: ['닫기', '바꾸기', '과거로 돌아가기'],
@@ -269,21 +275,253 @@ const translations = {
         newsTitle: '학교 소식',
         newsContents: [
             [
-                '이 학교가 있는지 조차 모르는 사람이 많습니다.', 
-                '우리 학교가 입학생이 기피하는 학교로 선정되었습니다.', 
-                '비어있는 강의실은 음산한 분위기를 내고 있습니다.', 
-                '이 학교의 평가는 별점 1점입니다.', 
-                '남아있는 학생마저 자퇴를 준비하고 있습니다.',
-                '학교에 학생보다 교수가 더 많습니다.'
+                [
+                    '교정에 울려 퍼지는 발소리는 거의 들리지 않습니다.', 
+                    '우리 학교가 입학생이 기피하는 학교로 선정되었습니다.', 
+                    '비어있는 강의실은 음산한 분위기를 내고 있습니다.', 
+                    '준비된 교재들은 먼지만 쌓여갈 뿐, 손길이 닿지 않습니다.', 
+                    '남아있는 학생마저 자퇴를 준비하고 있습니다.',
+                    '학교에 학생보다 교수가 더 많습니다.',
+                    '학교 게시판은 신입생 모집 포스터로 가득하지만, 아무도 관심을 두지 않습니다.',
+                    '카페에 한산하고, 앉을 자리를 고를 필요가 없습니다.',
+                    '교문 앞은 쓸쓸한 풍경만이 자리하고 있습니다.',
+                    '활발해야 할 동아리 방에는 먼지와 침묵이 자리잡고 있습니다.'
+                ],
+                [
+                    '경쟁은 느슨하지만 신입생들이 점점 늘고 있습니다.',
+                    '카파에 인기 있는 메뉴도 품절되는 경우가 없지만 예전보다 북적거립니다.',
+                    '한때 텅 비었던 강의실에 이제는 몇몇 학생이 자리를 채우기 시작했습니다.',
+                    '많은 사람들에게 외면받고 있지만 학교에 활기가 조금씩 돌아오고 있습니다.',
+                    '아직 규모가 작고 영향력은 미미하지만 학생회가 생겼습니다.',
+                    '어딘가 어색하지만 학생들의 웃음 소리가 들립니다.',
+                    '아직 타 명문대와 비교할 순 없지만 그래도 신입생은 점차 늘어가고 있습니다.',
+                    '우리 학교가 최고의 선택지는 아니지만 평판은 좋아지고 있습니다.',
+                    '학교 이름만으로는 아직 큰 울림은 없지만 신입생의 발걸음은 계속 이어지고 있습니다.',
+                    '명문대의 기준을 맞추기엔 부족하지만 꾸준한 성장세를 보이고 있습니다.'
+                ],
+                [
+                    '모든 경쟁이 끝난 곳, 우리 학교는 그 자체로 최종 목적지입니다.',
+                    '우리 학교는 단순한 교육 기관을 넘어 하나의 상징이 되었습니다.',
+                    '다른 학교들은 비교 자체가 불가능한 수준의 격차가 생겼습니다.',
+                    '학문적 권위와 실력으로 타의 추종을 불허하는 자리를 차지했습니다.',
+                    '입학은 곧 성공, 졸업은 곧 미래의 리더로 나아가는 첫걸음입니다.',
+                    '교내를 걷는 순간 명문이라는 의미를 온 몸으로 깨닫게 됩니다.',
+                    '우리 학교의 교육 방식과 프로그램은 세계적인 표준이 되었습니다.',
+                    '학생과 교수는 이곳에서 배우고 가르치는 것을 최고의 영광으로 여깁니다.',
+                    '졸업생들은 각 분야에서 리더로 활약하며 학교의 명성을 더욱 높이고 있습니다.',
+                    '5성급 식당보다 맛있는 음식을 먹고 싶다면 우리 학교의 급식을 먹는 것을 추천합니다.'
+                ],
+                [
+                    '이곳은 단순한 학교가 아닌, 우주적 비전을 실현하는 공간입니다.',
+                    '강의실에는 다양한 행성의 언어가 오가며 지식의 장이 펼쳐집니다.',
+                    '우리 학교에서 배운 지식은 다른 차원에서도 인정받고 있습니다.',
+                    '우주의 지식을 배경으로 한 교육은 지구에서 볼 수 없는 리더를 양성합니다.',
+                    '다른 차원에서 온 인재들이 모여 새로운 역사를 만들어가고 있습니다.',
+                    '외계 문명과 협력하여 초월적인 지식의 축적을 탐구하고 있습니다.',
+                    '학생들은 서로 다른 차원에서 온 학생과 함께 진정한 지식을 향해 나아갑니다,',
+                    '빛보다 빠른 지식 전달을 통해 더욱 넓혀가는 경험을 합니다.',
+                    '우리 학교는 우주적 사고의 요람이 되었으며 초월적 존재마저 탐내는 명문입니다.',
+                    '학문의 경계를 넘어 블랙홀을 탐험할 수 있는 기회를 제공합니다.'
+                ]
             ],
-            [],
-            []
+            [
+                [ // 학교 시설
+                    '학생회관에 설치된 게임방에서 과제를 외면한 학생의 레벨업 기회를 제공합니다.',
+                    '학생들을 위한 커뮤니티 공간이 더 많이 증축되어 다양한 행사와 모임이 형성되고 있습니다.',
+                    '학교 식당은 학생 평가 100점 만점에 99점을 달성했습니다.',
+                    '라운지에서 편안한 소파와 배터리 및 멘탈 충전이 가능한 무한한 충전 포트가 준비되어 있습니다.',
+                    '카페에서 커피뿐 아니라 꿈과 희망을 제공합니다.',
+                    '최점단 연구실에서 다른 차원의 문을 열어버리는 일 없도록 주의를 주고 있습니다.',
+                    '스포츠 센터에서 공부와 운동을 동시에 하는 새로운 트렌드를 만들었습니다.',
+                    '도서관에서 책이 24시간 대기 중입니다. 경고문에는 \'책이 뿜어내는 지식이 뜨거워요\'라고 쓰여있습니다.',
+                    '예술관에서 새로운 스튜디오에 창의적인 마법이 시작됩니다. 혹시 재료가 부족하면 연필에 실험해보세요.',
+                    '전문가를 꿈꾸는 학생의 놀이터를 만들기 위해 학교 시설을 계속 만들어 가고 있습니다.'
+                ],
+                [ // 교통 시설
+                    '전용 교통 버스가 생겼습니다. 우리 학교까지 이동하는 순간이 고급 스웨트처럼 부드러워졌습니다.',
+                    '자전거 도로는 학생의 친환경 자전거 대회가 열릴 곳으로 각광 받고 있습니다.',
+                    '새로운 통학 전용 지하철 노선이 개통되어 사람과 부딧힐일이 없습니다.',
+                    '주변에 설치된 무인 택시 정류장은 학생의 개인 운전기사처럼 소중한 손재가 되었습니다.',
+                    '교내부터 교외로 이어지는 산책로는 데이트 명소로 유명합니다.',
+                    '학생 전용 통행로는 악천후에서도 신속하게 학교에 도착할 수 있게 설계되어 있습니다.',
+                    '교내 공원에서는 자율주행 로봇이 배치되어 학생을 안전하게 안내합니다.',
+                    '전기 스쿠터 대여소를 통해 걷기 귀찮고 바람을 만끽하고 싶은 학생들에게 인기가 있습니다.',
+                    '지각한 학생의 대부분이 느리지만 멋진 공중케이블카로 등교해서 그렇습니다.',
+                    '살면서 이렇게 큰 배를 탈 일이 얼마나 있을까요? 배멀미용 알약은 구비되어있습니다.'
+                ],
+                [ // 주거지
+                    '우리 학교는 집 없는 학생은 없다는 슬로건으로 모든 신입생에게 거주지를 제공하고 있습니다.',
+                    '학생에게 부담되는 거주 임대료와 관리비는 모두 무료입니다.',
+                    '학생 거주지 근처에 생긴 푸드코트는 24시간으로 운영됩니다.',
+                    '안전한 보금자리를 제공하기 위해 모든 주거 공간은 최신 보안 시스템으로 보호됩니다.',
+                    '학생을 위한 생활 필수품 키트를 특별 할인합니다. 이사 축하 선물 같은 특별한 기회를 놓치지 마세요.',
+                    '거주 공간 지하에 학생을 위한 영화관이 들어섰습니다. 매주 밤마다 최신 영화를 무료로 볼 수 있죠.',
+                    '최근 새롭게 생긴 주거 단지는 친환경 생활을 지원하여 자연과 조화를 이루는 삶을 누릴 수 있습니다.',
+                    '요즘 원하는 학생끼리 한 집에서 살 수 있는 공유 주거 프로그램이 인기입니다.',
+                    '가까운 거리에 다양한 시설이 있어 도움을 빠르게 받을 수 있습니다.',
+                    '가족을 데려오는 학생의 수가 급증하고 있습니다. 아쉽지만 이 집에서는 학생의 가족이 살 수 없습니다. 나가주세요.'
+                ],
+                [ // 은행
+                    '우리 학생을 위해 대출 심사 따윈 과감히 없애버렸습니다.',
+                    '다양한 국적의 학생을 고려해 은행에서 모든 국가의 화폐를 마련해두었습니다.',
+                    '우리 학교 학생이라면 모든 대출금은 모두 무이자로 제공됩니다. 졸업해도 무이자는 유지된답니다.',
+                    '우수한 성적으로 졸업한 졸업생은 대출금을 일부 줄여주는 파격적인 조건을 실시했습니다.',
+                    '신입생 전용 금융 패키지가 출시되었습니다. \'정말, 급하게, 필요한 순간에만\' 여러분의 곁을 함께합니다.',
+                    '학생에게 더 많은 기회를 제공하기 위해 대출은 가입 조건이 없습니다.',
+                    '신용불량자인가요? 괜찮습니다. 우리 학교 학생인 것 만으로도 신용되는 사람이거든요.',
+                    '섵불리 자퇴하지 마세요. 학생에게는 무이자지만 학생이 아니라면 한 달 66%의 이자가 기다리고 있습니다.',
+                    '학업과 관련되지 않은 곳에 쓰기 위한 대출은 귀신같이 반려됩니다.',
+                    '변제할 능력이 없는 학생을 위해 돈이 아닌 다른 것으로 받는 서비스를 제공합니다.'
+                ],
+                [ // 공항
+                    '신속한 등하교를 위해 공항이 생겼습니다. 우리의 꿈이 현실이 되었네요.',
+                    '비행기 내 무료 와이파이와 식사 및 간식 제공됩니다.',
+                    '비행기 탑승 시 필요한 것은 학생증뿐! 돈은 집에 두고 오세요.',
+                    '비행기가 지평선을 넘어가듯, 학생 여러분의 꿈도 더 높은 곳으로 비상할 수 있도록 응원합니다.',
+                    '기내 서비스는 학생 맞춤형으로 이루어져있습니다. 장시간 비행의 피로를 날려줄 놀거리와 먹거리를 준비했습니다.',
+                    '10분에서 1시간마다 이륙하는 비행기는 여러분을 늦지 않게 학교와 집으로 데려다줍니다.',
+                    '난기류와 폭풍 따위는 문제 없이 운행할 수 있는 비행기를 사용해 안전한 이동을 가능케합니다.',
+                    '기내에서도 학업을 이어갈 수 있도록 다양한 서비스를 즐길 수 있습니다. 비행기 강의실은 처음보죠?',
+                    '합당한 목적과 서류만 제출하신다면 여행용으로 탑승해도 문제 없습니다.',
+                    `오늘 ${Math.floor(Math.random() * 899) + 100}대의 비행기가 이륙했는데 딱 한 대만 착륙하지 않았습니다.`
+                ],
+                [ // 기업
+                    '우리 학교 졸업생이라면 취업에 성공할 확률 100%입니다.',
+                    '대기업이 우리 학교의 인재를 선택하는 이유는 지식이 아닌 열정 때문이라고 밝혔습니다.',
+                    '졸업생이 각 분야에서 전문가로 활약하며 다양한 기업의 주목을 받고 있습니다.',
+                    '졸업생이 기업에서 성공적인 경력을 쌓아가며 우리 학교는 인재의 성지로 자리매김하고 있습니다.',
+                    '졸업생이 기업의 최고경영자가 되는 꿈을 현실로 만들고 있습니다.',
+                    '\'우리는 당신을 기다립니다!\'라는 다양한 기업의 공고문이 교내 곳곳에 보입니다. 기회를 놓치지 마세요!',
+                    '졸업을 앞둔 어떤 학생은 식당에서 밥을 먹다 기업 제안서를 수십 장을 받았습니다.',
+                    '많은 기업이 졸업생을 뽑기 위해 채용 설명회를 열고 있습니다. 졸업생이 고르는 입장이 됐다는 게 함정이죠.',
+                    '과 수석 학생을 데려가기 위해 두 기업의 최고경영자가 주먹다툼을 벌였다는 영상이 돌고 있습니다.',
+                    '기업끼리 우리 학교 졸업생을 데려가기 위해 비밀리에 경매까지 열린다는 소문이 있어 조사중입니다.'
+                ],
+                [ // 정부
+                    '정부는 우리 학교를 지원하기 위해 학생 행복 법안을 제정했습니다. 이제 학업과 삶의 균형이 더욱 쉬워집니다.',
+                    '정부의 스마트 교육 프로젝트에 선정되어 첨단 기술을 통해 학생의 학습 환경이 한층 더 개선됩니다.',
+                    '정부의 지원으로 졸업 전 기업 체험을 통해 실전 경험을 쌓을 기회가 생겼습니다.',
+                    '창의적인 학생들의 아이디어가 실제 사업으로 발전할 수 있도록 정부가 지원해주고 있습니다.',
+                    '학생의 육체적, 정신적 안정을 위해 정부가 치료비 지원 및 서비스를 제공하고 있습니다.',
+                    '우리 학교의 재학생이라면 정부가 학생의 가족에게 다양한 복지를 제공합니다.',
+                    '국정회의에 우리 학교의 학생들이 뭘 원할지 의논하는 것부터 시작한다고 합니다.',
+                    '정부가 학생 개개인을 위한 정책을 맞춰줄 계획을 세우고 있다는 소식을 접했습니다.',
+                    '학생들이 정부에서 가장 원하는 것은 과제를 금지하는 법안을 가장 원하고 있습니다.',
+                    '우리 학교를 이용해 이익을 챙기려고 했던 어떤 정치인이 어느날 갑자기 사라졌습니다. 정말 갑자기요.'
+                ],
+                [ // 세계 정부
+                    '최고의 권력을 가진 세계 정부가 우리 학교를 주목하고 있습니다.',
+                    '우리 학교의 교육 방식이 세계적으로 인정받아 해외 연수 프로그램이 활성화되고 있습니다.',
+                    '세계 정부가 우리 학교 연구를 지원하여 세계 최고 수준의 연구 환경을 조성하고 있습니다.',
+                    '우리 학교의 졸업생이 이젠 세계 각국에서 활약하며, 인재로써 더욱 높은 존재감을 뽐내고 있습니다.',
+                    '세계 정부가 우리 학교를 위한 특별 예산을 편성했습니다.',
+                    '세계 정상급 영향력을 가진 대통령이 우리 학교 졸업식에 참여했습니다.',
+                    '세계 정부는 우리 학교가 국제 교육의 중심지로 정했습니다.',
+                    '학생증만 있다면 국제연합 본부도 자유롭게 방문할 수 있는 권한이 발효되었습니다.',
+                    '세계 정부가 우리 학교와 협력해 글로벌 과제 해결에 나서기 시작했습니다.',
+                    '우리 학교의 인재를 데려가기 위해 각 세계 정부 간의 견제와 무역 보복이 심각해지고 있습니다.'
+                ],
+                [ // 복제 실험실
+                    '새로운 복제 실험실이 개설되었습니다. 학생을 복제로 통해 동기부여의 열쇠를 쥐게 될 것입니다.',
+                    '복제된 학생은 각기 다른 분야에서 활동하여 사회에 기여할 수 있습니다.',
+                    '생명 윤리에 대한 충분한 합의가 이루어졌습니다. 이제 학생은 자기 최적화의 시대를 맞이하게 되었습니다.',
+                    '여러 복제본이 함께 협력하여 프로젝트를 진행할 수 있는 사례가 많아졌습니다.',
+                    '학교 행사에 원본과 그의 복제본이 한 팀이 되어 개성과 실력을 살려 1등을 차지했습니다.',
+                    '복제된 자신이 교내 활동에 참여함으로써 사회적 네트워크를 넓힐 수 있는 기회를 제공합니다.',
+                    '원본과 복제본에서 발생한 혼란을 해결하는 동아리가 드디어 정식적인 기업으로 발전했다는 좋은 소식입니다.',
+                    '최근에 복제본이 원본이라고 주장하는 법정 싸움이 급증했습니다.',
+                    '복제본과 돌아가면서 과제를 하면 금방 끝난다는 소식이 들려옵니다. 그래서 교수는 과제를 더 늘릴 계획이라네요.',
+                    '복제본을 학교에 보내고 자기는 쉬고 싶다고요? 하지만 복제본도 똑같은 생각이네요.'
+                ],
+                [ // 우주 정거장
+                    '더 생생한 우주를 학습하기 위해 우주선에서 가르치는 방안을 추진하고 있습니다.',
+                    '무한한 학생의 학구열을 채우기 위해 무한한 우주로 나갈 수 있는 개인용 우주선을 보급하고 있습니다.',
+                    '출발한지 8주가 지난 우주선은 학교와 통신이 끊길 확률이 99.98%입니다.',
+                    '별을 가까이에서 느끼며 우주 과학에 대한 이해도를 높일 수 있는 기회를 제공하고 있습니다.',
+                    '각 우주선은 최신 안전 장비가 장착되어 학생의 안전한 이동을 보장합니다.',
+                    '우주 개척 프로젝트 과제를 하기 위해 학생은 더 먼 우주로 떠났습니다.',
+                    '우주선 탑승 시 필요한 것은 자신의 학생증뿐입니다.',
+                    '먼거리를 이동하기 위한 동면 시스템을 무료로 지원하는 정책을 실시 중입니다.',
+                    '학교 앞 버스를 기다리는 것보다 행성 한 두개를 지나는 시간이 더 짧습니다.',
+                    '우주 여행은 이제 특별한 경험이 아닌 일상적인 교육의 일환으로 여러분을 기다리고 있습니다.'
+                ],
+                [ // 차원 포털
+                    '포털을 이용하기 위해 위치와 시간이 중요합니다. 이상한 구멍으로 들어가면 예상과 다른 곳으로 가버린답니다.',
+                    `우리 학교는 주기적으로 포털에서 실종된 학생을 찾는 팀을 파견하고 있습니다. 오늘도 ${Math.floor(Math.random() * 99) + 1}명의 학생을 찾았습니다.`,
+                    '오랫동안 차원 포털의 끝을 보고 온 학생이 그 끝은 마치 원주율의 끝과 같다고 했습니다.',
+                    '차원 포털을 통해 가는 여행! 준비물은 책과 여행 가방, 그리고 상상력입니다.',
+                    '중요하진 않은 내용이지만 우연히 포털을 타고가다 초능력을 얻었다는 학생이 보고되고 있습니다.',
+                    '오늘도 목적지를 알 수 없는 차원 포털을 발견했습니다. 어서 지원자를 모집해야겠네요.',
+                    '가끔씩 포털을 타고 가다 미지의 존재에 공격을 받는다는 소식이 들려오고 있습니다.',
+                    '학생들이 말하길, 포털을 타는 느낌은 탄산음료를 믹서기에 갈아 거꾸로 매달린 뒤 깨물어 먹는 것 같다고 말했습니다.',
+                    '차원 포털은 무슨 원리로 이루어져 있을지 연구하려는 학생들이 늘어나고 있습니다.',
+                    '오랜 시간동안 차원을 탐험하고 있는 학생들은 학교에서 만든 감자튀김을 잊을 수 없다고 합니다.'
+                ],
+                [ // 블랙홀
+                    '블랙홀 안에는 시간의 개념이 없습니다. 과제의 제출 기한도 없다는 생각에 학생들이 블랙홀로 향하고 있습니다.',
+                    '우리 학생과 블랙홀 출신 학생의 노력 끝에 정부가 교과서 속 블랙홀과 관한 내용을 전면 수정하기로 결정했습니다.',
+                    '요즘 \'블랙홀 안에선 학점도, 성적도 모두 중력에 의해 쭉쭉 떨어진다.\'라는 모욕적인 말이 돌고 있습니다.',
+                    '블랙홀 안에는 중력 파티가 주기적으로 열립니다. 입장료는 자신과 시간, 그리고 과제라고 하는 군요.',
+                    '블랙홀 출신 학생이 지구 출신 학생에게 \'우리는 과거에서 왔는데 과제는 왜 여전히 미래로 미루냐고!\'라고 했습니다.',
+                    '학생들이 사이에서 블랙홀을 지나면 과제가 끝난다고 하길래 반대쪽에 교수님을 대기시켰습니다.',
+                    '어떤 학생이 블랙홀을 빠져나오니 과거의 자신이 자리에서 열심히 공부하고 있었다는 경험담이 떠돌고 있습니다.',
+                    '블랙홀에서 살고 있는 학생은 온 우주에서 가장 편안한 집은 블랙홀이라고 말했습니다.',
+                    '블랙홀 출신의 학생은 자신의 취미를 우주 먼지 먹기와 중력 낚시라고 말했습니다.',
+                    '블랙홀에서 방출된 소리가 최근 공부 ASMR로 인기입니다.'
+                ],
+                [ // 타임 머신
+                    '타임 머신을 타고 우리 학교의 미래 모습을 보는 것은 금지되어 있습니다. 총장님의 당부입니다.',
+                    '종종 시간여행을 하다가 시간 그 자체가 되어 소멸되는 사례가 보고 되고 있습니다.',
+                    '과거로 돌아가서 전설의 인재를 만나는 것도 가능합니다. 단, 과거의 자신과 충돌하지 않도록 주의하세요.',
+                    '타임 머신 덕분에 학생들은 역사적 인물과 직접 대화하고 여기 수업이 더 재밌다는 소감을 전달하고 있습니다.',
+                    '학생들과 함께 과거에서 교훈을 배우고 미래에서 \'데스스타\' 사용법을 배워봅시다.',
+                    '원하는 학생은 타임 머신을 이용해 먼 과거의 언어를 배워 올 수 있습니다.',
+                    '학생들이 미래로 가 10년 후 나를 만나고 그냥 열심히 하라는 조언을 듣고 왔습니다.',
+                    '미래로 가서 시간과 우주탐사 학위를 받고 돌아오면 교수님께 \'이제 우주에 좀 다녀왔다\'고 자랑할 수 있습니다.',
+                    '타임 머신의 비밀이 있습니다. 시간여행은 가능하지만 과제는 여전히 그 자리에 있습니다.',
+                    '타임 머신을 통해 매번 다른 시대의 최고의 트렌드를 배우고 유행에 뒤처지지 않을 수 있습니다.'
+                ],
+                [ // 평행 세계
+                    '평행 세계에도 우리 학교가 있고 학생도 그대로 있습니다. 여전히 과제를 미루는 것도 그대로네요.',
+                    '미식가가 되겠다는 학생의 평행 세계 속 본인은 우주 요리사가 되고 싶어합니다.',
+                    '평행 세계에서 교환학생으로 다녀오는 것이 가능해졌습니다.',
+                    '어떤 평행 세계의 우리 학교는 매 수업마다 99개의 과제를 내준다고 합니다.',
+                    '평행 세계의 자신은 소름 돋을 정도로 똑같다고 합니다. 하지만 시험 전날 밤새워 공부하는 것 마저요.',
+                    '어떤 평행 세계 속 우리 학교는 학생이 교수에게 시험지를 내고 채점하는 기적같은 일이 발생한다고 합니다.',
+                    '다른 평행 세계의 도서관은 책이 자동으로 내용을 암기하게 해줍니다. 대출은 안 된다고 하네요.',
+                    '평행 세계의 자신을 만나러 갔더니 모범생이였다는 이야기를 들었습니다. 과제를 미루는 건 똑같다고 하네요.',
+                    '평행 세계의 학생들은 남아있는 생명을 더 재미있게 바꾸는 방법을 배웠습니다. 수업에는 항상 웃음이 끊이질 않죠.',
+                    '어떤 학생이 모든 것은 게임이고, 인지할 수 없는 평행 세계에서 우릴 조종하고 있다는 음모론을 펼치고 있습니다.'
+                ],
+                [ // 또 다른 나
+                    '365일 24시간 위원장 자리에는 항상 사람이 있습니다.',
+                    '우리 학교의 교수들은 사람이 여러 명이니 수업과 과제도 더 늘려야한다고 주장합니다. 내가 잘못 들었나?',
+                    '졸리신가요? 주무셔도 괜찮아요. 또 다른 내가 나 대신 일을 해줄 겁니다.',
+                    `또 다른 나와 ${Math.floor(Math.random() * 99999) + 1}번째 회의를 진행했습니다. 그런데 모두들 같은 생각이라 1분만에 회의가 끝났습니다.`,
+                    '또 다른 나를 본 학생들은 기억과 지식을 하나로 모아 공유할 수 있는 장치를 개발하기 위해 예산을 신청했습니다.',
+                    '모두 같은 생각, 같은 행동, 같은 목표를 가진 나 자신이 모이면 하는 이야기는 \'오늘 저녁 뭐 먹지?\'입니다.',
+                    '학교 중앙 복도에서 \'너 몇번째 위원장이야?\'라고 소리치시는 총장님과 그걸 대답해주는 위원장이 자주 보입니다.',
+                    '또 다른 내가 삼삼오오 모여 각자 다른 안건을 논의하니 하루에 여러 개의 문제가 해결되곤 합니다.',
+                    '카페에 점심 이후에 여러 명의 위원장이 커피를 마시는 모습이 목격됩니다. 옷도 똑같이 입었네요.',
+                    '또 다른 나 사이에서 상위 차원의 존재를 본 적 있다는 목격담이 들려옵니다.'
+                ]
+            ]
+            
         ],
         menuSettingText_title: '설정',
         menuSettingText_subtitleCommon: '기본',
         menuStatsText_title: '통계',
         menuStatsText_subtitleCommon: '기본',
+        menuStatsText_save: '저장',
+        menuStatsText_buttonSave: '저장하기',
+        menuStatsText_buttonExport: '파일 내보내기',
+        menuStatsText_buttonImport: '파일 불러오기',
+        menuStatsText_Language: '언어',
+        menuStatsText_buttonChangeLanguage: '언어 변경',
         menuStatsText_subtitleDetail: '세부',
+        menuStatsText_soundEffectName: '효과음 크기',
+        menuStatsText_soundBgmName: '배경음 크기',
+        menuStatsText_soundNotice: '귀 건강에 유의하여 적절히 조절해주세요.',
         menuStatsText_statsTotalStudent: (value) => `누적된 총 입학 학생 (전체): <b class="fcWhite">${value}</b>`,
         menuStatsText_statsStudent: (value1, value2) => `누적된 총 입학 학생 (이번 회귀): <b class="fcWhite">${value1} (${value2}%)</b>`,
         menuStatsText_showPerSecondStudent: (value) => `초당 입학 학생: <b class="fcWhite">${value}</b>`,
@@ -308,7 +546,9 @@ const translations = {
         menuInfoText_subtitlePatchNote: '패치 노트',
         menuReturningText_title: '회귀',
         menuReturningText_panelLevel: (value) => `경험 등급 <b class="fcWhite">${value}</b>`,
-        menuReturningText_timeDate: (value) => `위원회가 <b class="fcWhite">${value}</b> 일간 운영되었습니다`,
+        menuReturningText_timeDateMinute: (value) => `위원회가 <b class="fcWhite fs110">${value}</b> 분간 운영되었습니다`,
+        menuReturningText_timeDateHour: (value1, value2) => `위원회가 <b class="fcWhite fs110">${value1}</b> 시간 <b class="fcWhite fs110">${value2}</b> 분간 운영되었습니다`,
+        menuReturningText_timeDateDay: (value1, value2, value3) => `위원회가 <b class="fcWhite fs110">${value1}</b> 일 <b class="fcWhite fs110">${value2}</b> 시간 <b class="fcWhite fs110">${value3}</b> 분간 운영되었습니다`,
         menuReturningText_nowReturningText_1: '지금 회귀한다면',
         menuReturningText_nowReturningIncreaseLevel: (value1, value2) => `등급 +${value1}<b class="fcDefault fs75 fsItalic">(SpS +${value2}%)</b>`,
         menuReturningText_nowReturningText_2: '을(를) 얻습니다.',
@@ -324,7 +564,7 @@ const translations = {
             ['잠김', '해금']
         ],
         productTooltipDescription: [
-            '학생 한 명 한 명이 소중한 법입니다.',
+            '학생 한 명 한 명이 소중합니다.',
             '학업, 오락, 휴식 시설 같은 원하는 모든 시설을 갖춥니다. 학생을 위해서 못해줄 건 없는 법입니다.',
             '세계 어디든 우리 학교로 쉽게 올 수 있는 다양한 교통 수단을 만듭니다. 재학생은 무료로 이용할 수 있습니다.',
             '반지하, 주택, 아파트 등 거주가 가능한 시설을 학교 주변에 짓습니다. 우리 학교 학생이라면 재학하는 동안 한 채씩 무료로 거주할 수 있습니다.',
@@ -352,11 +592,11 @@ const translations = {
         upgradeName: [
             ['학습의 경로', '10년제 대학교', '식사 지원', '인생 항해자', '지식 공유', '지혜의 서재', '원주율 끝까지 외우기 대회', '하루에 42시간 7분 공부', '고대의 마법서', '외계 학문 연구'],
             ['교내 상가', '탐구실', '토론의 방', '창의력 공방', '비상 대응소', '1천 제곱 킬로미터 운동장', '연금술 실험실', '지식의 사원', '현실 조작', '미지의 지하실'],
-            ['교통비 무료', '다인승차량', '속도 규제 해제', '초고속 환승', '전용 초고속도로', '', '', '', '', ''],
-            ['보금자리', '인프라 확대', '영혼의 안식처', '삶의 거처', '관리비 무료', '1인 1채', '뿌리의 공간', '쾌적한 공간', '', ''],
+            ['교통비 무료', '땅굴망', '다인승차량', '교통공학', '전용 초고속도로', '초고속 환승', '해상 이동수단 도입', '친환경 교통 정책', '신속한 병목 현상 해소', '속도 규제 해제'],
+            ['1인 1채', '보금자리', '인프라 확대', '삶의 거처', '관리비 무료', '이중 내진 설계', '뿌리의 공간', '쾌적한 공간', '영혼의 안식처', '마천루'],
             ['자산의 금고', '환율 고정', '이익의 전당', '신용카드', '인터넷 뱅킹 지원', '수업료 전액 대출', '부의 창고', '자본의 정원', '고리대금', '금전의 흐름'],
             ['비상 연결지', '하늘 도로', '공중 교차로', '관제탑', '24시간 운행', '공중 급유', '지평선 거점', '응급상황 대비', '초고속 비행', '무료 면세점 확대'],
-            ['', '', '', '당일 답신', '졸업생 우대 입사', '', '', '', '', ''],
+            ['당일 답신', '면접비 지원', '졸업생 우대 입사', '회사 내 숙소', '탕비실', '빠른 결재', '매달 연봉 협상', '퇴직금 정산', '주3일제', '평생 직장'],
             ['', '', '', '', '', '', '', '', '', ''],
             ['', '', '', '', '', '', '', '', '', ''],
             ['복제인간', '생명 재구성', '정체성 조작', '인체 재구성 프로젝트', '복사기', '이중 존재', '존재 변형', '새로운 쌍둥이', '유전자 조작', '복제 재활용 처리소'],
@@ -553,7 +793,8 @@ function changeLanguage() {
     document.getElementById('productSubtitle').innerHTML = translations[lang].menuSubtitleProduct;
 
     updateShowStudent();
-    updateUpgradeMenuButton();
+    
+    upgradeExpand.textContent = translations[lang].upgradeMenuButtonFold;
 }
 // 이름 바꾸기
 document.getElementById('universityName').addEventListener('click', changeUniversityName);
@@ -565,12 +806,13 @@ function changeUniversityName() {
 let universityLogo = document.getElementById('universityLogo');
 universityLogo.addEventListener('click', (e) => {
     // 학생 수 더하기
-    student += addClickStudent;
+    addClickTotalValue = addClickDefaultValue * addClickBonusValue;
+    student += addClickTotalValue;
     // 통계
-    statsTotalStudent += addClickStudent;
-    statsStudent += addClickStudent;
-    statsTotalAddClickStudent += addClickStudent;
-    statsAddClickStudent += addClickStudent;
+    statsTotalStudent += addClickTotalValue;
+    statsStudent += addClickTotalValue;
+    statsTotalAddClickStudent += addClickTotalValue;
+    statsAddClickStudent += addClickTotalValue;
     statsClickCount++;
     statsTotalClickCount++;
     // 갱신
@@ -587,7 +829,7 @@ universityLogo.addEventListener('click', (e) => {
         console.log(e.pageX + ' / ' + e.pageY);
         const floatingText = document.createElement('div');
         floatingText.classList.add('floatingUp');
-        floatingText.innerHTML = '+' + formatNumber(addClickStudent);
+        floatingText.innerHTML = '+' + formatNumber(addClickTotalValue);
 
         floatingText.style.left = `${e.offsetX}px`;
         floatingText.style.top = `${e.offsetY}px`;
@@ -597,6 +839,12 @@ universityLogo.addEventListener('click', (e) => {
             floatingText.remove();
         });
     }, 1);
+
+    
+    const soundClick = new Audio(`sound/StudentClick${Math.floor(Math.random() * 3) + 1}.mp3`);
+
+    soundClick.volume = soundEffectVolume.value;
+    soundClick.play();
     
 })
 universityLogo.addEventListener('mousedown', () => {
@@ -633,7 +881,18 @@ popupButton.className = 'button';
 // 팝업 이벤트 생성
 function popupAddEvent(type) {
 
-    popupCloseButton.addEventListener('click', () => { removePopup(); });
+    const soundAppear = new Audio('sound/AppearPopup.mp3');
+    soundAppear.volume = soundEffectVolume.value;
+    soundAppear.play();
+
+    // 우측 상단 닫기 버튼
+    popupCloseButton.addEventListener('click', () => {
+        const soundClose = new Audio('sound/ButtonClose.mp3');
+        soundClose.volume = soundEffectVolume.value;
+        soundClose.play();
+
+        removePopup();
+    });
 
     if(type == 'common') {
         popupButton.addEventListener('click',  () => { removePopup(); });
@@ -667,7 +926,7 @@ function appearPopup(i, j) { // 팝업창 생성
     popupTitle.innerHTML = translations[lang].popupTitle[i][j];
     popupBox.appendChild(popupTitle);
 
-    if(i == 0) {
+    if(i == 0) { // 일회용 증축 팝업
         // 닫기 버튼
         popupBox.appendChild(popupCloseButton);
         // 설명
@@ -678,7 +937,7 @@ function appearPopup(i, j) { // 팝업창 생성
         popupBox.appendChild(popupButton);
         // 이벤트 추가
         popupAddEvent('common');
-    } else if(i == 1) {
+    } else if(i == 1) { // 일회용 팝업
         if(j == 0) { // 처음 시작 시
             //닫기 버튼
             popupBox.appendChild(popupCloseButton);
@@ -715,7 +974,7 @@ function appearPopup(i, j) { // 팝업창 생성
             // 이벤트 추가
             popupAddEvent('common');
         }
-    } else if(i == 2) {
+    } else if(i == 2) { // 재사용 팝업
         if(j == 0) { // 언어 변경
             popupSelectLanguage();
             // 설명
@@ -753,7 +1012,16 @@ function appearPopup(i, j) { // 팝업창 생성
             popupAddEvent('common');
         }
         if(j == 3) { // 회귀
-
+            //닫기 버튼
+            popupBox.appendChild(popupCloseButton);
+            // 설명
+            popupDescription.innerHTML = translations[lang].popupDescription[i][j];
+            popupBox.appendChild(popupDescription);
+            // 버튼
+            popupButton.innerHTML = translations[lang].popupButton_text[0];
+            popupBox.appendChild(popupButton);
+            // 이벤트 추가
+            popupAddEvent('returning');
         }
         if(j == 4) { // 회귀 후 팝업
 
@@ -821,12 +1089,10 @@ function removePopup() { // 제거
     뉴스 업데이트
 */
 const showNewsContents = document.getElementById('showNewsContents');
-let newsIndex = 0;
+let newsType = 0;
 let newsSetTimeout;
 let newsSetInterval;
 function updateNews() {
-    console.log('Update news');
-
     showNewsContents.classList.remove('fadeIn');
     showNewsContents.classList.add('fadeOut');
 
@@ -834,8 +1100,24 @@ function updateNews() {
     clearInterval(newsSetInterval);
     
     newsSetTimeout = setTimeout(() => {
-        newsIndex = (newsIndex + 1) % translations[lang].newsContents[0].length;
-        showNewsContents.innerHTML = translations[lang].newsContents[0][newsIndex];
+        let newsContentsList = [];
+        let index = 0;
+
+        
+        if(statsStudent < 1e4) index = 0;
+        else if(statsStudent < 1e12) index = 1;
+        else if(statsStudent < 1e24) index = 2;
+        else index = 3;
+        
+        translations[lang].newsContents[0][index].forEach(content => { newsContentsList.push(content); });
+
+        for(let i = 0 ; i < arrProductGetCount.length - 1 ; i++){ if(arrProductGetCount[i + 1] >= 1) translations[lang].newsContents[1][i].forEach(content => { newsContentsList.push(content); }); }
+
+        showNewsContents.innerHTML = newsContentsList[Math.floor(Math.random() * newsContentsList.length)];
+
+        newsType++;
+        if(newsType >= 2) newsType = 0;
+
         showNewsContents.classList.remove('fadeOut');
         showNewsContents.classList.add('fadeIn');
     }, 1000);
@@ -843,6 +1125,10 @@ function updateNews() {
     newsSetInterval = setInterval(() => { updateNews(); }, 1000 * 6);
 }
 showNewsContents.addEventListener('click', () => {
+    const soundNewsFlipping = new Audio(`sound/NewsFlipping${Math.floor(Math.random() * 4) + 1}.mp3`);
+    soundNewsFlipping.volume = soundEffectVolume.value;
+    soundNewsFlipping.play();
+
     clearTimeout(newsSetTimeout);
     clearInterval(newsSetInterval);
     updateNews();
@@ -1004,30 +1290,59 @@ function settingProductStateImg(i) { // 배경에 아이콘 삽입
 /*
     설정 메뉴
 */
+const soundEffectVolume = document.getElementById('soundEffectVolume');
+const soundBgmVolume = document.getElementById('soundBgmVolume');
+const buttonSave = document.getElementById('buttonSave');
+const buttonSaveFileExport = document.getElementById('buttonSaveFileExport');
+const buttonSaveFileImport = document.getElementById('buttonSaveFileImport');
+const buttonChangeLanguage = document.getElementById('buttonChangeLanguage');
 function pageSetting() {
+    // 기본
     document.getElementById('pageSettingTitle').innerHTML = translations[lang].menuSettingText_title;
     document.getElementById('pageSettingCommon').innerHTML = translations[lang].menuSettingText_subtitleCommon;
+    document.getElementById('pageSettingNameSave').innerHTML = translations[lang].menuStatsText_save;
+    buttonSave.innerHTML = translations[lang].menuStatsText_buttonSave;
+    buttonSaveFileExport.innerHTML = translations[lang].menuStatsText_buttonExport;
+    buttonSaveFileImport.innerHTML = translations[lang].menuStatsText_buttonImport;
+    document.getElementById('pageSettingNameLanguage').innerHTML = translations[lang].menuStatsText_Language;
+    buttonChangeLanguage.innerHTML = translations[lang].menuStatsText_buttonChangeLanguage;
+    
+    // 세부
     document.getElementById('pageSettingDetail').innerHTML = translations[lang].menuStatsText_subtitleDetail;
-    //document.getElementById('buttonChangeLanuage').innerHTML = translations[lang].menuStatsText_;
+    document.getElementById('soundEffectVolumeText').innerHTML = translations[lang].menuStatsText_soundEffectName;
+    document.getElementById('soundBgmVolumeText').innerHTML = translations[lang].menuStatsText_soundBgmName;
+    changeSoundEffectVolume();
+    changeSoundBgmVolume();
+    document.getElementById('soundNotice').innerHTML = translations[lang].menuStatsText_soundNotice;
+    
 
-    const buttonSave = document.getElementById('buttonSave');
-    const buttonSaveFileExport = document.getElementById('buttonSaveFileExport');
-    const buttonSaveFileImport = document.getElementById('buttonSaveFileImport');
-    const InputSaveFileImport = document.getElementById('inputImportSaveFile');
-    const buttonChangeLanuage = document.getElementById('buttonChangeLanuage');
-
-    buttonSave.addEventListener('click', () => {
-        saveGame();
-    });
-    buttonSaveFileExport.addEventListener('click', () => {
-        exportSaveFile();
-    });
-    buttonSaveFileImport.addEventListener('click', () => {
-        importSaveFile();
-    });
-    buttonChangeLanuage.addEventListener('click', () => {
-        appearPopup(2, 0);
-    });
+}
+buttonSave.addEventListener('click', () => {
+    const soundSave = new Audio('sound/GameSave.mp3');
+    soundSave.volume = soundEffectVolume.value;
+    soundSave.play();
+    saveGame();
+});
+buttonSaveFileExport.addEventListener('click', () => {
+    exportSaveFile();
+});
+buttonSaveFileImport.addEventListener('click', () => {
+    importSaveFile();
+});
+buttonChangeLanguage.addEventListener('click', () => {
+    appearPopup(2, 0);
+});
+soundEffectVolume.addEventListener('input', () => changeSoundEffectVolume());
+function changeSoundEffectVolume() {
+    const textVolume = document.getElementById('soundEffectVolumeValue');
+    if(Math.floor(soundEffectVolume.value * 100) == 0) textVolume.innerHTML = `<b class="fcDefault">꺼짐</b>`;
+    if(Math.floor(soundEffectVolume.value * 100) > 0) textVolume.innerHTML = `${(soundEffectVolume.value * 100).toFixed(0)}%`;
+}
+soundBgmVolume.addEventListener('input', () => changeSoundBgmVolume());
+function changeSoundBgmVolume() {
+    const textVolume = document.getElementById('soundBgmVolumeValue');
+    if(Math.floor(soundBgmVolume.value * 100) == 0) textVolume.innerHTML = `<b class="fcDefault">꺼짐</b>`;
+    if(Math.floor(soundBgmVolume.value * 100) > 0) textVolume.innerHTML = `${(soundBgmVolume.value * 100).toFixed(0)}%`;
 }
 function exportSaveFile() {    
     // Blob 객체를 생성(파일의 내용을 포함)
@@ -1080,14 +1395,14 @@ function updatePageStats() { // 업데이트
     document.getElementById('showPerSecondStudent').innerHTML = translations[lang].menuStatsText_showPerSecondStudent(formatNumber(addPerSecondStudent));
     document.getElementById('statsTotalPerSecondStudent').innerHTML = translations[lang].menuStatsText_statsTotalPerSecondStudent(formatNumber(statsTotalAddPerSecondStudent));
     document.getElementById('statsPerSecondStudent').innerHTML = translations[lang].menuStatsText_statsPerSecondStudent(formatNumber(statsAddPerSecondStudent), percentageClac(statsTotalAddPerSecondStudent, statsAddPerSecondStudent));
-    document.getElementById('showClickStudent').innerHTML = translations[lang].menuStatsText_showClickStudent(formatNumber(addClickStudent));
+    document.getElementById('showClickStudent').innerHTML = translations[lang].menuStatsText_showClickStudent(formatNumber(addClickTotalValue));
     document.getElementById('statsTotalClickStudent').innerHTML = translations[lang].menuStatsText_statsTotalClickStudent(formatNumber(statsTotalAddClickStudent));
     document.getElementById('statsClickStudent').innerHTML = translations[lang].menuStatsText_statsClickStudent(formatNumber(statsAddClickStudent), percentageClac(statsTotalAddClickStudent, statsAddClickStudent));
-    document.getElementById('statsTotalClickCount').innerHTML = translations[lang].menuStatsText_statsTotalClickCount(formatNumber(statsTotalClickCount));
-    document.getElementById('statsClickCount').innerHTML = translations[lang].menuStatsText_statsClickCount(formatNumber(statsClickCount), percentageClac(statsTotalClickCount, statsClickCount));
-    document.getElementById('statsTotalProductCount').innerHTML = translations[lang].menuStatsText_statsTotalProductCount(formatNumber(statsTotalProductCount));
-    document.getElementById('statsProductCount').innerHTML = translations[lang].menuStatsText_statsProductCount(formatNumber(statsProductCount), percentageClac(statsTotalProductCount, statsProductCount));
-    document.getElementById('statsReturningCount').innerHTML = translations[lang].menuStatsText_statsReturningCount(formatNumber(statsReturningCount));
+    document.getElementById('statsTotalClickCount').innerHTML = translations[lang].menuStatsText_statsTotalClickCount(Math.floor(formatNumber(statsTotalClickCount)));
+    document.getElementById('statsClickCount').innerHTML = translations[lang].menuStatsText_statsClickCount(Math.floor(formatNumber(statsClickCount)), percentageClac(statsTotalClickCount, statsClickCount));
+    document.getElementById('statsTotalProductCount').innerHTML = translations[lang].menuStatsText_statsTotalProductCount(Math.floor(formatNumber(statsTotalProductCount)));
+    document.getElementById('statsProductCount').innerHTML = translations[lang].menuStatsText_statsProductCount(Math.floor(formatNumber(statsProductCount)), percentageClac(statsTotalProductCount, statsProductCount));
+    document.getElementById('statsReturningCount').innerHTML = translations[lang].menuStatsText_statsReturningCount(Math.floor(formatNumber(statsReturningCount)));
     
     // 강화 메뉴 갱신
     const statsUpgradeBundle = document.getElementById('statsUpgradeBundle');
@@ -1193,7 +1508,8 @@ function pageInfo() {
 /*
     회귀 메뉴
 */
-let returningLevelClacSetInterval;
+const buttonReturning = document.getElementById('buttonReturning');
+let updatePageStatsInterval;
 let returningMemorySetInterval;
 function pageReturning() {
     document.getElementById('pageReturningTitle').innerHTML = translations[lang].menuReturningText_title;
@@ -1202,7 +1518,7 @@ function pageReturning() {
     document.getElementById('pageReturningLevel').innerHTML = translations[lang].menuReturningText_subtitleLevel;
     document.getElementById('pageReturningAbility').innerHTML = translations[lang].menuReturningText_subtitleAbility;
     
-    returningLevelClacSetInterval = setInterval(() => { returningLevelClac(); }, 100); // 1초에 100번 작동
+    updatePageStatsInterval = setInterval(() => { updatePageReturning(); }, 200); // 1초에 5번 작동
 
     // 기억 왜곡
     const returningMemoryBundle = document.getElementById('returningMemoryBundle');
@@ -1232,27 +1548,40 @@ function pageReturning() {
         memoryIcon.addEventListener('mouseleave', () => removeMemoryTooltip());
     });
 }
-function returningLevelClac() {
+function updatePageReturning() { // 갱신
 
     const expPercent = (returningExp / returningExpMax) * 100;
     if(expPercent < 100) document.getElementById('pageReturningExpFilledBar').style.width = `${expPercent}%`;
     if(expPercent >= 100) document.getElementById('pageReturningExpFilledBar').style.width = `100%`;
     while(returningExp >= returningExpMax) {
-
         returningExp -= returningExpMax
         returningIncreaseLevel++;
         returningExpMax = ((((returningIncreaseLevel + 1) ** 4) /2 ) * 1e12);
-
     }
-    document.getElementById('pageReturningTimeDate').innerHTML = translations[lang].menuReturningText_timeDate(15000);
+
+    const currentTime = Date.now();
+    const returningDiffTime = Math.floor((currentTime - returningLastTime) / 60000);
+
+    const pageReturningTimeDate = document.getElementById('pageReturningTimeDate');
+    if(returningDiffTime < 60) pageReturningTimeDate.innerHTML = translations[lang].menuReturningText_timeDateMinute(returningDiffTime);
+    else if(returningDiffTime < 60 * 24) pageReturningTimeDate.innerHTML = translations[lang].menuReturningText_timeDateHour(Math.floor(returningDiffTime / 60), (returningDiffTime % 60));
+    else if(returningDiffTime) pageReturningTimeDate.innerHTML = translations[lang].menuReturningText_timeDateDay(Math.floor(returningDiffTime / (60 * 24)), (returningDiffTime % (60 * 24)), (returningDiffTime % 60));
     document.getElementById('pageReturningNowReturningText_1').innerHTML = translations[lang].menuReturningText_nowReturningText_1;
     document.getElementById('pageReturningNowReturningIncreaseLevel').innerHTML = translations[lang].menuReturningText_nowReturningIncreaseLevel(formatNumber(returningIncreaseLevel), formatNumber(returningIncreaseLevel));
     document.getElementById('pageReturningNowReturningText_2').innerHTML = translations[lang].menuReturningText_nowReturningText_2;
     document.getElementById('pageReturningExpPercentage').innerHTML = `${(expPercent).toFixed(2)}%`;
     document.getElementById('pageReturningExpEmptyValue').innerHTML = translations[lang].menuReturningText_emptyExp(formatNumber(returningExpMax - returningExp));
+
+    if(returningIncreaseLevel >= 1) {
+        buttonReturning.style.pointerEvents = 'auto';
+        buttonReturning.style.opacity = '1';
+    } else {
+        buttonReturning.style.pointerEvents = 'none';
+        buttonReturning.style.opacity = '0.5';
+    }
 }
-document.getElementById('buttonReturning').addEventListener('click', () => {
-    appearPopup(1, 1);
+buttonReturning.addEventListener('click', () => {
+    appearPopup(2, 3);
 })
 function returningAnimation() { // 회귀 연출
     console.log('Returning');
@@ -1274,10 +1603,11 @@ function returningFunction() { // 회귀 완료
     returningIncreaseLevel = 0; // 증가된 등급 초기화
     returningProductionMultiple = 1 + returningCurrentLevel * 0.01; // 회귀 배율값 추가
     returningExp = 0; // 경험치 초기화
+    returningLastTime = Date.now();
 
     // 학생 수 초기화
     student = 0;
-    addClickStudent = 1;
+    addClickTotalValue = 1;
     addPerSecondStudent = 0;
 
     // 통계
@@ -1390,7 +1720,6 @@ function activateMemory() {
     게임 메뉴
 */
 const menuPageButton = document.querySelectorAll('.menuPageButton');
-
 menuPageButton.forEach(div => {
     div.addEventListener('click', () => {
         menuPageButton.forEach(otherDiv => {
@@ -1399,7 +1728,10 @@ menuPageButton.forEach(div => {
 
         const isSelected = div.classList.toggle('select');
         clearTimeout(updatePageStatsSetTimeout);
-        clearInterval(returningLevelClacSetInterval)
+        clearInterval(updatePageStatsInterval)
+
+        const soundSelect = new Audio(`sound/MenuSelect${Math.floor(Math.random() * 3) + 1}.mp3`);
+        const soundClose = new Audio('sound/MenuClose.mp3');
         // 기본 설정
         if(isSelected) {
             document.getElementById('productStateList').style.display = 'none';
@@ -1407,7 +1739,15 @@ menuPageButton.forEach(div => {
             document.getElementById('pageStats').style.display = div.id == 'menuStats' ? '' : 'none';
             document.getElementById('pageInfo').style.display = div.id == 'menuInfo' ? '' : 'none';
             document.getElementById('pageReturning').style.display = div.id == 'menuReturning' ? '' : 'none';
-        } else gameMenuDefaultSetting();
+
+            soundSelect.volume = soundEffectVolume.value;
+            soundSelect.play();
+        } else {
+            gameMenuDefaultSetting();
+
+            soundClose.volume = soundEffectVolume.value;
+            soundClose.play();
+        }
         // 설정 메뉴
         if(document.getElementById('menuSetting').classList.contains('select')) pageSetting();
         // 통계 메뉴
@@ -1441,15 +1781,26 @@ function gameMenuDefaultSetting() {
     document.getElementById('pageReturning').style.display = 'none';
 }
 /*
-    업그레이드
+    강화
 */
 upgradeExpand.addEventListener('click', () => {
     upgradeBundle.classList.toggle('open');
     updateUpgradeMenuButton();
 })
 function updateUpgradeMenuButton() {
-    if(upgradeBundle.classList.contains('open')) upgradeExpand.textContent = translations[lang].upgradeMenuButtonFold;
-    else upgradeExpand.textContent = translations[lang].upgradeMenuButtonExpand;
+    if(upgradeBundle.classList.contains('open')) {
+        upgradeExpand.textContent = translations[lang].upgradeMenuButtonFold;
+
+        const soundExpand = new Audio('sound/ButtonExpand.mp3');
+        soundExpand.volume = soundEffectVolume.value;
+        soundExpand.play();
+    } else {
+        upgradeExpand.textContent = translations[lang].upgradeMenuButtonExpand;
+        
+        const soundFold = new Audio('sound/ButtonFold.mp3');
+        soundFold.volume = soundEffectVolume.value;
+        soundFold.play();
+    }
 }
 /* 
     증축
@@ -1467,7 +1818,12 @@ function settingProduct() {
         product.addEventListener('mouseleave', () => removeProductTooltip());
         // 클릭 상호작용
         product.addEventListener('click', () => {
-            if(student >= arrProductPrice[i]) {
+            if(student >= arrProductPrice[i]) { // 층분한 학생이 있을 경우
+                // 효과음
+                const soundBuy = new Audio(`sound/Buy${Math.floor(Math.random() * 6) + 1}.mp3`);
+                soundBuy.volume = soundEffectVolume.value;
+                soundBuy.play();
+
                 // 비용 지불
                 student -= arrProductPrice[i];
                 // 생산품 증가
@@ -1559,15 +1915,17 @@ function settingProductTooltip(i) {
     // 설명창 보이기
     tooltip.style.display = 'block';
     // 갱신 함수 || 최적화를 위해 1초에 100번 작동
-    intervalsettingProductTooltip = setInterval(() => { updateProductTooltip(i); }, 10);
+    intervalsettingProductTooltip = setInterval(() => { updateProductTooltip(i); }, 20);
 }
 function updateProductTooltip(i) {
     console.log("Product tooltip " + i);
 
     // 선언
     const tooltip = document.getElementById('productTooltip');
-    tooltip.querySelector('.price').textContent = translations[lang].students(formatNumber(arrProductPrice[i]));
 
+    // 가격
+    if(arrProductPrice[i] < 1e4) tooltip.querySelector('.price').textContent = translations[lang].students(Math.floor(formatNumber(arrProductPrice[i])));
+    else tooltip.querySelector('.price').textContent = translations[lang].students(formatNumber(arrProductPrice[i]));
     // 보유
     if(arrProductGetCount[i] >= 1) tooltip.querySelector('.getCount').innerHTML = translations[lang].productTooltipGetCount(arrProductGetCount[i]);
     // 가격색
@@ -1581,8 +1939,8 @@ function updateProductTooltip(i) {
     // 통계 활성화
     if(arrProductGetCount[i] >= 1) {
         tooltip.querySelector('#productTooltipStatsBundle').classList.remove('disabled');
-        tooltip.querySelector('#productTooltipStats_1').innerHTML = translations[lang].productTooltipStats_1(formatNumber(arrProductAddDefaultValue[i] * arrProductAddBonusValue[i]));
-        tooltip.querySelector('#productTooltipStats_2').innerHTML = translations[lang].productTooltipStats_2(formatNumber(arrProductAddTotalValue[i]));
+        tooltip.querySelector('#productTooltipStats_1').innerHTML = translations[lang].productTooltipStats_1(formatNumber(arrProductAddTotalValue[i]));
+        tooltip.querySelector('#productTooltipStats_2').innerHTML = translations[lang].productTooltipStats_2(formatNumber(arrProductAddFinalValue[i]));
         tooltip.querySelector('#productTooltipStats_3').innerHTML = translations[lang].productTooltipStats_3(formatNumber(arrProductStatsProductionTotal[i]));
     } else tooltip.querySelector('#productTooltipStatsBundle').classList.add('disabled');
 }
@@ -1593,7 +1951,7 @@ function removeProductTooltip() { // 설명창 제거
     // 반복 제거
     clearInterval(intervalsettingProductTooltip);
 }
-function settingProductMenu(type) {
+function settingProductMenu(type) { // 초기화 증축 메뉴
     for(let i = 0 ; i < productLength ; i++) {
         const product = document.getElementById(`product_${i}`);
 
@@ -1617,22 +1975,22 @@ function settingProductMenu(type) {
             if(arrProductGetCount[i] >= 1) product.querySelector('.getCount').innerHTML = arrProductGetCount[i];
         }
         if(type == 'price') {
-            product.querySelector('.price').innerHTML = translations[lang].students(formatNumber(arrProductPrice[i]));
+            if(arrProductPrice[i] < 1e4) product.querySelector('.price').innerHTML = translations[lang].students(Math.floor(formatNumber(arrProductPrice[i])));
+            else product.querySelector('.price').innerHTML = translations[lang].students(formatNumber(arrProductPrice[i]));
         }
     }
 }
-function settingProductPrice(i, j = 1) {
-    for(let k = 0 ; k < j ; k++) {
-        arrProductPrice[i] = Math.floor(arrProductPrice[i] * 1.15);
-        document.getElementById(`product_${i}_price`).innerHTML = translations[lang].students(formatNumber(arrProductPrice[i]));
-    }
+function settingProductPrice(i, j = 1) { // 증축 가격 계산
+    for(let k = 0 ; k < j ; k++)  arrProductPrice[i] = Math.floor(arrProductPrice[i] * 1.15);
+    settingProductMenu('price');
 }
 function settingProductAddPerSecond() { // 갱신 : 증축 초당 추가
     addPerSecondStudent = 0;
     for(let i = 0 ; i < productLength; i++) {
         // 공식: 증축 개수 * 증축 초당 효율 * 증축 강화 효율 * 효율 배수 * 회귀 효율 배수
-        arrProductAddTotalValue[i] = parseFloat((arrProductGetCount[i] * arrProductAddDefaultValue[i] * arrProductAddBonusValue[i] * productionMultiple * returningProductionMultiple).toFixed(1));
-        addPerSecondStudent += arrProductAddTotalValue[i];
+        arrProductAddTotalValue[i] = arrProductAddDefaultValue[i] * arrProductAddBonusValue[i] * productionMultiple * returningProductionMultiple;
+        arrProductAddFinalValue[i] = arrProductAddTotalValue[i] * arrProductGetCount[i];
+        addPerSecondStudent += arrProductAddFinalValue[i];
     }
     // 갱신
     updateShowStudent();
@@ -1643,6 +2001,9 @@ function updateShowStudent() { // 학생 수 갱신
     // 초당 학생 갱신
     document.getElementById('perSecondStudent').innerHTML = translations[lang].perSecond(formatNumber(addPerSecondStudent));
 }
+/*
+    증축
+*/
 function productDefaultSetting() { // 증축을 초기 상태로 설정
     for(let i = 0 ; i < productLength; i++) {
         // 변수 및 배열 초기화
@@ -1651,6 +2012,7 @@ function productDefaultSetting() { // 증축을 초기 상태로 설정
         arrProductGetCount[i] = 0;
         arrProductAddBonusValue[i] = 1;
         arrProductAddTotalValue[i] = 0;
+        arrProductAddFinalValue[i] = 0;
         arrProductStatsProductionTotal[i] = 0;
         arrProductUpgradeCount[i] = 0;
 
@@ -1679,7 +2041,7 @@ function productDefaultSetting() { // 증축을 초기 상태로 설정
     settingProductMenu('name');
     settingProductMenu('count');
 }
-function productOffline() {
+function productOffline() { // 증축 오프라인
     
     const currentTime = Date.now();
     offlineTimeDiff = Math.floor((currentTime - lastSaveTime) / 1000);
@@ -1693,9 +2055,9 @@ function productOffline() {
     }
 }
 /*
-    강화 확장 버튼 활성화 여부
+    강화
 */
-function upgradeExpandButton() {
+function upgradeExpandButton() { // 강화 확장 버튼 활성화
     const upgradeExpand = document.getElementById('upgradeExpand');
     const upgradeBundle = document.getElementById('upgradeBundle');
     const upgradeIconLength = upgradeBundle.getElementsByClassName('upgradeIcon').length;
@@ -1708,12 +2070,8 @@ function upgradeExpandButton() {
         upgradeExpand.style.opacity = '0.5';
     }
 }
-
-/* 
-    강화 아이콘 재정렬
-*/
 let intervalUpdateUpgradeTooltip;
-function reorderUpgradeIcon() {
+function reorderUpgradeIcon() { // 강화 아이콘 재정렬
     // 선언
     const upgradeBundle = document.getElementById('upgradeBundle');
     // 초기화
@@ -1745,7 +2103,11 @@ function reorderUpgradeIcon() {
 
         // 클릭
         upgradeIcon.addEventListener('click', () => {
-            if(student >= arrUpgradePrice[arr1][arr2]) {
+            if(student >= arrUpgradePrice[arr1][arr2]) { // 충분한 학생이 있을 경우
+                // 효과음
+                const soundBuy = new Audio('sound/BuyUpgrade.mp3');
+                soundBuy.volume = soundEffectVolume.value;
+                soundBuy.play();
                 // 비용 지불
                 student -= arrUpgradePrice[arr1][arr2];
                 // 배열 갱신
@@ -1766,10 +2128,7 @@ function reorderUpgradeIcon() {
     });
     upgradeExpandButton();
 }
-/* 
-    강화 아이콘 생성
-*/
-function addProductUpgradeIcon(i) {
+function addProductUpgradeIcon(i) { // 강화 아이콘 생성
     const upgradePurchaseList = document.getElementById('upgradePurchaseList');
 
     const arrReorder = arrProductUpgradePurchaseBool[i].slice().sort((a, b) => a - b);
@@ -1786,9 +2145,6 @@ function addProductUpgradeIcon(i) {
         upgradePurchaseList.appendChild(addUpgradeIcon);
     });
 }
-/*
-    강화 설명창 갱신
-*/
 function settingUpgradeTooltip(i, j, k) { // 강화 설명창 설정
 
     const tooltip = document.getElementById('upgradeTooltip');
@@ -1812,7 +2168,7 @@ function settingUpgradeTooltip(i, j, k) { // 강화 설명창 설정
     document.getElementById('upgradeTooltipDescription').innerHTML = translations[lang].upgradeDescription[i];
 
     // 반복
-    intervalUpdateUpgradeTooltip = setInterval(() => { updateUpgradeTooltip(i, j); }, 10);
+    intervalUpdateUpgradeTooltip = setInterval(() => { updateUpgradeTooltip(i, j); }, 20);
 
 }
 function updateUpgradeTooltip(i, j) { // 강화 설명창 갱신
@@ -1904,7 +2260,7 @@ function appendTag(elementById, type) {
 */
 function formatNumber(value) {
     // value의 값이 0일 경우
-    if(value == 0) return value;
+    if(value == 0) return 0;
     // 아닐 경우
     else {
         for(let i = arrFormatNumberKr.length - 1 ; i > -1 ; i--) {
@@ -1912,7 +2268,7 @@ function formatNumber(value) {
                 // 1e72 이상 | 무한
                 if(i == arrFormatNumberKr.length - 1) return arrFormatNumberKr[i] 
                 // 1e4 이하
-                else if(i == 0) return value + arrFormatNumberKr[0];
+                else if(i == 0) return parseFloat(value).toFixed(1) + arrFormatNumberKr[0];
                 // 그 외
                 else return (value / arrFormatStandardKr[i]).toFixed(2) + arrFormatNumberKr[i];
             }
@@ -1956,7 +2312,6 @@ setInterval(() => {
     document.getElementById('debugDiv').textContent = arrProductGetCount;
 });
 /*
-    Interval
     1초 반복
 */
 setInterval(perSecond, 1000);
@@ -1969,12 +2324,9 @@ function perSecond() {
     returningExp += addPerSecondStudent;
     updateShowStudent();
 
-    for(let i = 0 ; i < productLength ; i++) {
-        arrProductStatsProductionTotal[i] += arrProductAddTotalValue[i]
-    }
+    for(let i = 0 ; i < productLength ; i++) arrProductStatsProductionTotal[i] += arrProductAddFinalValue[i]
 }
 /*
-    Interval
     2초 반복 | 최적화를 위함
 */
 setInterval(() => {
@@ -1982,19 +2334,20 @@ setInterval(() => {
     document.title = translations[lang].windowTitle(formatNumber(student));
 }, 1000 * 2);
 /*
-    Interval
     30초 반복
 */
 setInterval(() => {
     // 진행상황은 쿠키에 저장
     saveGame();
 }, 1000*30);
-// 게임 저장
-function saveGame() {
+
+function saveGame() { // 게임 저장
     console.log('Save Game');
     // 학생
     setCookie('student', student);
-    setCookie('addClickStudent', addClickStudent);
+    setCookie('addClickDefaultValue', addClickDefaultValue);
+    setCookie('addClickBonusValue', addClickBonusValue);
+    setCookie('addClickTotalValue', addClickTotalValue);
     setCookie('addPerSecondStudent', addPerSecondStudent);
     // 팝업 등장 여부 | 배열
     setCookie('arrAppearPopupBool', arrAppearPopupBool);
@@ -2005,6 +2358,7 @@ function saveGame() {
     setCookie('arrProductGetCount', arrProductGetCount);
     setCookie('arrProductAddBonusValue', arrProductAddBonusValue);
     setCookie('arrProductAddTotalValue', arrProductAddTotalValue);
+    setCookie('arrProductAddFinalValue', arrProductAddFinalValue);
     setCookie('arrProductStatsProductionTotal', arrProductStatsProductionTotal);
     setCookie('productAddPerSecondTotal', productAddPerSecondTotal);
     setCookie('arrProductUpgradeCount', arrProductUpgradeCount);
@@ -2016,6 +2370,9 @@ function saveGame() {
     /*
         설정 관련 변수
     */
+    // 설정
+    setCookie('soundEffectVolume', soundEffectVolume.value);
+    setCookie('soundBgmVolume', soundBgmVolume.value);
     // 통계
     setCookie('statsTotalStudent', statsTotalStudent);
     setCookie('statsStudent', statsStudent);
@@ -2034,6 +2391,7 @@ function saveGame() {
     setCookie('returningExp', returningExp);
     setCookie('returningExpMax', returningExpMax);
     setCookie('returningProductionMultiple', returningProductionMultiple);
+    setCookie('returningLastTime', returningLastTime);
     // 기억 왜곡
     setCookie('arrMemoryEnable', arrMemoryEnable);
     // 도전 과제
@@ -2048,7 +2406,9 @@ function loadGame() { // 게임 로드
     console.log('Load cookie');
     // 학생
     student = getCookie('student');
-    addClickStudent = getCookie('addClickStudent');
+    addClickDefaultValue = getCookie('addClickDefaultValue');
+    addClickBonusValue = getCookie('addClickBonusValue');
+    addClickTotalValue = getCookie('addClickTotalValue');
     addPerSecondStudent = getCookie('addPerSecondStudent');
     // 팝업 등장 여부 | 배열
     arrAppearPopupBool = getCookie('arrAppearPopupBool');
@@ -2059,6 +2419,7 @@ function loadGame() { // 게임 로드
     arrProductGetCount = getCookie('arrProductGetCount');
     arrProductAddBonusValue = getCookie('arrProductAddBonusValue');
     arrProductAddTotalValue = getCookie('arrProductAddTotalValue');
+    arrProductAddFinalValue = getCookie('arrProductAddFinalValue');
     arrProductStatsProductionTotal = getCookie('arrProductStatsProductionTotal');
     productAddPerSecondTotal = getCookie('productAddPerSecondTotal');
     arrProductUpgradeCount = getCookie('arrProductUpgradeCount');
@@ -2071,6 +2432,9 @@ function loadGame() { // 게임 로드
     /*
         설정 관련 변수
     */
+    // 설정
+    soundEffectVolume.value = getCookie('soundEffectVolume');
+    soundBgmVolume.value = getCookie('soundBgmVolume');
     // 통계
     statsTotalStudent = getCookie('statsTotalStudent');
     statsStudent = getCookie('statsStudent');
@@ -2089,6 +2453,7 @@ function loadGame() { // 게임 로드
     returningExp = getCookie('returningExp');
     returningExpMax = getCookie('returningExpMax');
     returningProductionMultiple = getCookie('returningProductionMultiple');
+    returningLastTime = parseInt(getCookie('returningLastTime'), 10);
     // 기억 왜곡
     arrMemoryEnable = getCookie('arrMemoryEnable');
     // 도전 과제
@@ -2112,8 +2477,6 @@ function loadGame() { // 게임 로드
     lastSaveTime = parseInt(getCookie('lastSaveTime'), 10);
     productOffline();
 }
-
-
 function debugMode() {
     student = 1e58;
     for(let i = 0 ; i < productLength ; i++) {
@@ -2153,7 +2516,6 @@ window.onload = function() {
     settingProduct();
 
     // 쿠키
-
     checkCookies = document.cookie;
     if(checkCookies) {
         ifSelectLanguage = getCookie('ifSelectLanguage'); // 언어 관련 저장된 쿠키가 있는지 확인
@@ -2165,6 +2527,7 @@ window.onload = function() {
     } else {
         appearPopup(2, 0);
         productDefaultSetting();
+        returningLastTime = Date.now();
     }
 
     updateNews();

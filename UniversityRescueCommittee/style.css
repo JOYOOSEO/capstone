@@ -488,15 +488,65 @@ sectionMiddle
 	text-align: center;
 	width: 250px;
 	height: auto;
-	background-color: green;
-	border: 1px solid green;
+	background-color: 008000;
+	border: 1px solid #008000;
 	padding: 5px;
 	cursor: pointer;
 }
 #sectionMiddle #pageBundle #pageSetting #settingCommonBundle .button:hover {
-	color: green;
+	color: 008000;
 	background: white;
 	border: 1px solid white;
+}
+#sectionMiddle #pageBundle #pageSetting #settingDetailBundle #soundVolumeBundle {
+	display: flex;
+}
+#sectionMiddle #pageBundle #pageSetting #settingDetailBundle #soundVolumeBundle .settingSoundBox {
+	position: relative;
+	width: 30%;
+	max-width: 250px;
+	height: 48px;
+	background: #62626280;
+	border: 2px solid;
+	border-color: #008000 #006000 #006000 #008000;
+	border-radius: 2.5px;
+	margin-right: 7.5%;
+	padding: 16px 16px 4px 16px;
+}
+#sectionMiddle #pageBundle #pageSetting #settingDetailBundle #soundVolumeBundle .settingSoundBox .locationRight {
+	position: absolute;
+	top: 8px;
+	right: 16px;
+}
+#sectionMiddle #pageBundle #pageSetting #settingDetailBundle #soundVolumeBundle .settingSoundBox .locationLeft {
+	position: absolute;
+	top: 8px;
+	left: 16px;
+}
+#sectionMiddle #pageBundle #pageSetting #settingDetailBundle #soundVolumeBundle .typeRange {
+	-webkit-appearance: none;
+	width: 100%;
+	height: 16px;
+	box-shadow: 0px 2px 4px #75646480 inset;
+	background: #D2D2D2;
+	border-radius: 2.5px;
+	margin-top: 24px;
+	outline: none;
+	cursor: pointer;
+}
+#sectionMiddle #pageBundle #pageSetting #settingDetailBundle #soundVolumeBundle .typeRange:hover {
+	background: #BDBDBD;
+}
+#sectionMiddle #pageBundle #pageSetting #settingDetailBundle #soundVolumeBundle .typeRange::-webkit-slider-thumb {
+	appearance: none;
+	width: 20px;
+	height: 20px;
+	box-shadow: 0px 1px 2px #FFFFFF80 inset;
+	background: #4CAF50;
+	border-radius: 25%;
+}
+#sectionMiddle #pageBundle #pageSetting #settingDetailBundle #soundVolumeBundle .typeRange::-webkit-slider-thumb:hover {
+	filter: brightness(115%);
 }
 #sectionMiddle #pageBundle #pageStats #statsCommonBundle {
 	padding: 24px 20px;
@@ -729,17 +779,17 @@ sectionRight
 	position: relative;
 }
 #gameMenu .menuPageButton {
-	cursor: pointer;
+	display: inline-block;
 	width: 60px;
 	height: 60px;
-	margin: 5px;
 	background: url('img/game_menu_setting.png');
 	background-color: #999;
 	background-size: cover;
 	object-fit: cover;
-	display: inline-block;
 	border: #000 1px solid;
 	border-radius: 15px;
+	margin: 5px;
+	cursor: pointer;
 }
 #gameMenu .menuPageButton:hover {
 	filter: brightness(115%);
@@ -1062,5 +1112,9 @@ sectionRight
 .fcBlack { color: #000000 }
 /* font style */
 .fsItalic { font-style: italic; }
+.fsUnderline { text-decoration: underline;}
 /* ETC */
+.blankTop16 { margin-top: 16px; }
+.blankTop32 { margin-top: 32px; }
+.blankTop64 { margin-top: 64px; }
 .disabled { display: none !important; }

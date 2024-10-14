@@ -117,19 +117,30 @@
                     <div id="pageSettingTitle" class="title"></div>
                     <div id="pageSettingCommon" class="subtitle"></div>
                     <div id="settingCommonBundle" class="bundle">
-                        <div>저장하기</div>
-                        <div id="buttonSave" class="button">저장하기</div>
-                        <div id="buttonSaveFileExport" class="button">파일 내보내기</div>
-                        <div id="buttonSaveFileImport" class="button">파일 불러오기</div>
-                        <div id="text">언어설정</div>
-                        <div id="buttonChangeLanuage" class="button">언어 변경</div>
-                        <!-- <select id="languageSelector">
-                            <option value="ko">한국어</option>
-                            <option value="en">English</option>
-                        </select> -->
+                        <div id="pageSettingNameSave" class="fs175 fcWhite"></div>
+                        <div id="buttonSave" class="button"></div>
+                        <div id="buttonSaveFileExport" class="button"></div>
+                        <div id="buttonSaveFileImport" class="button"></div>
+                        <div class="blankTop32"></div>
+                        <div id="pageSettingNameLanguage" class="fs175 fcWhite"></div>
+                        <div id="buttonChangeLanguage" class="button"></div>
                     </div>
                     <div id="pageSettingDetail" class="subtitle"></div>
-                    <div id="settingDetailBundle" class="bundle"></div>
+                    <div id="settingDetailBundle" class="bundle">
+                        <div id="soundVolumeBundle">
+                            <div id="soundEffectVolumeBundle" class="settingSoundBox">
+                                <div id="soundEffectVolumeText" class="locationLeft fs125 fcWhite"></div>
+                                <div id="soundEffectVolumeValue" class="locationRight fs125 fcWhite"></div>
+                                <input type="range" id="soundEffectVolume" class="typeRange" min="0" max="1" step="0.01" value="0.5">
+                            </div>
+                            <div id="soundBgmVolumeBundle" class="settingSoundBox">
+                                <div id="soundBgmVolumeText" class="locationLeft fs125 fcWhite"></div>
+                                <div id="soundBgmVolumeValue" class="locationRight fs125 fcWhite"></div>
+                                <input type="range" id="soundBgmVolume" class="typeRange" min="0" max="1" step="0.01" value="0.5">
+                            </div>
+                            <div id="soundNotice"></div>
+                        </div>
+                    </div>
                     <div class="blankArea">DUMMY</div>
                 </div>
                 <div id="pageStats" class="pageMenu">
