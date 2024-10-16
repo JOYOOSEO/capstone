@@ -193,11 +193,6 @@ let arrAchievementEnable = [
     [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
 ];
 
-// FormatNumber list | 고정
-const arrFormatNumberKr = ['','만','억','조','경','해','자','양','구','간','정','재','극','항하사','아승기','나유타','불가사의','무량대수','무한']
-let arrFormatStandardKr = [1,1e4,1e8,1e12,1e16,1e20,1e24,1e28,1e32,1e36,1e40,1e44,1e48,1e52,1e56,1e60,1e64,1e68,1e72]
-
-
 /*
     언어
 */
@@ -782,6 +777,7 @@ const translations = {
 // 언어
 const languageSelector = document.getElementById('languageSelector');
 let lang = 'KO';
+let formatNumberSetting = 1;
 changeLanguage();
 
 // languageSelector.addEventListener('change', changeLanguage);
@@ -1307,15 +1303,23 @@ function pageSetting() {
     document.getElementById('pageSettingNameLanguage').innerHTML = translations[lang].menuStatsText_Language;
     buttonChangeLanguage.innerHTML = translations[lang].menuStatsText_buttonChangeLanguage;
     
-    // 세부
+    // * 세부 *
+    // 소리
+    document.getElementById('soundVolumeName').innerHTML = '소리';
     document.getElementById('pageSettingDetail').innerHTML = translations[lang].menuStatsText_subtitleDetail;
     document.getElementById('soundEffectVolumeText').innerHTML = translations[lang].menuStatsText_soundEffectName;
     document.getElementById('soundBgmVolumeText').innerHTML = translations[lang].menuStatsText_soundBgmName;
     changeSoundEffectVolume();
     changeSoundBgmVolume();
     document.getElementById('soundNotice').innerHTML = translations[lang].menuStatsText_soundNotice;
-    
 
+    // 표기 단위
+    document.getElementById('formatNumberName').innerHTML = '표기 단위';
+    document.getElementById('formatNumberSettingKr').innerHTML = '한글';
+    document.getElementById('formatNumberSettingLongEn').innerHTML = '영어(길게)';
+    document.getElementById('formatNumberSettingShortEn').innerHTML = '영어(짧게)';
+    document.getElementById('formatNumberNotice').innerHTML = '숫자의 단위를 선택할 수 있습니다.';
+    
 }
 buttonSave.addEventListener('click', () => {
     const soundSave = new Audio('sound/GameSave.mp3');
@@ -1922,10 +1926,8 @@ function updateProductTooltip(i) {
 
     // 선언
     const tooltip = document.getElementById('productTooltip');
-
     // 가격
-    if(arrProductPrice[i] < 1e4) tooltip.querySelector('.price').textContent = translations[lang].students(Math.floor(formatNumber(arrProductPrice[i])));
-    else tooltip.querySelector('.price').textContent = translations[lang].students(formatNumber(arrProductPrice[i]));
+    tooltip.querySelector('.price').textContent = translations[lang].students(formatNumber(arrProductPrice[i]));
     // 보유
     if(arrProductGetCount[i] >= 1) tooltip.querySelector('.getCount').innerHTML = translations[lang].productTooltipGetCount(arrProductGetCount[i]);
     // 가격색
@@ -1974,10 +1976,7 @@ function settingProductMenu(type) { // 초기화 증축 메뉴
             if(arrProductGetCount[i] == 0) product.querySelector('.getCount').innerHTML = '';
             if(arrProductGetCount[i] >= 1) product.querySelector('.getCount').innerHTML = arrProductGetCount[i];
         }
-        if(type == 'price') {
-            if(arrProductPrice[i] < 1e4) product.querySelector('.price').innerHTML = translations[lang].students(Math.floor(formatNumber(arrProductPrice[i])));
-            else product.querySelector('.price').innerHTML = translations[lang].students(formatNumber(arrProductPrice[i]));
-        }
+        if(type == 'price') product.querySelector('.price').innerHTML = translations[lang].students(formatNumber(arrProductPrice[i]));
     }
 }
 function settingProductPrice(i, j = 1) { // 증축 가격 계산
@@ -2258,22 +2257,55 @@ function appendTag(elementById, type) {
 /*
     자릿수 계산
 */
-function formatNumber(value) {
-    // value의 값이 0일 경우
-    if(value == 0) return 0;
-    // 아닐 경우
-    else {
-        for(let i = arrFormatNumberKr.length - 1 ; i > -1 ; i--) {
-            if(value >= arrFormatStandardKr[i]) {
-                // 1e72 이상 | 무한
-                if(i == arrFormatNumberKr.length - 1) return arrFormatNumberKr[i] 
-                // 1e4 이하
-                else if(i == 0) return parseFloat(value).toFixed(1) + arrFormatNumberKr[0];
-                // 그 외
-                else return (value / arrFormatStandardKr[i]).toFixed(2) + arrFormatNumberKr[i];
-            }
-        }
+const arrFormatNumberKr = ['','만','억','조','경','해','자','양','구','간','정','재','극','항하사','아승기','나유타','불가사의','무량대수']
+let arrFormatNumberLongEn = ['','thousand','million','billion','trillion','quadrillion','quintillion','sextillion','septillion','octillion','nonillion'];
+const arrFormatNumberPrefixLongEn = ['','un','duo','tre','quattuor','quin','sex','septen','octo','novem'];
+const arrFormatNumberSuffixLongEn = ['decillion','vigintillion','trigintillion','quadragintillion','quinquagintillion','sexagintillion','septuagintillion','octogintillion','nonagintillion'];
+let arrFormatNumberShortEn =['','k','M','B','T','Qa','Qi','Sx','Sp','Oc','No'];
+const arrFormatNumberPrefixShortEn=['','Un','Do','Tr','Qa','Qi','Sx','Sp','Oc','No'];
+const arrFormatNumberSuffixShortEn=['D','V','T','Qa','Qi','Sx','Sp','O','N'];
+const arrFormatNumberInfinityKr = '무한'; const arrFormatNumberInfinityEn = 'infinity';
+for(let i = 0 ; i < arrFormatNumberPrefixLongEn.length ; i++) {
+    for(let j = 0 ; j < arrFormatNumberSuffixLongEn.length ; j++) {
+        arrFormatNumberLongEn.push(arrFormatNumberPrefixLongEn[i] + arrFormatNumberSuffixLongEn[j]);
+        arrFormatNumberShortEn.push(arrFormatNumberPrefixShortEn[i] + arrFormatNumberSuffixShortEn[j]);
     }
+}
+
+function formatNumber(value) {
+    // 변수 창출
+    let index = 0;
+
+    if(value == 0) return 0; // value의 값이 0일 경우
+    else { // 아닐경우
+        if(formatNumberSetting == 1) {
+            while(value >= 1e4) {
+                value /= 1e4;
+                index++;
+            }
+
+            if(index == 0) return value.toFixed(1) + arrFormatNumberKr[0];
+            if(17 >= index) return value.toFixed(2) + arrFormatNumberKr[index];
+            else return arrFormatNumberInfinityKr;
+        }
+        if(3 >= formatNumberSetting && formatNumberSetting >= 2) {
+            while(value >= 1e3) {
+                value /= 1e3;
+                index++;
+            }
+
+            if(index == 0) {
+                console.log(value)
+                if(formatNumberSetting == 2) return value.toFixed(1) + arrFormatNumberLongEn[0];
+                if(formatNumberSetting == 3) return value.toFixed(1) + arrFormatNumberShortEn[0];
+            }
+            else if(100 >= index && index >= 1) {
+                if(formatNumberSetting == 2) return value.toFixed(2) + arrFormatNumberLongEn[index];
+                if(formatNumberSetting == 3) return value.toFixed(2) + arrFormatNumberShortEn[index];
+            }
+            else return arrFormatNumberInfinityEn;
+        }
+    }    
 }
 
 /*
@@ -2373,6 +2405,7 @@ function saveGame() { // 게임 저장
     // 설정
     setCookie('soundEffectVolume', soundEffectVolume.value);
     setCookie('soundBgmVolume', soundBgmVolume.value);
+    setCookie('formatNumberSetting', formatNumberSetting);
     // 통계
     setCookie('statsTotalStudent', statsTotalStudent);
     setCookie('statsStudent', statsStudent);
@@ -2435,6 +2468,7 @@ function loadGame() { // 게임 로드
     // 설정
     soundEffectVolume.value = getCookie('soundEffectVolume');
     soundBgmVolume.value = getCookie('soundBgmVolume');
+    formatNumberSetting = getCookie('formatNumberSetting');
     // 통계
     statsTotalStudent = getCookie('statsTotalStudent');
     statsStudent = getCookie('statsStudent');

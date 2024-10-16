@@ -483,12 +483,10 @@ sectionMiddle
 	color: #FFFFFF;
 } */
 #sectionMiddle #pageBundle #pageSetting #settingCommonBundle .button {
-	color: white;
-	font-size: 150%;
 	text-align: center;
 	width: 250px;
 	height: auto;
-	background-color: 008000;
+	background-color: #008000;
 	border: 1px solid #008000;
 	padding: 5px;
 	cursor: pointer;
@@ -500,6 +498,7 @@ sectionMiddle
 }
 #sectionMiddle #pageBundle #pageSetting #settingDetailBundle #soundVolumeBundle {
 	display: flex;
+	gap: 7.5%;
 }
 #sectionMiddle #pageBundle #pageSetting #settingDetailBundle #soundVolumeBundle .settingSoundBox {
 	position: relative;
@@ -510,7 +509,6 @@ sectionMiddle
 	border: 2px solid;
 	border-color: #008000 #006000 #006000 #008000;
 	border-radius: 2.5px;
-	margin-right: 7.5%;
 	padding: 16px 16px 4px 16px;
 }
 #sectionMiddle #pageBundle #pageSetting #settingDetailBundle #soundVolumeBundle .settingSoundBox .locationRight {
@@ -546,6 +544,19 @@ sectionMiddle
 	border-radius: 25%;
 }
 #sectionMiddle #pageBundle #pageSetting #settingDetailBundle #soundVolumeBundle .typeRange::-webkit-slider-thumb:hover {
+	filter: brightness(115%);
+}
+#sectionMiddle #pageBundle #pageSetting #settingDetailBundle #formatNumberBundle {
+	display: flex;
+	gap: 2.5%;
+}
+#sectionMiddle #pageBundle #pageSetting #settingDetailBundle #formatNumberBundle .buttonFormatNumber {
+	text-align: center;
+	width: 20%;
+	height: 48px;
+	background: #008800;
+}
+#sectionMiddle #pageBundle #pageSetting #settingDetailBundle #formatNumberBundle .buttonFormatNumber:hover {
 	filter: brightness(115%);
 }
 #sectionMiddle #pageBundle #pageStats #statsCommonBundle {
