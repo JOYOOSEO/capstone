@@ -278,7 +278,7 @@ const translations = {
                     '남아있는 학생마저 자퇴를 준비하고 있습니다.',
                     '학교에 학생보다 교수가 더 많습니다.',
                     '학교 게시판은 신입생 모집 포스터로 가득하지만, 아무도 관심을 두지 않습니다.',
-                    '카페에 한산하고, 앉을 자리를 고를 필요가 없습니다.',
+                    '쿠키 카페에 한산하고, 앉을 자리를 고를 필요가 없습니다.',
                     '교문 앞은 쓸쓸한 풍경만이 자리하고 있습니다.',
                     '활발해야 할 동아리 방에는 먼지와 침묵이 자리잡고 있습니다.'
                 ],
@@ -324,8 +324,8 @@ const translations = {
                     '학생회관에 설치된 게임방에서 과제를 외면한 학생의 레벨업 기회를 제공합니다.',
                     '학생들을 위한 커뮤니티 공간이 더 많이 증축되어 다양한 행사와 모임이 형성되고 있습니다.',
                     '학교 식당은 학생 평가 100점 만점에 99점을 달성했습니다.',
-                    '라운지에서 편안한 소파와 배터리 및 멘탈 충전이 가능한 무한한 충전 포트가 준비되어 있습니다.',
-                    '카페에서 커피뿐 아니라 꿈과 희망을 제공합니다.',
+                    '라운지에서 편안한 소파와 배터리 및 멘탈 충전이 가능한 충전 포트가 준비되어 있습니다.',
+                    '쿠키 카페에서 커피뿐 아니라 꿈과 희망을 제공합니다.',
                     '최점단 연구실에서 다른 차원의 문을 열어버리는 일 없도록 주의를 주고 있습니다.',
                     '스포츠 센터에서 공부와 운동을 동시에 하는 새로운 트렌드를 만들었습니다.',
                     '도서관에서 책이 24시간 대기 중입니다. 경고문에는 \'책이 뿜어내는 지식이 뜨거워요\'라고 쓰여있습니다.',
@@ -497,7 +497,7 @@ const translations = {
                     '모두 같은 생각, 같은 행동, 같은 목표를 가진 나 자신이 모이면 하는 이야기는 \'오늘 저녁 뭐 먹지?\'입니다.',
                     '학교 중앙 복도에서 \'너 몇번째 위원장이야?\'라고 소리치시는 총장님과 그걸 대답해주는 위원장이 자주 보입니다.',
                     '또 다른 내가 삼삼오오 모여 각자 다른 안건을 논의하니 하루에 여러 개의 문제가 해결되곤 합니다.',
-                    '카페에 점심 이후에 여러 명의 위원장이 커피를 마시는 모습이 목격됩니다. 옷도 똑같이 입었네요.',
+                    '쿠키 카페에 점심 이후에 여러 명의 위원장이 커피를 마시는 모습이 목격됩니다. 옷도 똑같이 입었네요.',
                     '또 다른 나 사이에서 상위 차원의 존재를 본 적 있다는 목격담이 들려옵니다.'
                 ]
             ]
@@ -1292,6 +1292,9 @@ const buttonSave = document.getElementById('buttonSave');
 const buttonSaveFileExport = document.getElementById('buttonSaveFileExport');
 const buttonSaveFileImport = document.getElementById('buttonSaveFileImport');
 const buttonChangeLanguage = document.getElementById('buttonChangeLanguage');
+const buttonFormatNumberKr = document.getElementById('formatNumberSettingKr');
+const buttonFormatNumberLongEn = document.getElementById('formatNumberSettingLongEn');
+const buttonFormatNumberShortEn = document.getElementById('formatNumberSettingShortEn');
 function pageSetting() {
     // 기본
     document.getElementById('pageSettingTitle').innerHTML = translations[lang].menuSettingText_title;
@@ -1319,6 +1322,7 @@ function pageSetting() {
     document.getElementById('formatNumberSettingLongEn').innerHTML = '영어(길게)';
     document.getElementById('formatNumberSettingShortEn').innerHTML = '영어(짧게)';
     document.getElementById('formatNumberNotice').innerHTML = '숫자의 단위를 선택할 수 있습니다.';
+    buttonFormatNumber();
     
 }
 buttonSave.addEventListener('click', () => {
@@ -1330,24 +1334,6 @@ buttonSave.addEventListener('click', () => {
 buttonSaveFileExport.addEventListener('click', () => {
     exportSaveFile();
 });
-buttonSaveFileImport.addEventListener('click', () => {
-    importSaveFile();
-});
-buttonChangeLanguage.addEventListener('click', () => {
-    appearPopup(2, 0);
-});
-soundEffectVolume.addEventListener('input', () => changeSoundEffectVolume());
-function changeSoundEffectVolume() {
-    const textVolume = document.getElementById('soundEffectVolumeValue');
-    if(Math.floor(soundEffectVolume.value * 100) == 0) textVolume.innerHTML = `<b class="fcDefault">꺼짐</b>`;
-    if(Math.floor(soundEffectVolume.value * 100) > 0) textVolume.innerHTML = `${(soundEffectVolume.value * 100).toFixed(0)}%`;
-}
-soundBgmVolume.addEventListener('input', () => changeSoundBgmVolume());
-function changeSoundBgmVolume() {
-    const textVolume = document.getElementById('soundBgmVolumeValue');
-    if(Math.floor(soundBgmVolume.value * 100) == 0) textVolume.innerHTML = `<b class="fcDefault">꺼짐</b>`;
-    if(Math.floor(soundBgmVolume.value * 100) > 0) textVolume.innerHTML = `${(soundBgmVolume.value * 100).toFixed(0)}%`;
-}
 function exportSaveFile() {    
     // Blob 객체를 생성(파일의 내용을 포함)
     const blob = new Blob([document.cookie], { type: 'text/plain' });
@@ -1363,6 +1349,9 @@ function exportSaveFile() {
 
     URL.revokeObjectURL(URL.createObjectURL(blob)); // 메모리를 반환
 }
+buttonSaveFileImport.addEventListener('click', () => {
+    importSaveFile();
+});
 function importSaveFile() {
     const input = document.createElement('input');
     input.type = 'file';
@@ -1381,7 +1370,45 @@ function importSaveFile() {
     };
     input.click(); // 자동으로 파일 선택창 열기
 }
+buttonChangeLanguage.addEventListener('click', () => {
+    appearPopup(2, 0);
+});
 
+soundEffectVolume.addEventListener('input', () => changeSoundEffectVolume());
+function changeSoundEffectVolume() {
+    const textVolume = document.getElementById('soundEffectVolumeValue');
+    if(Math.floor(soundEffectVolume.value * 100) == 0) textVolume.innerHTML = `<b class="fcDefault">꺼짐</b>`;
+    if(Math.floor(soundEffectVolume.value * 100) > 0) textVolume.innerHTML = `${(soundEffectVolume.value * 100).toFixed(0)}%`;
+}
+soundBgmVolume.addEventListener('input', () => changeSoundBgmVolume());
+function changeSoundBgmVolume() {
+    const textVolume = document.getElementById('soundBgmVolumeValue');
+    if(Math.floor(soundBgmVolume.value * 100) == 0) textVolume.innerHTML = `<b class="fcDefault">꺼짐</b>`;
+    if(Math.floor(soundBgmVolume.value * 100) > 0) textVolume.innerHTML = `${(soundBgmVolume.value * 100).toFixed(0)}%`;
+}
+buttonFormatNumberKr.addEventListener('click', () => {
+    formatNumberSetting = 1;
+    buttonFormatNumber();
+});
+buttonFormatNumberLongEn.addEventListener('click', () => {
+    formatNumberSetting = 2;
+    buttonFormatNumber();
+});
+buttonFormatNumberShortEn.addEventListener('click', () => {
+    formatNumberSetting = 3;
+    buttonFormatNumber();
+});
+function buttonFormatNumber() {
+    settingProductMenu('price');
+
+    buttonFormatNumberKr.classList.remove('select');
+    buttonFormatNumberLongEn.classList.remove('select');
+    buttonFormatNumberShortEn.classList.remove('select');
+
+    if(formatNumberSetting == 1) buttonFormatNumberKr.classList.add('select');
+    if(formatNumberSetting == 2) buttonFormatNumberLongEn.classList.add('select');
+    if(formatNumberSetting == 3) buttonFormatNumberShortEn.classList.add('select');
+}
 /*
     통계 메뉴
 */
@@ -2258,17 +2285,17 @@ function appendTag(elementById, type) {
     자릿수 계산
 */
 const arrFormatNumberKr = ['','만','억','조','경','해','자','양','구','간','정','재','극','항하사','아승기','나유타','불가사의','무량대수']
-let arrFormatNumberLongEn = ['','thousand','million','billion','trillion','quadrillion','quintillion','sextillion','septillion','octillion','nonillion'];
+let arrFormatNumberLongEn = ['',' thousand',' million',' billion',' trillion',' quadrillion',' quintillion',' sextillion',' septillion',' octillion',' nonillion'];
 const arrFormatNumberPrefixLongEn = ['','un','duo','tre','quattuor','quin','sex','septen','octo','novem'];
 const arrFormatNumberSuffixLongEn = ['decillion','vigintillion','trigintillion','quadragintillion','quinquagintillion','sexagintillion','septuagintillion','octogintillion','nonagintillion'];
-let arrFormatNumberShortEn =['','k','M','B','T','Qa','Qi','Sx','Sp','Oc','No'];
+let arrFormatNumberShortEn =['',' K',' M',' B',' T',' Qa',' Qi',' Sx',' Sp',' Oc',' No'];
 const arrFormatNumberPrefixShortEn=['','Un','Do','Tr','Qa','Qi','Sx','Sp','Oc','No'];
 const arrFormatNumberSuffixShortEn=['D','V','T','Qa','Qi','Sx','Sp','O','N'];
 const arrFormatNumberInfinityKr = '무한'; const arrFormatNumberInfinityEn = 'infinity';
 for(let i = 0 ; i < arrFormatNumberPrefixLongEn.length ; i++) {
     for(let j = 0 ; j < arrFormatNumberSuffixLongEn.length ; j++) {
-        arrFormatNumberLongEn.push(arrFormatNumberPrefixLongEn[i] + arrFormatNumberSuffixLongEn[j]);
-        arrFormatNumberShortEn.push(arrFormatNumberPrefixShortEn[i] + arrFormatNumberSuffixShortEn[j]);
+        arrFormatNumberLongEn.push(' ' + arrFormatNumberPrefixLongEn[i] + arrFormatNumberSuffixLongEn[j]);
+        arrFormatNumberShortEn.push(' ' + arrFormatNumberPrefixShortEn[i] + arrFormatNumberSuffixShortEn[j]);
     }
 }
 
@@ -2295,7 +2322,6 @@ function formatNumber(value) {
             }
 
             if(index == 0) {
-                console.log(value)
                 if(formatNumberSetting == 2) return value.toFixed(1) + arrFormatNumberLongEn[0];
                 if(formatNumberSetting == 3) return value.toFixed(1) + arrFormatNumberShortEn[0];
             }

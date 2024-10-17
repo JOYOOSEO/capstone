@@ -189,12 +189,12 @@ body {
 
 /* sectionLeft */
 #sectionLeft {
+	min-width: 200px;
 	position: absolute;
 	top: 0px;
 	bottom: 0px;
 	left: 0px;
 	width: 30%;
-	min-width: 100px;
 	background: url(img/sectionLeftBackground.png)
 }
 #sectionLeft #gradient {
@@ -322,22 +322,22 @@ sectionMiddle
 	left: 30%;
 	bottom: 0px;
 	right: 318px;
-	min-width: 100px;
-	padding-left: 16px;
-	margin-right: 16px;
+	min-width: 200px;
+	/* padding-left: 16px;
+	margin-right: 16px; */
+	margin: 0px 16px;
 	overflow: hidden;
 }
 #sectionMiddle #newsBundle {
-	position: relative;
 	text-align: center;
-	height: 96px;
+	position: relative;
 	width: 100%;
+	height: 96px;
 	background-color: #000000;
-	border-radius: 15px;
 	padding: 24px 0px;
 }
 #sectionMiddle #newsBundle:hover {
-	text-shadow: 0px 0px 8px #FFFFFF;
+	text-shadow: 0px 0px 8px #FFFFFF80;
 }
 #sectionMiddle #newsBundle #showNewsTitle {
 	font-size: 225%;
@@ -348,7 +348,6 @@ sectionMiddle
 	margin: 4px 0px;
 }
 #sectionMiddle #newsBundle #showNewsContents {
-	font-size: 125%;
 	word-wrap: break-word;
 	position: absolute;
 	top: 48px;
@@ -379,13 +378,12 @@ sectionMiddle
 #SectionMiddle #pageBundle {
 	position: absolute;
 	top: 160px;
-	left: 16px;
+	left: 0px;
 	bottom: 0px;
 	right: 0px;
 	overflow-x: hidden;
 	overflow-y: scroll;
 	background: linear-gradient(90deg, #1B1B1B, #2B2B2B, #1B1B1B);
-
 }
 #SectionMiddle #pageBundle #productStateList {
 	position: relative;
@@ -492,7 +490,7 @@ sectionMiddle
 	cursor: pointer;
 }
 #sectionMiddle #pageBundle #pageSetting #settingCommonBundle .button:hover {
-	color: 008000;
+	color: #008000;
 	background: white;
 	border: 1px solid white;
 }
@@ -559,6 +557,10 @@ sectionMiddle
 #sectionMiddle #pageBundle #pageSetting #settingDetailBundle #formatNumberBundle .buttonFormatNumber:hover {
 	filter: brightness(115%);
 }
+#sectionMiddle #pageBundle #pageSetting #settingDetailBundle #formatNumberBundle .buttonFormatNumber.select {
+	color: #008800;
+	background: #FFFFFF;
+}
 #sectionMiddle #pageBundle #pageStats #statsCommonBundle {
 	padding: 24px 20px;
 }
@@ -572,10 +574,10 @@ sectionMiddle
 	display: inline-block;
 	width: 48px;
 	height: 48px;
-	filter: drop-shadow(0px 3px 2px #000000);
 	background-size: cover;
 	object-fit: cover;
 	margin: 6px;
+	filter: drop-shadow(0px 3px 2px #000000);
 }
 #sectionMiddle #pageBundle #pageStats #statsUpgradeBundle .statsUpgradeIcon:hover {
 	transform: translateY(-2px);
@@ -584,11 +586,11 @@ sectionMiddle
 	display: inline-block;
 	width: 48px;
 	height: 48px;
-	filter: drop-shadow(0px 3px 2px #000000);
 	background-size: cover;
 	border: 1px solid #FFFFFF;
 	object-fit: cover;
 	margin: 6px;
+	filter: drop-shadow(0px 3px 2px #000000);
 }
 #sectionMiddle #pageBundle #pageStats #statsAchievementBundle .statsAchievementIcon:hover {
 	transform: translateY(-2px);
@@ -608,7 +610,6 @@ sectionMiddle
 	display: flex;
 	justify-content: space-around;
 	flex-wrap: wrap;
-
 }
 #sectionMiddle #pageBundle #pageInfo #infoCreditBundle #developerBundle .developer {
 	display: flex;
@@ -780,32 +781,36 @@ sectionRight
 	position: absolute;
 	top: 0px;
 	right: 0px;
+	min-width: 318px;
 	height: 100%;
 	overflow-x: hidden;
 	overflow-y: scroll;
-	/*background:url(img/panelBG.png);*/
-	background:rgba(0,0,0,0.5);
+	background:#00000080;
 }
 #gameMenu {
+	display: flex;
+	justify-content: space-around;
 	position: relative;
+	background: #00000090;
+	box-shadow: 0px 0px 4px #000000;
+	padding: 8px 0px;
 }
 #gameMenu .menuPageButton {
-	display: inline-block;
 	width: 60px;
 	height: 60px;
 	background: url('img/game_menu_setting.png');
-	background-color: #999;
 	background-size: cover;
 	object-fit: cover;
-	border: #000 1px solid;
-	border-radius: 15px;
-	margin: 5px;
+	border-radius: 100%;
+	filter: drop-shadow(0px 0px 2px #FFFFFF80);
 	cursor: pointer;
 }
 #gameMenu .menuPageButton:hover {
+	background-color: #FFFFFF40;
 	filter: brightness(115%);
 }
 #gameMenu .menuPageButton.select {
+	background-color: #FFFFFF80;
 	filter: brightness(125%);
 }
 #sectionRight .title {
@@ -1079,13 +1084,12 @@ sectionRight
 	z-index: 50;
 }
 .divisionLine.cloumn {
+	position: absolute;
 	width: 16px;
 	height: 100%;
-	position: absolute;
 	top: 0px;
 	bottom: 0px;
 	background: url(img/store.png) no-repeat top left,url(img/store.png) no-repeat bottom left,url(img/store.png) repeat-y;
-	z-index: 50;
 }
 .divisionLine.cloumn.left {
 	left: 30%;
