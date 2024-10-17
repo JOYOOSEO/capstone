@@ -12,7 +12,7 @@ let ifSelectLanguage = false;
 let student = 0; // 현재 보유 학생
 
 let addClickDefaultValue = 1;
-let addClickBonusValue = 1.00;
+let addClickBonusValue = 0;
 let addClickTotalValue = 1; // 클릭당 추가 학생
 
 let addPerSecondStudent = 0; // 초당 추가 학생
@@ -57,42 +57,42 @@ let returningLastTime = 0;
 */
 let arrUpgradeId = []; // 남아있는 숫자가 강화 메뉴에 등장, 구매하면 해당 강화의 숫자는 제거됨
 let arrUpgradeEnable = [ // 강화가 재반복 등장하는 것을 막기 위한 배열
-    [false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false],
-    [false]
+    [false, false, false, false, false, false, false, false, false, false], // 0 학생 강화
+    [false, false, false, false, false, false, false, false, false, false], // 1 학교 시설 강화
+    [false, false, false, false, false, false, false, false, false, false], // 2 교통 시설 강화
+    [false, false, false, false, false, false, false, false, false, false], // 3 주거지 강화
+    [false, false, false, false, false, false, false, false, false, false], // 4 은행 강화
+    [false, false, false, false, false, false, false, false, false, false], // 5 공항 강화
+    [false, false, false, false, false, false, false, false, false, false], // 6 기업 강화
+    [false, false, false, false, false, false, false, false, false, false], // 7 정부 강화
+    [false, false, false, false, false, false, false, false, false, false], // 8 세계 정부 강화
+    [false, false, false, false, false, false, false, false, false, false], // 9 복제 실험실 강화
+    [false, false, false, false, false, false, false, false, false, false], // 10 우주정거장 강화
+    [false, false, false, false, false, false, false, false, false, false], // 11 포털
+    [false, false, false, false, false, false, false, false, false, false], // 12 블랙홀
+    [false, false, false, false, false, false, false, false, false, false], // 13 타임머신
+    [false, false, false, false, false, false, false, false, false, false], // 14 평행 세계
+    [false, false, false, false, false, false, false, false, false, false], // 15 또 다른 나
+    [false, false, false, false, false, false, false, false, false, false] // 16 클릭
 ];
 let arrUpgradePrice = [ // 강화 가격 | 고정
-    [50*10, 50*100, 50*5000, 50*25e4, 50*2500e4, 50*25e8, 50*1.25e12, 50*625e12, 50*62.5e16, 50*6.25e20],
-    [160*10, 160*100, 160*5000, 160*25e4, 160*2500e4, 160*25e8, 160*1.25e12, 160*625e12, 160*62.5e16, 160*6.25e20],
-    [2700*10, 2700*100, 2700*5000, 2700*25e4, 2700*2500e4, 2700*25e8, 2700*1.25e12, 2700*625e12, 2700*62.5e16, 2700*6.25e200],
-    [3.9e4*10, 3.9e4*100, 3.9e4*5000, 3.9e4*25e4, 3.9e4*2500e4, 3.9e4*25e8, 3.9e4*1.25e12, 3.9e4*625e12, 3.9e4*62.5e16, 3.9e4*6.25e20],
-    [52e4*10, 52e4*100, 52e4*5000, 52e4*25e4, 52e4*2500e4, 52e4*25e8, 52e4*1.25e12, 52e4*625e12, 52e4*62.5e16, 52e4*6.25e20],
-    [670e4*10, 670e4*100, 670e4*5000, 670e4*25e4, 670e4*2500e4, 670e4*25e8, 670e4*1.25e12, 670e4*625e12, 670e4*62.5e16, 670e4*6.25e20],
-    [8500e4*10, 8500e4*100, 8500e4*5000, 8500e4*25e4, 8500e4*2500e4, 8500e4*25e8, 8500e4*1.25e12, 8500e4*625e12, 8500e4*62.5e16, 8500e4*6.25e20],
-    [10.8e8*10, 10.8e8*100, 10.8e8*5000, 10.8e8*25e4, 10.8e8*2500e4, 10.8e8*25e8, 10.8e8*1.25e12, 10.8e8*625e12, 10.8e8*62.5e16, 10.8e8*6.25e20],
-    [229e8*10, 229e8*100, 229e8*5000, 229e8*25e4, 229e8*2500e4, 229e8*25e8, 229e8*1.25e12, 229e8*625e12, 229e8*62.5e16, 229e8*6.25e20],
-    [3630e8*10, 3630e8*100, 3630e8*5000, 3630e8*25e4, 3630e8*2500e4, 3630e8*25e8, 3630e8*1.25e12, 3630e8*625e12, 3630e8*62.5e16, 3630e8*6.25e20],
-    [5.18e12*10, 5.18e12*100, 5.18e12*5000, 5.18e12*25e4, 5.18e12*2500e4, 5.18e12*25e8, 5.18e12*1.25e12, 5.18e12*625e12, 5.18e12*62.5e16, 5.18e12*6.25e20],
-    [70.7e12*10, 70.7e12*100, 70.7e12*5000, 70.7e12*25e4, 70.7e12*2500e4, 70.7e12*25e8, 70.7e12*1.25e12, 70.7e12*625e12, 70.7e12*62.5e16, 70.7e12*6.25e20],
-    [951e12*10, 951e12*100, 951e12*5000, 951e12*25e4, 951e12*2500e4, 951e12*25e8, 951e12*1.25e12, 951e12*625e12, 951e12*62.5e16, 951e12*6.25e20],
-    [1.29e16*10, 1.29e16*100, 1.29e16*5000, 1.29e16*25e4, 1.29e16*2500e4, 1.29e16*25e8, 1.29e16*1.25e12, 1.29e16*625e12, 1.29e16*62.5e16, 1.29e16*6.25e20],
-    [26.7e16*10, 26.7e16*100, 26.7e16*5000, 26.7e16*25e4, 26.7e16*2500e4, 26.7e16*25e8, 26.7e16*1.25e12, 26.7e16*625e12, 26.7e16*62.5e16, 26.7e16*6.25e20],
-    [428e16*10, 428e16*100, 428e16*5000, 428e16*25e4, 428e16*2500e4, 428e16*25e8, 428e16*1.25e12, 428e16*625e12, 428e16*62.5e16, 428e16*6.25e20],
-    []
+    [50*10, 50*100, 50*5000, 50*25e4, 50*2500e4, 50*25e8, 50*1.25e12, 50*625e12, 50*62.5e16, 50*6.25e20], // 0 학생 강화
+    [160*10, 160*100, 160*5000, 160*25e4, 160*2500e4, 160*25e8, 160*1.25e12, 160*625e12, 160*62.5e16, 160*6.25e20], // 1 학교 시설 강화
+    [2700*10, 2700*100, 2700*5000, 2700*25e4, 2700*2500e4, 2700*25e8, 2700*1.25e12, 2700*625e12, 2700*62.5e16, 2700*6.25e200], // 2 교통 시설 강화
+    [3.9e4*10, 3.9e4*100, 3.9e4*5000, 3.9e4*25e4, 3.9e4*2500e4, 3.9e4*25e8, 3.9e4*1.25e12, 3.9e4*625e12, 3.9e4*62.5e16, 3.9e4*6.25e20], // 3 주거지 강화
+    [52e4*10, 52e4*100, 52e4*5000, 52e4*25e4, 52e4*2500e4, 52e4*25e8, 52e4*1.25e12, 52e4*625e12, 52e4*62.5e16, 52e4*6.25e20], // 4 은행 강화
+    [670e4*10, 670e4*100, 670e4*5000, 670e4*25e4, 670e4*2500e4, 670e4*25e8, 670e4*1.25e12, 670e4*625e12, 670e4*62.5e16, 670e4*6.25e20], // 5 공항 강화
+    [8500e4*10, 8500e4*100, 8500e4*5000, 8500e4*25e4, 8500e4*2500e4, 8500e4*25e8, 8500e4*1.25e12, 8500e4*625e12, 8500e4*62.5e16, 8500e4*6.25e20], // 6 기업 강화
+    [10.8e8*10, 10.8e8*100, 10.8e8*5000, 10.8e8*25e4, 10.8e8*2500e4, 10.8e8*25e8, 10.8e8*1.25e12, 10.8e8*625e12, 10.8e8*62.5e16, 10.8e8*6.25e20], // 7 정부 강화
+    [229e8*10, 229e8*100, 229e8*5000, 229e8*25e4, 229e8*2500e4, 229e8*25e8, 229e8*1.25e12, 229e8*625e12, 229e8*62.5e16, 229e8*6.25e20], // 8 세계 정부 강화
+    [3630e8*10, 3630e8*100, 3630e8*5000, 3630e8*25e4, 3630e8*2500e4, 3630e8*25e8, 3630e8*1.25e12, 3630e8*625e12, 3630e8*62.5e16, 3630e8*6.25e20], // 9 복제 실험실 강화
+    [5.18e12*10, 5.18e12*100, 5.18e12*5000, 5.18e12*25e4, 5.18e12*2500e4, 5.18e12*25e8, 5.18e12*1.25e12, 5.18e12*625e12, 5.18e12*62.5e16, 5.18e12*6.25e20], // 10 우주정거장 강화
+    [70.7e12*10, 70.7e12*100, 70.7e12*5000, 70.7e12*25e4, 70.7e12*2500e4, 70.7e12*25e8, 70.7e12*1.25e12, 70.7e12*625e12, 70.7e12*62.5e16, 70.7e12*6.25e20], // 11 포털
+    [951e12*10, 951e12*100, 951e12*5000, 951e12*25e4, 951e12*2500e4, 951e12*25e8, 951e12*1.25e12, 951e12*625e12, 951e12*62.5e16, 951e12*6.25e20], // 12 블랙홀
+    [1.29e16*10, 1.29e16*100, 1.29e16*5000, 1.29e16*25e4, 1.29e16*2500e4, 1.29e16*25e8, 1.29e16*1.25e12, 1.29e16*625e12, 1.29e16*62.5e16, 1.29e16*6.25e20], // 13 타임머신
+    [26.7e16*10, 26.7e16*100, 26.7e16*5000, 26.7e16*25e4, 26.7e16*2500e4, 26.7e16*25e8, 26.7e16*1.25e12, 26.7e16*625e12, 26.7e16*62.5e16, 26.7e16*6.25e20], // 14 평행 세계
+    [428e16*10, 428e16*100, 428e16*5000, 428e16*25e4, 428e16*2500e4, 428e16*25e8, 428e16*1.25e12, 428e16*625e12, 428e16*62.5e16, 428e16*6.25e20], // 15 또 다른 나
+    [1e2*50, 1e3*50, 1e4*50, 1e6*50, 1e8*50, 1e10*50, 1e13*50, 1e16*50, 1e19*50, 1e23*50] // 16 클릭
 ];
 let arrProductUpgradePurchaseBool = [ // 구매가 완료된 강화 ID 번호
     [],
@@ -126,24 +126,28 @@ let arrProductAppear = [true, true, true, false, false, false, false, false, fal
 let arrProductUnlock = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
 let arrProductGetCount = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; // 보유한 증축 개수
 
-let arrProductPrice = [ // 증축 가격 | 고정
-    50, // 50
-    160, // 160
-    2700, // 2700
-    3.9e4, // 3.9만
-    52e4, // 52만
-    670e4, // 670만
-    8500e4, // 8500만
-    10.8e8, // 10.8억
-    229e8, // 229 억
-    3630e8, // 3630 억
-    5.18e12, // 5.18 조
-    70.7e12, // 70.7 조
-    951e12, // 951 조
-    1.29e16, // 1.29 경
-    26.7e16, // 26.7 경
-    428e16 // 428 경
-];
+let arrProductPrice; // 증축 가격 | 고정
+let_arrProductPrice();
+function let_arrProductPrice() {
+    arrProductPrice = [
+        50, // 50
+        160, // 160
+        2700, // 2700
+        3.9e4, // 3.9만
+        52e4, // 52만
+        670e4, // 670만
+        8500e4, // 8500만
+        10.8e8, // 10.8억
+        229e8, // 229 억
+        3630e8, // 3630 억
+        5.18e12, // 5.18 조
+        70.7e12, // 70.7 조
+        951e12, // 951 조
+        1.29e16, // 1.29 경
+        26.7e16, // 26.7 경
+        428e16 // 428 경
+    ];
+}
 
 let arrProductAddDefaultValue = [ // 증축 초당 증가량 | 고정
     1, // 1
@@ -600,8 +604,8 @@ const translations = {
             ['어둠의 심연', '무한의 늪', '중력의 소용돌이', '왜곡의 영역', '빛 포식자', '가르강튀아', '사건의 지평선', '우주의 구멍', 'M87*', '화이트 홀'], // 가르강튀아: 영화 인터스텔라에 등장하는 블랙홀 ||| M87*: 인류 최초로 촬영된 블랙홀
             ['과거와 미래', '시간 여행자', '시간 가속', '잃어버린 시계', '시간의 오버플로우', '시공간 여행선', '드로리언 DMC-12', '시간의 섬광', '타임 패러독스', '타디스'], // 시간 여행자: 소설 타임머신 패러디 ||| 시간의 오버플로우: 시간을 저장한 변수가 오버플로우가 나면 시간이 과거로 출력된다는 프로그래밍 현상 ||| 드로리언 DMC-12: 백 투더 퓨처 패러디 ||| 타디스: 닥터후 패러디
             ['4차원', '다차원 우주', '현실과 비현실의 다리', '평행 세계 탐험소', '복잡한 연결망', '끝없는 개척', '양자역학', '무한 차원', '데우스 엑스 마키나', '서울로 가는 길'], // 데우스 엑스 마키나: 창작물에 개연성을 억지로 맞추기 위해 평행 세계 소재를 사용한데서 비롯 ||| 서울로 가는 길: 쿠키클리커 패러디, 선택한 언어 설정에 맞는 국가의 수도로 이름 변경
-            ['대체 자아', '그림자 존재', '정신질환 의심', '거울에 비친 나', '대면 세계', '철학적 주제', 'DNA 대조 결과 일치', '괴테의 일기장', '기억 동화', '도플갱어'] // 괴테의 일기장: 괴테는 일기장에 도플갱어를 만났다는 내용이 존재
-        
+            ['대체 자아', '그림자 존재', '정신질환 의심', '거울에 비친 나', '대면 세계', '철학적 주제', 'DNA 대조 결과 일치', '괴테의 일기장', '기억 동화', '도플갱어'], // 괴테의 일기장: 괴테는 일기장에 도플갱어를 만났다는 내용이 존재
+            ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
         ],
         upgradeDescription: [
             ['학생의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
@@ -620,7 +624,7 @@ const translations = {
             ['타임머신의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
             ['평행 세계의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
             ['또 다른 나의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
-            ['클릭의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가']
+            ['클릭의 입학 효율 <b class="fcWhite fs110">SpS +1%</b>만큼 증가']
         ],
         memoryPrice: (value) => `기억 등급 ${value}`,
         memoryName: ['기억 축적', '경험적 사고', '무의식', '초장기 기억력', '해마 2개', '머릿속 저장소', '절대 기억', '악마랑 기억력 시험보기', '천사랑 기억력 시험보기', '10', '11', '', '', '', '', '', '', '', '', ''],
@@ -800,9 +804,10 @@ function changeUniversityName() {
 
 // 학교 로고 클릭 이벤트
 let universityLogo = document.getElementById('universityLogo');
-universityLogo.addEventListener('click', (e) => {
+let logoBundle = document.getElementById('logoBundle');
+universityLogo.addEventListener('click', (event) => {
     // 학생 수 더하기
-    addClickTotalValue = addClickDefaultValue * addClickBonusValue;
+    addClickTotalValue = addClickDefaultValue + (addPerSecondStudent * addClickBonusValue);
     student += addClickTotalValue;
     // 통계
     statsTotalStudent += addClickTotalValue;
@@ -821,21 +826,23 @@ universityLogo.addEventListener('click', (e) => {
         universityLogo.classList.remove('bounce');
     })
 
+    
+    const floatingText = document.createElement('div');
+    floatingText.classList.add('floatingUp');
+    floatingText.innerHTML = '+' + formatNumber(addClickTotalValue);
+
+    const rect = logoBundle.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+
+    floatingText.style.left = `${x}px`;
+    floatingText.style.top = `${y - 48}px`;
+
+    logoBundle.appendChild(floatingText);
+
     setTimeout(() => {
-        console.log(e.pageX + ' / ' + e.pageY);
-        const floatingText = document.createElement('div');
-        floatingText.classList.add('floatingUp');
-        floatingText.innerHTML = '+' + formatNumber(addClickTotalValue);
-
-        floatingText.style.left = `${e.offsetX}px`;
-        floatingText.style.top = `${e.offsetY}px`;
-        universityLogo.appendChild(floatingText);
-
-        floatingText.addEventListener('animationend', () => {
-            floatingText.remove();
-        });
-    }, 1);
-
+        floatingText.remove();
+    }, 2000);
     
     const soundClick = new Audio(`sound/StudentClick${Math.floor(Math.random() * 3) + 1}.mp3`);
 
@@ -1650,6 +1657,7 @@ function returningFunction() { // 회귀 완료
     statsReturningCount++;
 
     // 증축 관련
+    let_arrProductPrice();
     productAddPerSecondTotal = 0;
 
     // 강화
@@ -2137,8 +2145,13 @@ function reorderUpgradeIcon() { // 강화 아이콘 재정렬
                 // 비용 지불
                 student -= arrUpgradePrice[arr1][arr2];
                 // 배열 갱신
-                arrProductAddBonusValue[arr1] *= 2; // 보너스 적용
-                arrProductUpgradeCount[arr1]++; // 카운트 증가
+                if(1599 >= number && number >= 0) { // 건물 강화일 경우
+                    arrProductAddBonusValue[arr1] *= 2; // 보너스 적용
+                    arrProductUpgradeCount[arr1]++; // 카운트 증가
+                }
+                if(1699 >= number && number >= 1600) {
+                    addClickBonusValue += 0.01;
+                }
                 arrProductUpgradePurchaseBool[arr1].push(number); // 카운트 증가
                 // 배열 제거
                 arrUpgradeId = arrUpgradeId.filter(n => n !== number);
@@ -2366,6 +2379,19 @@ setInterval(() => {
         }
     }
 
+    // 클릭 강화 조건
+    if(statsAddClickStudent >= 1e2 && arrUpgradeEnable[16][0] == false) { arrUpgradeEnable[16][0] = true; arrUpgradeId.push(1600); reorderUpgradeIcon(); upgradeExpandButton(); }
+    if(statsAddClickStudent >= 1e3 && arrUpgradeEnable[16][1] == false) { arrUpgradeEnable[16][1] = true; arrUpgradeId.push(1601); reorderUpgradeIcon(); upgradeExpandButton(); }
+    if(statsAddClickStudent >= 1e4 && arrUpgradeEnable[16][2] == false) { arrUpgradeEnable[16][2] = true; arrUpgradeId.push(1602); reorderUpgradeIcon(); upgradeExpandButton(); }
+    if(statsAddClickStudent >= 1e6 && arrUpgradeEnable[16][3] == false) { arrUpgradeEnable[16][3] = true; arrUpgradeId.push(1603); reorderUpgradeIcon(); upgradeExpandButton(); }
+    if(statsAddClickStudent >= 1e8 && arrUpgradeEnable[16][4] == false) { arrUpgradeEnable[16][4] = true; arrUpgradeId.push(1604); reorderUpgradeIcon(); upgradeExpandButton(); }
+    if(statsAddClickStudent >= 1e10 && arrUpgradeEnable[16][5] == false) { arrUpgradeEnable[16][5] = true; arrUpgradeId.push(1605); reorderUpgradeIcon(); upgradeExpandButton(); }
+    if(statsAddClickStudent >= 1e13 && arrUpgradeEnable[16][6] == false) { arrUpgradeEnable[16][6] = true; arrUpgradeId.push(1606); reorderUpgradeIcon(); upgradeExpandButton(); }
+    if(statsAddClickStudent >= 1e16 && arrUpgradeEnable[16][7] == false) { arrUpgradeEnable[16][7] = true; arrUpgradeId.push(1607); reorderUpgradeIcon(); upgradeExpandButton(); }
+    if(statsAddClickStudent >= 1e19 && arrUpgradeEnable[16][8] == false) { arrUpgradeEnable[16][8] = true; arrUpgradeId.push(1608); reorderUpgradeIcon(); upgradeExpandButton(); }
+    if(statsAddClickStudent >= 1e23 && arrUpgradeEnable[16][9] == false) { arrUpgradeEnable[16][9] = true; arrUpgradeId.push(1609); reorderUpgradeIcon(); upgradeExpandButton(); }
+
+
     // Debug text
     document.getElementById('debugDiv').textContent = arrProductGetCount;
 });
@@ -2542,6 +2568,10 @@ function debugMode() {
     for(let i = 0 ; i < productLength ; i++) {
         arrProductGetCount[i]++
     }
+}
+function x2() {
+    student *= 2;
+    updateShowStudent();
 }
 /*
     쿠키 설정
