@@ -56,25 +56,29 @@ let returningLastTime = 0;
     업그레이드
 */
 let arrUpgradeId = []; // 남아있는 숫자가 강화 메뉴에 등장, 구매하면 해당 강화의 숫자는 제거됨
-let arrUpgradeEnable = [ // 강화가 재반복 등장하는 것을 막기 위한 배열
-    [false, false, false, false, false, false, false, false, false, false], // 0 학생 강화
-    [false, false, false, false, false, false, false, false, false, false], // 1 학교 시설 강화
-    [false, false, false, false, false, false, false, false, false, false], // 2 교통 시설 강화
-    [false, false, false, false, false, false, false, false, false, false], // 3 주거지 강화
-    [false, false, false, false, false, false, false, false, false, false], // 4 은행 강화
-    [false, false, false, false, false, false, false, false, false, false], // 5 공항 강화
-    [false, false, false, false, false, false, false, false, false, false], // 6 기업 강화
-    [false, false, false, false, false, false, false, false, false, false], // 7 정부 강화
-    [false, false, false, false, false, false, false, false, false, false], // 8 세계 정부 강화
-    [false, false, false, false, false, false, false, false, false, false], // 9 복제 실험실 강화
-    [false, false, false, false, false, false, false, false, false, false], // 10 우주정거장 강화
-    [false, false, false, false, false, false, false, false, false, false], // 11 포털
-    [false, false, false, false, false, false, false, false, false, false], // 12 블랙홀
-    [false, false, false, false, false, false, false, false, false, false], // 13 타임머신
-    [false, false, false, false, false, false, false, false, false, false], // 14 평행 세계
-    [false, false, false, false, false, false, false, false, false, false], // 15 또 다른 나
-    [false, false, false, false, false, false, false, false, false, false] // 16 클릭
-];
+let arrUpgradeEnable;
+let_arrUpgradeEnable();
+function let_arrUpgradeEnable() { // 강화가 재반복 등장하는 것을 막기 위한 배열
+    arrUpgradeEnable = [
+        [false, false, false, false, false, false, false, false, false, false], // 0 학생 강화
+        [false, false, false, false, false, false, false, false, false, false], // 1 학교 시설 강화
+        [false, false, false, false, false, false, false, false, false, false], // 2 교통 시설 강화
+        [false, false, false, false, false, false, false, false, false, false], // 3 주거지 강화
+        [false, false, false, false, false, false, false, false, false, false], // 4 은행 강화
+        [false, false, false, false, false, false, false, false, false, false], // 5 공항 강화
+        [false, false, false, false, false, false, false, false, false, false], // 6 기업 강화
+        [false, false, false, false, false, false, false, false, false, false], // 7 정부 강화
+        [false, false, false, false, false, false, false, false, false, false], // 8 세계 정부 강화
+        [false, false, false, false, false, false, false, false, false, false], // 9 복제 실험실 강화
+        [false, false, false, false, false, false, false, false, false, false], // 10 우주정거장 강화
+        [false, false, false, false, false, false, false, false, false, false], // 11 포털
+        [false, false, false, false, false, false, false, false, false, false], // 12 블랙홀
+        [false, false, false, false, false, false, false, false, false, false], // 13 타임머신
+        [false, false, false, false, false, false, false, false, false, false], // 14 평행 세계
+        [false, false, false, false, false, false, false, false, false, false], // 15 또 다른 나
+        [false, false, false, false, false, false, false, false, false, false] // 16 클릭
+    ];
+}
 let arrUpgradePrice = [ // 강화 가격 | 고정
     [50*10, 50*100, 50*5000, 50*25e4, 50*2500e4, 50*25e8, 50*1.25e12, 50*625e12, 50*62.5e16, 50*6.25e20], // 0 학생 강화
     [160*10, 160*100, 160*5000, 160*25e4, 160*2500e4, 160*25e8, 160*1.25e12, 160*625e12, 160*62.5e16, 160*6.25e20], // 1 학교 시설 강화
@@ -94,25 +98,29 @@ let arrUpgradePrice = [ // 강화 가격 | 고정
     [428e16*10, 428e16*100, 428e16*5000, 428e16*25e4, 428e16*2500e4, 428e16*25e8, 428e16*1.25e12, 428e16*625e12, 428e16*62.5e16, 428e16*6.25e20], // 15 또 다른 나
     [1e2*50, 1e3*50, 1e4*50, 1e6*50, 1e8*50, 1e10*50, 1e13*50, 1e16*50, 1e19*50, 1e23*50] // 16 클릭
 ];
-let arrProductUpgradePurchaseBool = [ // 구매가 완료된 강화 ID 번호
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    []
-];
+let arrProductUpgradePurchaseBool;
+let_arrProductUpgradePurchaseBool();
+function let_arrProductUpgradePurchaseBool() { // 구매가 완료된 강화 ID 번호
+    arrProductUpgradePurchaseBool = [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+    ];
+}
 /*
     입학 효율
 */
@@ -255,7 +263,7 @@ const translations = {
                 '또 다른 나'
             ],
             [
-                '올해의 유일한 졸업생인 당신은 총장님의 부름에 한걸음 달려갑니다.<br><br>총장님은 당신을 보자 이렇게 말합니다.<br><br><b class="fsItalic fs90">\"학교가 곧 폐교 직전이네. 그래서 대학 구조 위원회를 만들었는데, 네가 위원장을 맡았으면 한다. 거절한다면 졸업장은 주지 않을걸세.\"</b><br><br><br>좋든 싫든 당신은 졸업장을 돌려받기 위한 위원회 활동을 시작합니다.',
+                '올해의 유일한 졸업생인 당신은 총장님의 부름에 한걸음 달려갑니다.<br><br>총장님은 당신을 보자 이렇게 말합니다.<br><br><b class="fcMint fsItalic fs90">\"우리 학교가 곧 폐교 직전이라 내가 급히 대학 구조 위원회라는걸 만들었어. 그래서, 네가 위원장을 맡았으면 해.<br><br>물론, 거절해도 돼. 대신 올해도 내년에도 졸업식은 없다.\"</b><br><br>당신은 좋든 싫든 졸업장을 받기 위한 위원회 활동을 시작합니다.',
                 '갑자기 눈앞에는 위원장 자리를 권하는 총장님이 있습니다. 시계를 보니 날짜도 과거로 왔습니다.<br><br>지금까지의 기억이 생생한데 이 상황이 혼란스럽기만 합니다.<br><br>당신의 반응을 살피던 총장님은 조심스럽게 말을 꺼냈습니다.<br><br><b class="fsItalic fs90">\"그렇게 좋은 기분은 아니지? 익숙해질 거야.\"</b>',
                 '끝'
             ],
@@ -263,7 +271,7 @@ const translations = {
                 '언어는 설정 메뉴에서 바꿀 수 있습니다.',
                 '학교의 이름을 바꿀 수 있습니다!<br><br>학교의 이름을 바꾸는 것은 재미를 위한 것으로, 진행에 영향을 주지 않습니다.<br><br>가급적 부적절한 단어 사용은 삼가시길 바랍니다.',
                 '당신이 없는동안 수많은 학생이 입학했습니다!<br><br><b class="fs200"><b id="showOfflineEarnings"></b> 명 입학</b><br><b class="fcDefault fs75">총 <b id="showOfflineTimeDiff" class="textShadow fcWhite fs110"></b> 초 동안 <b id="showOfflineEfficiency" class="textShadow fcWhite fs110"></b>%의 효율 / 최대 <b id="showMaxOfflineTime" class="textShadow fcWhite fs110"></b>시간</b>',
-                '기억 등급, 도전 과제를 제외한 모든 진행상황을 잃어버립니다. 경험 등급이 높을수록 영구적인 추가 효과를 부여합니다.'
+                '과거의 나에게로 회귀하면 기억 등급, 도전 과제를 모든 진행상황을 잃어버립니다.<br><br>경험 등급은 높을수록 영구적인 추가 효과를 부여합니다.'
             ]
         ],
         popupButton_text: ['닫기', '바꾸기', '과거로 돌아가기'],
@@ -1021,7 +1029,7 @@ function appearPopup(i, j) { // 팝업창 생성
             popupDescription.innerHTML = translations[lang].popupDescription[i][j];
             popupBox.appendChild(popupDescription);
             // 버튼
-            popupButton.innerHTML = translations[lang].popupButton_text[0];
+            popupButton.innerHTML = translations[lang].popupButton_text[2];
             popupBox.appendChild(popupButton);
             // 이벤트 추가
             popupAddEvent('returning');
@@ -1302,6 +1310,7 @@ const buttonChangeLanguage = document.getElementById('buttonChangeLanguage');
 const buttonFormatNumberKr = document.getElementById('formatNumberSettingKr');
 const buttonFormatNumberLongEn = document.getElementById('formatNumberSettingLongEn');
 const buttonFormatNumberShortEn = document.getElementById('formatNumberSettingShortEn');
+
 function pageSetting() {
     // 기본
     document.getElementById('pageSettingTitle').innerHTML = translations[lang].menuSettingText_title;
@@ -1630,6 +1639,10 @@ function returningAnimation() { // 회귀 연출
     popupArea.appendChild(createDiv);
 
     setTimeout(() => {
+        const soundReturningBell = new Audio(`sound/ReturningBell${Math.floor(Math.random() * 3) + 1}.mp3`);
+        soundReturningBell.volume = soundEffectVolume.value;
+        soundReturningBell.play();
+
         document.getElementById('returningBackground').remove();
         popupArea.classList.add('disabled');
         returningFunction();
@@ -1663,36 +1676,11 @@ function returningFunction() { // 회귀 완료
     // 강화
     document.getElementById('upgradeBundle').innerHTML = '';
     arrUpgradeId = [];
-    for(let i = 0 ; i < arrUpgradeEnable.length ; i++) {
-        for(let j = 0 ; j < arrUpgradeEnable[i].length ; j++) {
-            arrUpgradeEnable[i][j] = false;
-        }
-    }
-
-    // 생산 관련
+    let_arrUpgradeEnable();
+    let_arrProductUpgradePurchaseBool();
     
-    arrProductUpgradePurchaseBool = [
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        []
-    ];
     updateShowStudent();
     gameMenuDefaultSetting();
-    settingProduct();
     productDefaultSetting(); // 증축 관련 초기화
     saveGame(); // 저장
 }
@@ -1758,6 +1746,15 @@ function activateMemory() {
 /*
     게임 메뉴
 */
+document.getElementById('menuSetting').style.backgroundImage = `url('img/icons_game_menu.png')`;
+document.getElementById('menuSetting').style.backgroundPositionX = `0px`;
+document.getElementById('menuStats').style.backgroundImage = `url('img/icons_game_menu.png')`;
+document.getElementById('menuStats').style.backgroundPositionX = `-64px`;
+document.getElementById('menuInfo').style.backgroundImage = `url('img/icons_game_menu.png')`;
+document.getElementById('menuInfo').style.backgroundPositionX = `-128px`;
+document.getElementById('menuReturning').style.backgroundImage = `url('img/icons_game_menu.png')`;
+document.getElementById('menuReturning').style.backgroundPositionX = `-192px`;
+
 const menuPageButton = document.querySelectorAll('.menuPageButton');
 menuPageButton.forEach(div => {
     div.addEventListener('click', () => {
