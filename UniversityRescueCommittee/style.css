@@ -590,7 +590,6 @@ sectionMiddle
 	width: 48px;
 	height: 48px;
 	background-size: cover;
-	border: 1px solid #FFFFFF;
 	object-fit: cover;
 	margin: 6px;
 	filter: drop-shadow(0px 3px 2px #000000);
@@ -776,6 +775,63 @@ sectionMiddle
 #sectionMiddle #pageBundle #pageReturning #returningMemoryBundle .returningMemoryIcon:hover {
 	filter: brightness(115%);
 	transform: translateY(-2px);
+}
+#sectionMiddle #notification {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: absolute;
+	bottom: 0%;
+	left: 50%;
+	width: 50%;
+	height: auto;
+	padding: 16px;
+	transform: translateX(-50%);
+	gap: 16px;
+	pointer-events: none;
+}
+#sectionMiddle #notification .notiList {
+	width: 95%;
+	background: #2D2D2D;
+	border: 2px solid #FFFFFF;
+	padding: 4px 8px;
+	filter: drop-shadow(0px 2px 4px #000000);
+}
+#sectionMiddle #notification .save {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 32px;
+}
+#sectionMiddle #notification .achievement {
+	display: flex;
+	position: relative;
+	height: auto;
+}
+#sectionMiddle #notification .img {
+	width: 48px;
+	height: 48px;
+	margin: 8px;
+	filter: drop-shadow(0px 3px 2px #000000);
+}
+#sectionMiddle #notification .textBundle {
+	width: 95%;	
+}
+#sectionMiddle #notification .title {
+	text-shadow: 0px 0px 4px #FFFFFF;
+	margin: 4px;
+}
+
+#sectionMiddle #notification .textBundle .achievementLine {
+	width: 95%;
+	height: 2px;
+	background: linear-gradient(to right,#00000000,#FFFFFF,#00000000);
+	border: 0px;
+	margin: 4px;
+}
+#sectionMiddle #notification .achievementName {
+	text-shadow: 0px 0px 2px #FFFFFF;
+	margin-left: 8px;
 }
 /* 
 sectionRight 
