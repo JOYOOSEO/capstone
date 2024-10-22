@@ -347,7 +347,7 @@ let universityLogo = document.getElementById('universityLogo');
 let logoBundle = document.getElementById('logoBundle');
 universityLogo.addEventListener('click', (event) => {
     // 학생 수 더하기
-    addClickTotalValue = addClickDefaultValue + (addPerSecondStudent * addClickBonusValue);
+    addClickTotalValue = addClickDefaultValue + (addPerSecondStudent * addClickBonusValue) * returningProductionMultiple;
     student += addClickTotalValue;
     // 통계
     statsTotalStudent += addClickTotalValue;
@@ -366,8 +366,7 @@ universityLogo.addEventListener('click', (event) => {
     universityLogo.classList.add('bounce');
     universityLogo.addEventListener('animationend', () => {
         universityLogo.classList.remove('bounce');
-    })
-
+    });
     
     const floatingText = document.createElement('div');
     floatingText.classList.add('floatingUp');
@@ -390,10 +389,6 @@ universityLogo.addEventListener('click', (event) => {
 
     soundClick.volume = soundEffectVolume.value;
     soundClick.play();
-    
-})
-universityLogo.addEventListener('mousedown', () => {
-    
 });
 /*
     팝업
@@ -425,7 +420,50 @@ popupButton.className = 'button';
 
 // 팝업 이벤트 생성
 function popupAddEvent(type) {
- 
+
+    const soundAppear = new Audio('sound/AppearPopup.mp3');
+    soundAppear.volume = soundEffectVolume.value;
+    soundAppear.play();
+
+    if(type == 'common') {
+        popupButton.addEventListener('click', popupEventCommon);
+    }
+    if(type == 'name') {
+        popupInput.addEventListener('mouseenter', () => { popupInput.style.outline = '1px solid #b9b9b9'; });
+        popupInput.addEventListener('mouseleave', () => { popupInput.style.outline = '1px solid #888888'; });
+        popupInput.addEventListener('focus', () => { popupInput.style.outline = '2px solid #3D90F4'; });
+        popupButton.addEventListener('click', popupEventName);
+    }
+    if(type == 'returning') {
+        popupButton.addEventListener('click', popupEventReturning);
+    }
+}
+// addEventListener 팝업창 우측 상단 닫기 버튼
+popupCloseButton.addEventListener('click', () => {
+    const soundClose = new Audio('sound/ButtonClose.mp3');
+    soundClose.volume = soundEffectVolume.value;
+    soundClose.play();
+
+    removePopup();
+});
+function popupEventCommon() {
+    removePopup();
+    popupButton.removeEventListener('click', popupEventCommon);
+}
+function popupEventName() {
+    if(popupInput.value <= 0) {
+        popupInput.style.outline = '3px solid #FF0000';
+    } else {
+        document.getElementById('universityName').innerHTML = popupInput.value + translations.universityNameSuffix;
+
+        removePopup();
+        popupButton.removeEventListener('click', popupEventName);
+    }
+}
+function popupEventReturning() {
+    removePopup();
+    returningAnimation();
+    popupButton.removeEventListener('click', popupEventReturning);
 }
 function appearPopup(i, j) { // 팝업창 생성
     console.log('popup' + i + ' ' + j);
@@ -1205,11 +1243,13 @@ function returningFunction() { // 회귀 완료
     returningExp = 0; // 경험치 초기화
     returningLastTime = Date.now();
 
-    // 학생 수 초기화
+    // 학생 초기화
     student = 0;
+    addClickDefaultValue = 1;
+    addClickBonusValue = 0;
     addClickTotalValue = 1;
     addPerSecondStudent = 0;
-
+    
     // 통계
     statsStudent = 0;
     statsAddPerSecondStudent = 0;
@@ -1350,7 +1390,6 @@ function addNotificationList(type, i = null, j = null) {
 
         setTimeout(() => { divAchievement.remove(); }, 7500);
     }
-
 
     // 알림창 리스트를 5개까지만 보이도록
     notiList.forEach((list, index) => { if(index >= 4) { list.style.display = 'none'; } });
@@ -1769,7 +1808,7 @@ function reorderUpgradeIcon() { // 강화 아이콘 재정렬
                     if(arrProductUpgradeCount[arr1] == arrProductUpgradeCountMax[arr1]) achievementProductUpgradeAllGetEach(arr1)
                 }
                 if(1699 >= number && number >= 1600) {
-                    addClickBonusValue += 0.01;
+                    addClickBonusValue += 0.02;
                 }
                 arrProductUpgradePurchaseBool[arr1].push(number); // 카운트 증가
                 // 배열 제거
