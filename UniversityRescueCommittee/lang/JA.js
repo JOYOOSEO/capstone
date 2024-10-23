@@ -1,38 +1,35 @@
-window.translationsKO = {
-    windowTitle: (value) => `${value} 명 - 대학 구조 위원회`,
-    /*
-        팝업
-    */
+window.translationsJA = {
+    windowTitle: (value) => `${value} people - Rescue Committee`,
     popupLanguageText_description: '',
     popupTitle: [
         [
-            '최초의 입학생',
-            '학교 시설 최초 구매',
-            '교통수단 최초 구매',
-            '주거지 최초 구매',
-            '은행 최초 설립',
-            '공항 최초 구매',
-            '기업 최초 구매',
-            '정부 최초 구매',
-            '세계 정부 최초 구매',
-            '복제 실험실 최초 구매',
-            '우주정거장 최초 구매',
-            '차원 포털 최초 구매',
-            '블랙홀 최초 구매',
-            '타임머신 최초 구매',
-            '평행 세계 최초 구매',
-            '또 다른 나 발견'
+            '最初の入学生',
+            '学校施設を初めて購入',
+            '交通手段の最初の購入',
+            '住居地最初の購入',
+            '銀行初設立',
+            '空港で初めて購入',
+            '企業初購入',
+            '政府初購入',
+            '世界政府初購入',
+            'クローン実験室の最初の購入',
+            '宇宙ステーションの最初の購入',
+            '次元ポータルの最初の購入',
+            'ブラックホール最初購入',
+            'タイムマシン初購入',
+            '平行世界初購入',
+            'また違う私を発見'
         ],
         [
-            '대학 구조 위원회',
-            '과거로 돌아왔습니다.',
-            '끝'
+            '大学構造委員会',
+            '過去に戻ってきました。',
+            '終わり'
         ],
         [
-            '언어 선택',
-            '이름을 바꾸시겠습니까?',
-            '당신이 없는 동안...',
-            '<b class="returning">돌아갈 시간</b>'
+            '言語選択',
+            '名前を変えますか？',
+            'あなたがいない間...',
+            '<b class="returning">帰る時間</b>'
         ],
     ],
     popupDescription: [
@@ -66,11 +63,11 @@ window.translationsKO = {
             '과거의 나에게로 회귀하면 기억 등급, 도전 과제를 모든 진행상황을 잃어버립니다.<br><br>경험 등급은 높을수록 영구적인 추가 효과를 부여합니다.'
         ]
     ],
-    popupButton_text: ['닫기', '바꾸기', '과거로 돌아가기'],
-    universityMyName: '대림',
-    universityNameSuffix: ' 대학교',
-    students: (value) => `${value} 명`,
-    perSecond: (value) => `초당: ${value} 명`,
+    popupButton_text: ['閉じる', '変える', '過去に戻る'],
+    universityMyName: 'テリム',
+    universityNameSuffix: ' 大学校',
+    students: (value) => `${value} 名`,
+    perSecond: (value) => `1秒当たり: ${value} 名`,
     /*
         학교 소식
     */
@@ -313,64 +310,64 @@ window.translationsKO = {
     /*
         설정 메뉴
     */
-    menuSettingText_title: '설정',
+    menuSettingText_title: '設定',
     // < 기본 >
-    menuSettingText_subtitleCommon: '기본',
-    menuStatsText_title: '통계',
-    menuStatsText_subtitleCommon: '기본',
-    menuStatsText_save: '저장',
-    menuStatsText_buttonSave: '저장하기',
-    menuStatsText_buttonExport: '파일 내보내기',
-    menuStatsText_buttonImport: '파일 불러오기',
-    menuStatsText_Language: '언어',
-    menuStatsText_buttonChangeLanguage: '언어 변경',
+    menuSettingText_subtitleCommon: '基本',
+    menuStatsText_title: '統計',
+    menuStatsText_subtitleCommon: '基本',
+    menuStatsText_save: '貯蔵',
+    menuStatsText_buttonSave: '保存する',
+    menuStatsText_buttonExport: 'ファイルをエクスポート',
+    menuStatsText_buttonImport: 'ファイルを読み込む',
+    menuStatsText_Language: '言語',
+    menuStatsText_buttonChangeLanguage: '言語変更',
     // < 기본 >
-    menuStatsText_subtitleDetail: '세부',
-    menuStatsText_soundEffectName: '효과음 크기',
-    menuStatsText_soundBgmName: '배경음 크기',
-    menuStatsText_soundNotice: '귀 건강에 유의하여 적절히 조절해주세요.',
+    menuStatsText_subtitleDetail: '細部',
+    menuStatsText_soundEffectName: '効果音の大きさ',
+    menuStatsText_soundBgmName: '背景音の大きさ',
+    menuStatsText_soundNotice: '耳の健康に気をつけて適切に調節してください。',
     /*
         통계
     */
     // <기본>
     menuStatsText_statsList: [
-        (value) => `누적된 총 입학 학생 (전체): <b class="fcWhite">${value}</b>`,
-        (value1, value2) => `누적된 총 입학 학생 (이번 회귀): <b class="fcWhite">${value1} (${value2}%)</b>`,
-        (value) => `초당 입학 학생: <b class="fcWhite">${value}</b>`,
-        (value) => `누적된 초당 입학 학생 (전체): <b class="fcWhite">${value}</b>`,
-        (value1, value2) => `누적된 초당 입학 학생 (이번 회귀): <b class="fcWhite">${value1} (${value2}%)</b>`,
-        (value) => `클릭당 입학 학생: <b class="fcWhite">${value}</b>`,
-        (value) => `누적된 클릭당 입학 학생 (전체): <b class="fcWhite">${value}</b>`,
-        (value1, value2) => `누적된 클릭당 입학 학생 (이번 회귀): <b class="fcWhite">${value1} (${value2}%)</b>`,
-        (value) => `누적된 클릭 횟수 (전체): <b class="fcWhite">${value}</b>`,
-        (value1, value2) => `누적된 클릭 횟수 (이번 회귀): <b class="fcWhite">${value1} (${value2}%)</b>`,
-        (value) => `누적된 시설 구매 횟수 (전체): <b class="fcWhite">${value}</b>`,
-        (value1, value2) => `누적된 시설 구매 횟수 (이번 회귀): <b class="fcWhite">${value1} (${value2}%)</b>`,
-        (value) => `누적된 회귀 횟수: <b class="fcWhite">${value}</b>`
+        (value) => `累積された総入学学生 (全体): <b class="fcWhite">${value}</b>`,
+        (value1, value2) => `累積された総入学学生 (今回の回帰): <b class="fcWhite">${value1} (${value2}%)</b>`,
+        (value) => `超党入学学生: <b class="fcWhite">${value}</b>`,
+        (value) => `累積された1秒当たり入学学生 (全体): <b class="fcWhite">${value}</b>`,
+        (value1, value2) => `累積された1秒当たりの入学学生 (今回の回帰): <b class="fcWhite">${value1} (${value2}%)</b>`,
+        (value) => `クリックあたり入学学生: <b class="fcWhite">${value}</b>`,
+        (value) => `累積されたクリックあたりの入学学生 (全体): <b class="fcWhite">${value}</b>`,
+        (value1, value2) => `累積されたクリックあたりの入学学生 (今回の回帰): <b class="fcWhite">${value1} (${value2}%)</b>`,
+        (value) => `累積されたクリック回数 (全体): <b class="fcWhite">${value}</b>`,
+        (value1, value2) => `累積されたクリック回数（今回の回帰: <b class="fcWhite">${value1} (${value2}%)</b>`,
+        (value) => `累積された施設購入回数 (全体): <b class="fcWhite">${value}</b>`,
+        (value1, value2) => `累積された施設購入回数 (今回の回帰): <b class="fcWhite">${value1} (${value2}%)</b>`,
+        (value) => `累積された回帰回数: <b class="fcWhite">${value}</b>`
     ],
     // <완료된 강화 목록>
-    menuStatsText_subtitleUpgrade: '완료된 강화 목록',
+    menuStatsText_subtitleUpgrade: '完了した強化リスト',
     // 도전 과제
-    menuStatsText_subtitleAchievement: '도전 과제',
+    menuStatsText_subtitleAchievement: '挑戦課題',
     /*
         정보 소개
     */
-    menuInfoText_title: '정보',
+    menuInfoText_title: '情報',
     // <소개>
-    menuInfoText_subtitleIntroduce: '소개',
-    menuInfoText_introduceText_1: '대학 구조 위원회는 <a href="https://store.steampowered.com/app/1454400/Cookie_Clicker/" target="_blank">쿠키 클리커</a>에 영감을 받아 개발한 게임입니다.',
-    menuInfoText_introduceText_2: '<b class="fcWhite fs110">HTML, CSS, JavaScript</b>를 사용해 개발했습니다.',
+    menuInfoText_subtitleIntroduce: '紹介',
+    menuInfoText_introduceText_1: '大学構造委員会は <a href="https://store.steampowered.com/app/1454400/Cookie_Clicker/" target="_blank">クッキークリッカー</a>にインスピレーションを受けて開発したゲームです。',
+    menuInfoText_introduceText_2: '<b class="fcWhite fs110">HTML, CSS, JavaScript</b>を使って開発しました。',
     // <개발자>
-    menuInfoText_subtitleCredit: '개발자',
+    menuInfoText_subtitleCredit: '開発者',
     // <패치 노트>
-    menuInfoText_subtitlePatchNote: '패치 노트',
+    menuInfoText_subtitlePatchNote: 'パッチ·ノート',
     /*
         회귀
     */
-    menuReturningText_title: '회귀',
+    menuReturningText_title: '回帰',
     // <회귀 레벨>
-    menuReturningText_subtitleLevel: '회귀 레벨',
-    menuReturningText_panelLevel: (value) => `경험 등급 <b class="fcWhite">${value}</b>`,
+    menuReturningText_subtitleLevel: '回帰レベル',
+    menuReturningText_panelLevel: (value) => `経験等級 <b class="fcWhite">${value}</b>`,
     menuReturningText_timeDateMinute: (value) => `위원회가 <b class="fcWhite fs110">${value}</b> 분간 운영되었습니다`,
     menuReturningText_timeDateHour: (value1, value2) => `위원회가 <b class="fcWhite fs110">${value1}</b> 시간 <b class="fcWhite fs110">${value2}</b> 분간 운영되었습니다`,
     menuReturningText_timeDateDay: (value1, value2, value3) => `위원회가 <b class="fcWhite fs110">${value1}</b> 일 <b class="fcWhite fs110">${value2}</b> 시간 <b class="fcWhite fs110">${value3}</b> 분간 운영되었습니다`,
@@ -378,40 +375,40 @@ window.translationsKO = {
     menuReturningText_nowReturningIncreaseLevel: (value1, value2) => `등급 +${value1}<b class="fcDefault fs75 fsItalic">(SpS +${value2}%)</b>`,
     menuReturningText_nowReturningText_2: '을(를) 얻습니다.',
     menuReturningText_emptyExp: (value) => `다음 등급까지 초당 학생 <b class="fcWhite">${value}</b> 명 입학 필요`,
-    menuReturningText_buttonReturning: '과거로 돌아가기',
+    menuReturningText_buttonReturning: '過去に戻る',
     // <기억 왜곡>
-    menuReturningText_subtitleAbility: '기억 왜곡',
+    menuReturningText_subtitleAbility: '記憶歪曲',
     /*
         알림창
     */
-    notiText_save: `<b class="fcWhite fs125">진행상황이 저장되었습니다.</b>`,
-    notiText_achievement: `<b class="fcWhite fs150">도전 과제 달성</b>`,
+    notiText_save: `<b class="fcWhite fs125">進行状況が保存されました。</b>`,
+    notiText_achievement: `<b class="fcWhite fs150">挑戦課題達成</b>`,
     /*
         우측 메뉴
     */
-    menuRightTitle: '제안',
+    menuRightTitle: '提案',
     /*
         강화
     */
-    menuSubtitleUpgrade: '강화',
-    upgradeMenuButtonExpand: '펼치기',
-    upgradeMenuButtonFold: '접기',
+    menuSubtitleUpgrade: '強化',
+    upgradeMenuButtonExpand: '展開',
+    upgradeMenuButtonFold: '折り紙',
     /*
         시설
     */
-    menuSubtitleProduct: '시설',
-    arrProductName: ['학생', '학교 시설', '교통수단', '주거지', '은행', '공항', '기업', '정부', '세계 정부', '복제 실험실', '우주정거장', '차원 포털', '블랙홀', '타임머신', '평행 세계', '또 다른 나'],
+    menuSubtitleProduct: '施設',
+    arrProductName: ['学生', '学校施設', '交通手段', '住居地', '銀行', '空港', '企業', '政府', '世界政府', 'クローン実験室', '宇宙ステーション', '次元ポータル', 'ブラックホール', 'タイムマシン', '平行世界', 'もう一人の私'],
 
     /*
         설명창
     */
-    productTooltipGetCount: (value) => `${value} 보유`,
+    productTooltipGetCount: (value) => `${value} 保有`,
     tooltipTagName: [ // 설명창 분류
-        ['시설', '강화', '기억 왜곡', '도전 과제'],
-        ['금속', '초콜릿', '호박꿀', '오렌지 즙', '경고등', '짙은 나무', '불꽃', '다이아몬드', '4차원', '공허'],
+        ['施設', '講和', '記憶歪曲', '挑戦課題'],
+        ['金属', 'チョコレート', 'カボチャ蜂蜜', 'オレンジ汁', '警告灯', '濃い木', '花火', 'ダイヤモンド', '四次元', '空虚'],
         [],
-        ['비활성화', '활성화'],
-        ['잠김', '해금']
+        ['非活性化', '活性化'],
+        ['ロック', '解禁']
     ],
     // <강화>
     upgradeTooltipName: [ // 이름
@@ -476,11 +473,11 @@ window.translationsKO = {
         (value) => `초당 총 <b class="fcWhite fs110">${value} 명</b> 입학`,
         (value) => `지금까지 <b class="fcWhite fs110">${value} 명</b> 입학`
     ],
-    productTooltipUpgradeDone: '강화 완료 목록',
+    productTooltipUpgradeDone: '強化完了リスト',
     /*
         기억 등급 관련
     */
-    memoryPrice: (value) => `기억 등급 ${value}`,
+    memoryPrice: (value) => `記憶等級 ${value}`,
     // <이름>
     memoryName: ['기억 축적', '경험적 사고', '무의식', '초장기 기억력', '해마 2개', '머릿속 저장소', '절대 기억', '악마랑 기억력 시험보기', '천사랑 기억력 시험보기', '회상', '데자뷰', '머슬 메모리', '추억 기록', '환생', '', '', '기억조작', '완전기억능력', '반복되는 기억', '윤회'],
     // <설명>

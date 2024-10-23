@@ -187,12 +187,12 @@ let arrProductRowIconCount = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 // 오프라인 생산
 let lastSaveTime;
 let offlineTimeDiff;
-let offlineEfficiency = 0.05;
+let offlineEfficiency = 0.5;
 let maxOfflineTime = 3600 * 24;
 let offlineEarnings;
 // 기억 왜곡
-let arrMemoryId = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // 고정
-let arrMemoryEnable = [false, false, false, false, false, false, false, false, false, false, false];
+let arrMemoryId = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]; // 고정
+let arrMemoryEnable = [false, false, false, false, false, false, false, false, false, false];
 let arrMemoryPrice = [1, 5, 100, 500, 1000, 2500, 10000, 25000, 100000, 250000]; // 고정
 // 도전 과제
 let arrAchievementId = [
@@ -233,8 +233,7 @@ let arrAchievementId = [
     7100, 7101, 7102, 7103, 7104, 7105, 7106, 7107,
     7200, 7201, 7202, 7203, 7204, 7205, 7206, 7207,
     7300, 7301, 7302, 7303, 7304,
-    7400,
-    7500
+    7400
 ]
 let arrAchievementEnable = [
     [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false], // 0 ~ 15
@@ -299,7 +298,7 @@ let arrAchievementEnable = [
     [false, false, false, false, false, false, false, false], // 7200 ~ 7207
     [false, false, false, false, false], // 7300 ~ 7304
     [false], // 7400
-    [false] // 7500
+    // [false] // 7500
 ];
 
 /*
@@ -314,6 +313,7 @@ function loadLanguage(lang) { // 언어에 따른 텍스트 불러오기
     script.onload = function() {
         if(lang == 'KO') translations = window.translationsKO;
         if(lang == 'EN') translations = window.translationsEN;
+        if(lang == 'JA') translations = window.translationsJA;
 
         changeLanguage();
     }
@@ -321,14 +321,12 @@ function loadLanguage(lang) { // 언어에 따른 텍스트 불러오기
 }
 
 // 언어
-const languageSelector = document.getElementById('languageSelector');
-
 let formatNumberSetting = 1;
 
 function changeLanguage() {
 
     document.getElementById('showNewsTitle').innerHTML = translations.newsTitle;
-    //document.getElementById('universityNameSuffix').innerHTML = popupInput.value + translations.universityNameSuffix;
+    document.getElementById('rightMenu').innerHTML = translations.menuRightTitle;
     document.getElementById('upgradeSubtitle').innerHTML = translations.menuSubtitleUpgrade;
     document.getElementById('productSubtitle').innerHTML = translations.menuSubtitleProduct;
 
@@ -591,19 +589,12 @@ function popupSelectLanguage() {
         popupLanguageBundle.appendChild(languageDiv);
     }
 
-    // const popupLanguageText = document.createElement('div');
-    // popupLanguageText.id = 'popupLanguageText';
-    // popupLanguageText.classList.add('text');
-    // popupBox.appendChild(popupLanguageText);
-
-    document.getElementById('popupLanguageKO').addEventListener('mouseover', () => { lang = 'KO'; changeLanguageText(); });
+    document.getElementById('popupLanguageKO').addEventListener('mouseover', () => { lang = 'KO'; loadLanguage(lang); changeLanguageText(); });
     document.getElementById('popupLanguageKO').addEventListener('click', () => { checkSelectLanguage(); });
-    document.getElementById('popupLanguageEN').addEventListener('mouseover', () => { lang = 'EN'; changeLanguageText(); });
+    document.getElementById('popupLanguageEN').addEventListener('mouseover', () => { lang = 'EN'; loadLanguage(lang); changeLanguageText(); });
     document.getElementById('popupLanguageEN').addEventListener('click', () => { checkSelectLanguage(); });
-    document.getElementById('popupLanguageJA').addEventListener('mouseover', () => {
-        popupTitle.innerHTML = '日本語選択';
-        popupLanguageText.innerHTML = '言語は設定で変えることができます。';
-    });
+    document.getElementById('popupLanguageJA').addEventListener('mouseover', () => { lang = 'JA'; loadLanguage(lang); changeLanguageText(); });
+    document.getElementById('popupLanguageJA').addEventListener('click', () => { checkSelectLanguage(); });
 }
 function checkSelectLanguage() {
 
@@ -729,13 +720,13 @@ function updateBackgroundVariation(i) { // 배경 베리에이션
         for(let j = 0 ; j < 3 ; j++) if(productBackgroundNumber_2 == `${j}`) document.getElementById('productRow_2').style.background = `url('img/background/product/2_${j}.png') repeat-x`;
         productBackgroundNumber_2++;
         if(productBackgroundNumber_2 >= 3) productBackgroundNumber_2 = 0;
-        productBackgroundNumber_2_setTimeout = setTimeout(() => { updateBackgroundVariation(i); }, 1000 * 5);
+        productBackgroundNumber_2_setTimeout = setTimeout(() => { updateBackgroundVariation(i); }, 1000 * 60 * 5);
     }
     if(i == 5) {
         for(let j = 0 ; j < 3 ; j++) if(productBackgroundNumber_5 == `${j}`) document.getElementById('productRow_5').style.background = `url('img/background/product/5_${j}.png') repeat-x`;
         productBackgroundNumber_5++;
         if(productBackgroundNumber_5 >= 3) productBackgroundNumber_5 = 0;
-        productBackgroundNumber_5_setTimeout = setTimeout(() => { updateBackgroundVariation(i); }, 1000 * 7);
+        productBackgroundNumber_5_setTimeout = setTimeout(() => { updateBackgroundVariation(i); }, 1000 * 60 * 5);
     }
     if(i == 14) for(let j = 0 ; j < 2 ; j++) if(productBackgroundNumber_14 == `${j}`) document.getElementById('productRow_14').style.background = `url('img/background/product/14_${j}.png') repeat-x`;
     if(i == 15) for(let j = 0 ; j < 4 ; j++) if(productBackgroundNumber_15 == `${j}`) document.getElementById('productRow_15').style.background = `url('img/background/product/15_${j}.png') repeat-x`;
@@ -748,8 +739,9 @@ function settingProductStateImg(i) { // 배경에 아이콘 삽입
             appendStateImg.style.background = `url('img/state/product_${i}.png') repeat-x`;
 
             if(i == 0) { // 학생
-                appendStateImg.style.top = `${20 * Math.floor(j % 3)}px`;
-                appendStateImg.style.left = `${16 * j}px`
+                appendStateImg.style.top = `${32 * Math.floor(j % 3)}px`;
+                appendStateImg.style.left = `${-16 + 8 * j}px`
+                appendStateImg.style.backgroundPositionX = `${-64 * Math.floor(Math.random() * 7)}px`;
             }
             else if(i == 1) { // 학교 시설
                 appendStateImg.style.top = `${40}px`;
@@ -825,7 +817,7 @@ function settingProductStateImg(i) { // 배경에 아이콘 삽입
             }
             else if(i == 15) { // 또 다른 나
                 appendStateImg.style.top = `${32}px`;
-                appendStateImg.style.left = `${80 + 40 * j}px`
+                appendStateImg.style.left = `${32 * j}px`
 
             }
 
@@ -1205,6 +1197,7 @@ function updatePageReturning() { // 갱신
     document.getElementById('pageReturningNowReturningText_2').innerHTML = translations.menuReturningText_nowReturningText_2;
     document.getElementById('pageReturningExpPercentage').innerHTML = `${(expPercent).toFixed(2)}%`;
     document.getElementById('pageReturningExpEmptyValue').innerHTML = translations.menuReturningText_emptyExp(formatNumber(returningExpMax - returningExp));
+    buttonReturning.innerHTML = translations.menuReturningText_buttonReturning;
 
     if(returningIncreaseLevel >= 1) {
         buttonReturning.style.pointerEvents = 'auto';
@@ -1324,7 +1317,6 @@ function removeMemoryTooltip() { // 기억 왜곡 설명창 제거
     tooltip.style.display = 'none';
 }
 function activateMemory() {
-    console.log('act')
     for(let i = 0 ; i < arrMemoryEnable.length ; i++) {
         if(returningCurrentLevel >= arrMemoryPrice[i]) {
             arrMemoryEnable[i] = true;
@@ -2167,10 +2159,6 @@ setInterval(() => {
     if(statsAddClickStudent >= 1e16 && arrUpgradeEnable[16][7] == false) { arrUpgradeEnable[16][7] = true; arrUpgradeId.push(1607); reorderUpgradeIcon(); upgradeExpandButton(); }
     if(statsAddClickStudent >= 1e19 && arrUpgradeEnable[16][8] == false) { arrUpgradeEnable[16][8] = true; arrUpgradeId.push(1608); reorderUpgradeIcon(); upgradeExpandButton(); }
     if(statsAddClickStudent >= 1e23 && arrUpgradeEnable[16][9] == false) { arrUpgradeEnable[16][9] = true; arrUpgradeId.push(1609); reorderUpgradeIcon(); upgradeExpandButton(); }
-
-
-    // Debug text
-    document.getElementById('debugDiv').textContent = arrProductGetCount;
 });
 /*
     1초 반복
@@ -2190,20 +2178,10 @@ function perSecond() {
         achievementProductStatsStudent(i, arrProductStatsProductionTotal[i]);
     }
 }
-/*
-    2초 반복 | 최적화를 위함
-*/
-setInterval(() => {
-    // 웹 HTML 제목 갱신
-    document.title = translations.windowTitle(formatNumber(student));
-}, 1000 * 2);
-/*
-    30초 반복
-*/
-setInterval(() => {
-    // 진행상황은 쿠키에 저장
-    saveGame();
-}, 1000*30);
+// 2초 반복 | 최적화를 위함 | 웹 HTML 제목 갱신
+setInterval(() => { document.title = translations.windowTitle(formatNumber(student)); }, 1000 * 2);
+// 60초마다 자동 저장
+setInterval(() => { saveGame(); }, 1000 * 60);
 
 function saveGame() { // 게임 저장
     console.log('Save Game');
@@ -2278,6 +2256,8 @@ function loadGame() { // 게임 로드
     addClickTotalValue = updateLocalStorage('addClickTotalValue', addClickTotalValue);
     // 초당 추가 학생
     addPerSecondStudent = updateLocalStorage('addPerSecondStudent', addPerSecondStudent);
+    // 팝업 등장 여부 | 배열
+    arrAppearPopupBool = updateLocalStorage('arrAppearPopupBool', arrAppearPopupBool);
     // 설정
     soundEffectVolume.value = updateLocalStorage('soundEffectVolume', soundEffectVolume);
     soundBgmVolume.value = updateLocalStorage('soundBgmVolume', soundBgmVolume);
@@ -2370,33 +2350,6 @@ function debugMode() {
 function x2() {
     student *= 2;
     updateShowStudent();
-}
-/*
-    쿠키 설정
-*/
-function setCookie(name, value) { // 쿠키 저장하기
-    // JSON 문자열로 변환 | 받은 값이 배열일 경우 불러오기 편하게 하기 위함
-    value = JSON.stringify(value);
-    // 쿠키에 저장
-    document.cookie = `${name}=${encodeURIComponent(value)}; max-age=${3.156e+8}; path=/`;
-}
-function setCookies(cookies) {
-    for (const [name, value] of Object.entries(cookies)) {
-        const cookieValue = JSON.stringify(value);
-        document.cookie = `${name}=${encodeURIComponent(cookieValue)}; max-age=${3.156e+8}; path=/`;
-    }
-}
-function getCookie(name) { // 쿠키 가져오기
-    const cookieData = document.cookie.split('; ');
-    let cookieValue;
-
-    for(let i = 0 ; i < cookieData.length ; i++) {
-        if(cookieData[i].split('=')[0] == name) {
-            cookieValue = cookieData[i].split('=')[1];
-        }
-    }
-
-    return JSON.parse(decodeURIComponent(cookieValue));
 }
 
 // 페이지 로드 시 쿠키 확인 및 메시지 표시

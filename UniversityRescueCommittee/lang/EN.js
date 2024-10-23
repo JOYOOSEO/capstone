@@ -1,55 +1,55 @@
 window.translationsEN = {
-    windowTitle: (value) => `${value} people - Rescue Committee`,
+    windowTitle: (value) => `${value} people - university rescue committee`,
     popupLanguageText_description: '',
     popupTitle: [
         [
-            '최초의 입학생',
-            '학교 시설 최초 증축',
-            '교통 시설 최초 증축',
-            '주거지 최초 증축',
-            '은행 최초 증축',
-            '공항 최초 증축',
-            '기업 최초 증축',
-            '정부 최초 증축',
-            '세계 정부 최초 증축',
-            '복제 실험실 최초 증축',
-            '우주정거장 최초 증축',
-            '차원 포털 최초 증축',
-            '블랙홀 최초 증축',
-            '타임머신 최초 증축',
-            '평행 세계 최초 증축',
-            '또 다른 나 최초 증축'
+            'The First Entry',
+            'First purchase of school facilities',
+            'First purchase of transportation',
+            'First purchase of residence',
+            'First establishment of a bank',
+            'First Airport Purchase',
+            'First purchase of a company',
+            'First government purchase',
+            'The World Government\'s First Purchase',
+            'First purchase of replication laboratory',
+            'First purchase of the space station',
+            'First time purchasing a dimensional portal',
+            'First purchase of a black hole',
+            'First purchase of a time machine',
+            'The world\'s first parallel purchase',
+            'Found another me.'
         ],
         [
-            '대학 구조 위원회',
-            '과거로 돌아왔습니다.',
-            '끝'
+            'University Rescue Committee',
+            'It\'s back to the past.',
+            'The End'
         ],
         [
-            '언어 선택',
-            '이름을 바꾸시겠습니까?',
-            '당신이 없는 동안...',
-            '<b class="returning">돌아갈 시간</b>'
+            'Language Choice',
+            'Would you like to change your name?',
+            'While you\'re away...',
+            '<b class="returning">Time to go back</b>'
         ],
     ],
     popupDescription: [
         [
-            '당신이 위원장 자리에 앉은 이후 드디어 최초의 입학생이 생겼습니다.<br><br>올해 입학생은 이 학생이 유일하지만, 표정을 보니 앞으로의 행보가 기대되는군요.',
-            '빈약했던 학교에 다양한 시설을 설치했습니다.<br><br>더 많은 시설을 설치하기 위해 당신은 프렌차이즈와 계약할 계획을 세웁니다.',
-            '교통 시설',
-            '주거지',
-            '은행',
-            '공항',
-            '기업',
-            '현 정부는 우리 학교를 위해 많은 정책을 실시하고 많은 법을 논의할 것입니다.<br><br>참고로 현 대통령은 당신이 위원장 자리에 앉았을 때 최초로 입학했던 학생이였습니다.',
-            '세계 정부',
-            '복제 실험실',
-            '우주정거장',
-            '차원 포털',
-            '블랙홀',
-            '타임머신',
-            '평행 세계',
-            '또 다른 나'
+            'We finally have our first batch of new students since you took the chairmanship.<br><br>This is the only new student this year, but he looks confident on his face.<br><br>Your intuition tells you he\'s going to do a big job. I don\'t know what it\'s like, but the important thing is it\'s just beginning.',
+            'There\'s finally a facility in a school where there was nothing.<br><br>A 24-hour vending machine that\'s responsible for your student\'s survival, a never-ending Wi-Fi zone, and a gamer\'s classroom that\'s more important than class. More facilities and contracts from suspicious franchises will be added in the future.<br><br>I don\'t know where this school will go, but one thing\'s for sure. It\'s going to be fun.',
+            '교통의 혁명이 시작되었습니다.<br><br>우리 학교로 바로 통할 수 있는 버스와 기차, 택시 등이 생겼고, 지하철은 학생을 신속하게 이동시키죠. 학교에서 대여해주는 자전거와 킥보드는 필수 아이템이 되었습니다.<br><br>학생을 지각으로부터 해방시킬 시간입니다!',
+            '학생들에게 드디어 아늑한 보금자리가 생깁니다.<br><br>우리 학교 주변에는 다양한 주거지가 생겼고, 이곳에 친구들과 추억을 쌓거나 마법 같은 분위기를 만끽하거나, 혼자만의 시간을 즐길 수 있는 공간도 마련되어있죠.<br><br>학생은 각자 원하는 스타일에 맞는 보금자리를 찾아 꿈을 키워나갑니다.',
+            '학생에게 꿈을 지원하는 은행이 등장했습니다.<br><br>학업과 꿈을 위해 복잡한 절차 없이 돈을 지원해주죠. 예를 들어, 잃어버린 학비를 충당하거나, 급하게 필요한 교보재를 구매할 때 말입니다.<br><br>이 은행은 이자를 받지 않으니 학생은 경제적 걱정 없이 학업에 집중할 수 있는 기반을 마련합니다.',
+            '특별한 공항이 생겼습니다.<br><br>세계 어디로든 갈 수 있는 통로로 신소하고 안전하게 학교로 데려오거나 집으로 보내주죠. 합당한 이유가 있다면 새로운 모험을 위해 해외로 떠날 기회를 제공해주죠.<br><br>공항은 언제나 꿈꾸는 모든 장소로 떠날 준비가 되어있습니다.',
+            '요즘 기업 관계자들이 구석에서 학생을 예의주시하고 있다는 민원을 자주 받습니다.<br><br>아무래도 모 기업이 우리 학교 과수석 학생을 데려가고 전년대비 성장률 200%를 기록했다는 소식 덕분인 것 같네요.<br><br>그런데 우리 학교는 외부인 출입 금지인데요?',
+            '현 정부는 우리 학교를 위해 많은 정책을 실시하고 많은 법을 논의할 것을 약속했습니다.<br><br>정치인들도 우리 학교를 위해서라면 모두가 한마음 한뜻입니다.<br><br>참고로 현 대통령은 당신이 위원장 자리에 앉았을 때 최초로 입학했던 학생이였습니다.',
+            '세계 정부가 우리 학교를 위해 엄청난 자원을 아끼지 않고 있습니다.<br><br>글로벌 인재 양성의 메카로 자리 잡은 우리 학교를 위해 각국 정부는 학생에게 혜택을 제공하기 위한 치열한 경쟁을 벌이고 있습니다.<br><br>전쟁 중이던 어떤 국가 출신의 학생이 우리 학교 입학이 결정되자 전쟁을 멈추고 종전을 선언했습니다.',
+            '많은 학생의 노력 끝에 복제 실험실이 등장했습니다.<br><br>학생의 더 많은 배움의 기회를 제공하기 위해 자신을 복제하는 미친 아이디어가 현실이 되었죠. 생명 윤리? 그런 건 이미 학구열 앞에선 의미 없죠.<br><br>하지만 위원장인 당신은 들어가길 꺼려했습니다.',
+            '마침내 우주정거장을 세웠습니다.<br><br>지구 밖 학생들에게 빠르고 안전한 이동수단을 제공할 수 있게 되었죠. 학교는 이제 우주로 손을 뻗을 수 있는 기회를 얻었습니다.<br><br>아, 외계인의 존재요? 옆에 지나가는 저 학생은 지구 밖에서 왔어요.',
+            `지구로부터 ${Math.floor(Math.random() * 899) + 100}광년 떨어진 곳에 차원 포털을 발견했습니다.<br><br>믿을 수 없을 만큼 먼 거리를 이동할 수 있는 이 포털 덕에 학생은 시간과 공간의 제약에 해방되었네요.<br><br>조심하세요! 잘못 내딛으면 공룡과 마주칠 수 있으니까요.`,
+            '많은 지원과 학생의 피나는 노력으로 블랙홀은 이제 위험하지 않은 수준까지 조절되었습니다. 내부에 거주 가능한 구역과 존재까지 발견했죠.<br><br>신비로운 세계를 탐험하며, 과거의 공포를 불식시키고 학술 연구를 새롭게 정립할 기회를 얻었습니다.<br><br>이제 인류는 블랙홀을 더 이상 두려워하지 않고 매력을 발견하는 즐거움을 만끽할 준비만 남았습니다.',
+            '학교에 드디어 타임머신이 도입되었습니다.<br><br>이제 과거와 미래로 여행하며 공부하거나 특별한 학생을 데려오는 일이 일상처럼 흔해졌고, 역사적인 사건을 직접 목격하거나 미래의 기술을 배우며 신나는 경험을 쌓고 있죠.<br><br>시간선 혼란이요? 걱정마세요. 저희가 천문학적인 비용을 들여 수습하고 있으니까요.',
+            '다양한 평행 세계를 횡단하면서 우리 학교를 소개했습니다.<br><br>조금씩 다른 규칙과 사고방식을 가진 평행 세계의 학생들이였지만 열정 앞에서는 사소할 차이일뿐이였죠.<br><br>그 어떤 평행 세계를 가봐도 우리 학교만큼 발전한 학교가 없는걸 보자 총장님은 정말 좋아하셨습니다.',
+            '학교에서 갑자기 나타난 또 다른 나를 발견했습니다.<br><br>지금까지의 기억과 경험을 완벽하게 공유하고 있었고 모습도, 버릇도, 취향도 똑같았습니다. 두 사람은 놀라움을 금치 못했습니다.<br><br>많은 일들이 머릿속에서 스쳐 지나가며 한바탕 웃음이 터져나옵니다. 이제 각자의 장점을 살려 함께 위원회을 운영하며 더 큰 미래를 위해 도전을 시작합니다.'
         ],
         [
             '올해의 유일한 졸업생인 당신은 총장님의 부름에 한걸음 달려갑니다.<br><br>총장님은 당신을 보자 이렇게 말합니다.<br><br><b class="fcMint fsItalic fs90">\"우리 학교가 곧 폐교 직전이라 내가 급히 대학 구조 위원회라는걸 만들었어. 그래서, 네가 위원장을 맡았으면 해.<br><br>물론, 거절해도 돼. 대신 올해도 내년에도 졸업식은 없다.\"</b><br><br>당신은 좋든 싫든 졸업장을 받기 위한 위원회 활동을 시작합니다.',
@@ -63,19 +63,22 @@ window.translationsEN = {
             '과거의 나에게로 회귀하면 기억 등급, 도전 과제를 모든 진행상황을 잃어버립니다.<br><br>경험 등급은 높을수록 영구적인 추가 효과를 부여합니다.'
         ]
     ],
-    popupButton_text: ['닫기', '바꾸기', '과거로 돌아가기'],
-    universityMyName: '대림',
-    universityNameSuffix: ' 대학교',
-    students: (value) => `${value} 명`,
-    perSecond: (value) => `초당: ${value} 명`,
-    newsTitle: '학교 소식',
+    popupButton_text: ['Close', 'Change it', 'Back to the past'],
+    universityMyName: 'Daelim',
+    universityNameSuffix: ' University',
+    students: (value) => `${value} people`,
+    perSecond: (value) => `per second: ${value} people `,
+    /*
+        학교 소식
+    */
+    newsTitle: 'school news',
     newsContents: [
         [
             [
-                '교정에 울려 퍼지는 발소리는 거의 들리지 않습니다.', 
-                '우리 학교가 입학생이 기피하는 학교로 선정되었습니다.', 
-                '비어있는 강의실은 음산한 분위기를 내고 있습니다.', 
-                '준비된 교재들은 먼지만 쌓여갈 뿐, 손길이 닿지 않습니다.', 
+                '교정에 울려 퍼지는 발소리는 거의 들리지 않습니다.',
+                '우리 학교가 입학생이 기피하는 학교로 선정되었습니다.',
+                '비어있는 강의실은 음산한 분위기를 내고 있습니다.',
+                '준비된 교재들은 먼지만 쌓여갈 뿐, 손길이 닿지 않습니다.',
                 '남아있는 학생마저 자퇴를 준비하고 있습니다.',
                 '학교에 학생보다 교수가 더 많습니다.',
                 '학교 게시판은 신입생 모집 포스터로 가득하지만, 아무도 관심을 두지 않습니다.',
@@ -133,7 +136,7 @@ window.translationsEN = {
                 '예술관에서 새로운 스튜디오에 창의적인 마법이 시작됩니다. 혹시 재료가 부족하면 연필에 실험해보세요.',
                 '전문가를 꿈꾸는 학생의 놀이터를 만들기 위해 학교 시설을 계속 만들어 가고 있습니다.'
             ],
-            [ // 교통 시설
+            [ // 교통수단
                 '전용 교통 버스가 생겼습니다. 우리 학교까지 이동하는 순간이 고급 스웨트처럼 부드러워졌습니다.',
                 '자전거 도로는 학생의 친환경 자전거 대회가 열릴 곳으로 각광 받고 있습니다.',
                 '새로운 통학 전용 지하철 노선이 개통되어 사람과 부딧힐일이 없습니다.',
@@ -149,7 +152,7 @@ window.translationsEN = {
                 '우리 학교는 집 없는 학생은 없다는 슬로건으로 모든 신입생에게 거주지를 제공하고 있습니다.',
                 '학생에게 부담되는 거주 임대료와 관리비는 모두 무료입니다.',
                 '학생 거주지 근처에 생긴 푸드코트는 24시간으로 운영됩니다.',
-                '안전한 보금자리를 제공하기 위해 모든 주거 공간은 최신 보안 시스템으로 보호됩니다.',
+                '보금자리를 제공하기 위해 모든 주거 공간은 최신 보안 시스템으로 보호됩니다.',
                 '학생을 위한 생활 필수품 키트를 특별 할인합니다. 이사 축하 선물 같은 특별한 기회를 놓치지 마세요.',
                 '거주 공간 지하에 학생을 위한 영화관이 들어섰습니다. 매주 밤마다 최신 영화를 무료로 볼 수 있죠.',
                 '최근 새롭게 생긴 주거 단지는 친환경 생활을 지원하여 자연과 조화를 이루는 삶을 누릴 수 있습니다.',
@@ -176,7 +179,7 @@ window.translationsEN = {
                 '비행기가 지평선을 넘어가듯, 학생 여러분의 꿈도 더 높은 곳으로 비상할 수 있도록 응원합니다.',
                 '기내 서비스는 학생 맞춤형으로 이루어져있습니다. 장시간 비행의 피로를 날려줄 놀거리와 먹거리를 준비했습니다.',
                 '10분에서 1시간마다 이륙하는 비행기는 여러분을 늦지 않게 학교와 집으로 데려다줍니다.',
-                '난기류와 폭풍 따위는 문제 없이 운행할 수 있는 비행기를 사용해 안전한 이동을 가능케합니다.',
+                '난기류와 폭풍 따위는 문제 없이 운행할 수 있는 비행기를 사용해 이동을 가능케합니다.',
                 '기내에서도 학업을 이어갈 수 있도록 다양한 서비스를 즐길 수 있습니다. 비행기 강의실은 처음보죠?',
                 '합당한 목적과 서류만 제출하신다면 여행용으로 탑승해도 문제 없습니다.',
                 `오늘 ${Math.floor(Math.random() * 899) + 100}대의 비행기가 이륙했는데 딱 한 대만 착륙하지 않았습니다.`
@@ -234,7 +237,7 @@ window.translationsEN = {
                 '무한한 학생의 학구열을 채우기 위해 무한한 우주로 나갈 수 있는 개인용 우주선을 보급하고 있습니다.',
                 '출발한지 8주가 지난 우주선은 학교와 통신이 끊길 확률이 99.98%입니다.',
                 '별을 가까이에서 느끼며 우주 과학에 대한 이해도를 높일 수 있는 기회를 제공하고 있습니다.',
-                '각 우주선은 최신 안전 장비가 장착되어 학생의 안전한 이동을 보장합니다.',
+                '각 우주선은 최신 안전 장비가 장착되어 학생의 이동을 보장합니다.',
                 '우주 개척 프로젝트 과제를 하기 위해 학생은 더 먼 우주로 떠났습니다.',
                 '우주선 탑승 시 필요한 것은 자신의 학생증뿐입니다.',
                 '먼거리를 이동하기 위한 동면 시스템을 무료로 지원하는 정책을 실시 중입니다.',
@@ -302,45 +305,68 @@ window.translationsEN = {
                 '또 다른 나 사이에서 상위 차원의 존재를 본 적 있다는 목격담이 들려옵니다.'
             ]
         ]
-        
+
     ],
-    menuSettingText_title: '설정',
-    menuSettingText_subtitleCommon: '기본',
-    menuStatsText_title: '통계',
-    menuStatsText_subtitleCommon: '기본',
-    menuStatsText_save: '저장',
-    menuStatsText_buttonSave: '저장하기',
-    menuStatsText_buttonExport: '파일 내보내기',
-    menuStatsText_buttonImport: '파일 불러오기',
-    menuStatsText_Language: '언어',
-    menuStatsText_buttonChangeLanguage: '언어 변경',
-    menuStatsText_subtitleDetail: '세부',
-    menuStatsText_soundEffectName: '효과음 크기',
-    menuStatsText_soundBgmName: '배경음 크기',
-    menuStatsText_soundNotice: '귀 건강에 유의하여 적절히 조절해주세요.',
-    menuStatsText_statsTotalStudent: (value) => `누적된 총 입학 학생 (전체): <b class="fcWhite">${value}</b>`,
-    menuStatsText_statsStudent: (value1, value2) => `누적된 총 입학 학생 (이번 회귀): <b class="fcWhite">${value1} (${value2}%)</b>`,
-    menuStatsText_showPerSecondStudent: (value) => `초당 입학 학생: <b class="fcWhite">${value}</b>`,
-    menuStatsText_statsTotalPerSecondStudent: (value) => `누적된 초당 입학 학생 (전체): <b class="fcWhite">${value}</b>`,
-    menuStatsText_statsPerSecondStudent: (value1, value2) => `누적된 초당 입학 학생 (이번 회귀): <b class="fcWhite">${value1} (${value2}%)</b>`,
-    menuStatsText_showClickStudent: (value) => `클릭당 입학 학생: <b class="fcWhite">${value}</b>`,
-    menuStatsText_statsTotalClickStudent: (value) => `누적된 클릭당 입학 학생 (전체): <b class="fcWhite">${value}</b>`,
-    menuStatsText_statsClickStudent: (value1, value2) => `누적된 클릭당 입학 학생 (이번 회귀): <b class="fcWhite">${value1} (${value2}%)</b>`,
-    menuStatsText_statsTotalClickCount: (value) => `누적된 클릭 횟수 (전체): <b class="fcWhite">${value}</b>`,
-    menuStatsText_statsClickCount: (value1, value2) => `누적된 클릭 횟수 (이번 회귀): <b class="fcWhite">${value1} (${value2}%)</b>`,
-    menuStatsText_statsTotalProductCount: (value) => `누적된 증축 횟수 (전체): <b class="fcWhite">${value}</b>`,
-    menuStatsText_statsProductCount: (value1, value2) => `누적된 증축 횟수 (이번 회귀): <b class="fcWhite">${value1} (${value2}%)</b>`,
-    menuStatsText_statsReturningCount: (value1) => `누적된 회귀 횟수: <b class="fcWhite">${value1}</b>`,
-    menuStatsText_subtitleUpgrade: '강화',
-    menuStatsText_subtitleAchievement: '도전 과제',
-    menuSubtitleProduct: '증축',
-    menuInfoText_title: '정보',
-    menuInfoText_subtitleIntroduce: '소개',
-    menuInfoText_introduceText_1: '대학 구조 위원회는 대한민국 대학생이 <a href="https://store.steampowered.com/app/1454400/Cookie_Clicker/" target="_blank">쿠키 클리커</a>에 영감을 받아 개발한 게임입니다.',
-    menuInfoText_introduceText_2: '<b>HTML, CSS, JavaScript</b>를 사용해 개발했습니다.',
-    menuInfoText_subtitleCredit: '개발자',
-    menuInfoText_subtitlePatchNote: '패치 노트',
-    menuReturningText_title: '회귀',
+    /*
+        설정 메뉴
+    */
+    menuSettingText_title: 'setting',
+    // < 기본 >
+    menuSettingText_subtitleCommon: 'basics',
+    menuStatsText_title: 'Statistics',
+    menuStatsText_subtitleCommon: 'basics',
+    menuStatsText_save: 'Save',
+    menuStatsText_buttonSave: 'Save',
+    menuStatsText_buttonExport: 'Export File',
+    menuStatsText_buttonImport: 'Importing files',
+    menuStatsText_Language: 'Language',
+    menuStatsText_buttonChangeLanguage: 'Changing the Language',
+    // < 기본 >
+    menuStatsText_subtitleDetail: 'Details',
+    menuStatsText_soundEffectName: 'Sound effect volume',
+    menuStatsText_soundBgmName: 'Background sound volume',
+    menuStatsText_soundNotice: 'Please pay attention to your ear\'s health and adjust it appropriately.',
+    /*
+        통계
+    */
+    // <기본>
+    menuStatsText_statsList: [
+        (value) => `Accumulated Total Admissions Students (Full): <b class="fcWhite">${value}</b>`,
+        (value1, value2) => `Accumulated Total Entrance Students (This Return): <b class="fcWhite">${value1} (${value2}%)</b>`,
+        (value) => `Students admitted per second: <b class="fcWhite">${value}</b>`,
+        (value) => `Accumulated students per second (full): <b class="fcWhite">${value}</b>`,
+        (value1, value2) => `Accumulated students per second (rebound): <b class="fcWhite">${value1} (${value2}%)</b>`,
+        (value) => `Entrance students per click: <b class="fcWhite">${value}</b>`,
+        (value) => `Accumulated students per click (full): <b class="fcWhite">${value}</b>`,
+        (value1, value2) => `Accumulated students per click (This Return): <b class="fcWhite">${value1} (${value2}%)</b>`,
+        (value) => `Accumulated clicks (total): <b class="fcWhite">${value}</b>`,
+        (value1, value2) => `Accumulated number of clicks (This Return): <b class="fcWhite">${value1} (${value2}%)</b>`,
+        (value) => `Accumulated facility purchases (total): <b class="fcWhite">${value}</b>`,
+        (value1, value2) => `Accumulated number of facility purchases (This Return): <b class="fcWhite">${value1} (${value2}%)</b>`,
+        (value) => `Accumulated number of Return: <b class="fcWhite">${value}</b>`
+    ],
+    // <완료된 강화 목록>
+    menuStatsText_subtitleUpgrade: 'Completed upgrade list',
+    // 도전 과제
+    menuStatsText_subtitleAchievement: 'Achievement',
+    /*
+        정보 소개
+    */
+    menuInfoText_title: 'Info',
+    // <소개>
+    menuInfoText_subtitleIntroduce: 'Introduce',
+    menuInfoText_introduceText_1: '대학 구조 위원회는 <a href="https://store.steampowered.com/app/1454400/Cookie_Clicker/" target="_blank">쿠키 클리커</a>에 영감을 받아 개발한 게임입니다.',
+    menuInfoText_introduceText_2: '<b class="fcWhite fs110">HTML, CSS, JavaScript</b>를 사용해 개발했습니다.',
+    // <개발자>
+    menuInfoText_subtitleCredit: 'Developer',
+    // <패치 노트>
+    menuInfoText_subtitlePatchNote: 'Patch Notes',
+    /*
+        회귀
+    */
+    menuReturningText_title: 'Returning',
+    // <회귀 레벨>
+    menuReturningText_subtitleLevel: '회귀 레벨',
     menuReturningText_panelLevel: (value) => `경험 등급 <b class="fcWhite">${value}</b>`,
     menuReturningText_timeDateMinute: (value) => `위원회가 <b class="fcWhite fs110">${value}</b> 분간 운영되었습니다`,
     menuReturningText_timeDateHour: (value1, value2) => `위원회가 <b class="fcWhite fs110">${value1}</b> 시간 <b class="fcWhite fs110">${value2}</b> 분간 운영되었습니다`,
@@ -348,147 +374,234 @@ window.translationsEN = {
     menuReturningText_nowReturningText_1: '지금 회귀한다면',
     menuReturningText_nowReturningIncreaseLevel: (value1, value2) => `등급 +${value1}<b class="fcDefault fs75 fsItalic">(SpS +${value2}%)</b>`,
     menuReturningText_nowReturningText_2: '을(를) 얻습니다.',
-    menuReturningText_emptyExp: (value) => `다음 등급까지 <b class="fcWhite">${value}</b> 명 입학 필요`,
-    menuReturningText_subtitleLevel: '회귀 레벨',
+    menuReturningText_emptyExp: (value) => `다음 등급까지 초당 학생 <b class="fcWhite">${value}</b> 명 입학 필요`,
+    menuReturningText_buttonReturning: '과거로 돌아가기',
+    // <기억 왜곡>
     menuReturningText_subtitleAbility: '기억 왜곡',
-    arrProductName: ['Student','Student facilities','Transportation facilities','Residential facilities','Bank','Airport','Corporation','Government','World government','Cloning laboratory','Space station','Dimensional portal','Black hole','Time machine','Multiverse','Another me'],
-    tooltipTagName: [
-        ['증축', '강화', '기억 왜곡', '도전 과제'],
+    /*
+        알림창
+    */
+    notiText_save: `<b class="fcWhite fs125">Your progress has been saved.</b>`,
+    notiText_achievement: `<b class="fcWhite fs150">Achieving Challenges</b>`,
+    /*
+        우측 메뉴
+    */
+    menuRightTitle: 'Proposal',
+    /*
+        강화
+    */
+    menuSubtitleUpgrade: 'Upgrade',
+    upgradeMenuButtonExpand: 'Expand',
+    upgradeMenuButtonFold: 'Fold',
+    /*
+        시설
+    */
+    menuSubtitleProduct: 'facility',
+    arrProductName: ['Students', 'school facilities', 'transportation', 'residential areas', 'banks', 'airports', 'businesses', 'governments', 'world government', 'cloning labs', 'space stations', 'multi-dimensional portals', 'black hole', 'time machine', 'parallel world', 'another me'],
+
+    /*
+        설명창
+    */
+    productTooltipGetCount: (value) => `${value} 보유`,
+    tooltipTagName: [ // 설명창 분류
+        ['시설', '강화', '기억 왜곡', '도전 과제'],
         ['금속', '초콜릿', '호박꿀', '오렌지 즙', '경고등', '짙은 나무', '불꽃', '다이아몬드', '4차원', '공허'],
         [],
         ['비활성화', '활성화'],
         ['잠김', '해금']
     ],
-        productTooltipDescription: [
-            '학생 한 명 한 명이 소중합니다.',
-            '학업, 오락, 휴식 시설 같은 원하는 모든 시설을 갖춥니다. 학생을 위해서 못해줄 건 없는 법입니다.',
-            '세계 어디든 우리 학교로 쉽게 올 수 있는 다양한 교통 수단을 만듭니다. 재학생은 무료로 이용할 수 있습니다.',
-            '반지하, 주택, 아파트 등 거주가 가능한 시설을 학교 주변에 짓습니다. 우리 학교 학생이라면 재학하는 동안 한 채씩 무료로 거주할 수 있습니다.',
-            '우리 학교 재학생이라면 증명 없이 필요한 비용을 반드시 대출할 수 있는 은행을 설립합니다. 이자는 평생 없습니다.',
-            '각 국 나라에서 학교로 1시간마다 운행하는 공항을 세웁니다. 물론 재학생은 무료로 이용할 수 있습니다.',
-            '기업은 자기 회사로 데려올 재학생을 항상 눈여겨 보고 있습니다.',
-            '정부는 우리 학생과 학교를 위한 지원과 정책을 실시합니다.',
-            '세계는 앞으로 우리 학교만을 위해 움직입니다.',
-            '자원을 받은 학생을 복제해 더 많은 학생을 만듭니다. 학구열 앞에서는 윤리와 혼란 따위는 중요한 것이 아닙니다.',
-            '우리 학교에서 가까운 행성까지 우주선을 통해 이동합니다. 재학생이라면 탑승료와 동면 서비스는 무료입니다.',
-            '천문학과가 아니라면 마주할 수 없는 거리를 순식간에 이동할 수 있는 포털을 세웁니다. 학생이라고 주장하는 존재에게 우리 학교를 설명할 수 있겠네요.',
-            '블랙홀 내부에서 살아있는 학생을 우리 학교로 구조합니다. 때로는 위험을 감수할줄도 알아야 합니다.',
-            '과거 혹은 미래로 가 더 많은 학생을 현재 시간대로 데려옵니다. 시대 차이 따위 극복 가능한 법이죠.',
-            '평행 세계를 횡단하는 방법을 찾아 다른 세계 학생에게 우리 학교를 홍보합니다. 횡단 비용은 많이 들지만 같은 홍보물을 반복해 쓸 수 있어 경제적이죠.',
-            '당신은 혼자가 아닙니다. 그리고 또 다른 당신도 혼자가 아니죠.'
-        ],
-        productTooltipGetCount: (value) => `${value} 보유`,
-        productTooltipStats_1: (value) => `보유마다 <b class="fcWhite fs110">${value} 명</b> 입학`,
-        productTooltipStats_2: (value) => `초당 총 <b class="fcWhite fs110">${value} 명</b> 입학`,
-        productTooltipStats_3: (value) => `지금까지 <b class="fcWhite fs110">${value} 명</b> 입학`,
-        productTooltipUpgradeDone: '강화 완료 목록',
-        menuSubtitleUpgrade: '강화',
-        upgradeMenuButtonExpand: '펼치기',
-        upgradeMenuButtonFold: '접기',
-        upgradeName: [
-            ['학습의 경로', '10년제 대학교', '식사 지원', '인생 항해자', '지식 공유', '지혜의 서재', '원주율 끝까지 외우기 대회', '하루에 42시간 7분 공부', '고대의 마법서', '외계 학문 연구'],
-            ['교내 상가', '탐구실', '토론의 방', '창의력 공방', '비상 대응소', '1천 제곱 킬로미터 운동장', '연금술 실험실', '지식의 사원', '현실 조작', '미지의 지하실'],
-            ['교통비 무료', '땅굴망', '다인승차량', '교통공학', '전용 초고속도로', '초고속 환승', '해상 이동수단 도입', '친환경 교통 정책', '신속한 병목 현상 해소', '속도 규제 해제'],
-            ['1인 1채', '보금자리', '인프라 확대', '삶의 거처', '관리비 무료', '이중 내진 설계', '뿌리의 공간', '쾌적한 공간', '영혼의 안식처', '마천루'],
-            ['자산의 금고', '환율 고정', '이익의 전당', '신용카드', '인터넷 뱅킹 지원', '수업료 전액 대출', '부의 창고', '자본의 정원', '고리대금', '금전의 흐름'],
-            ['비상 연결지', '하늘 도로', '공중 교차로', '관제탑', '24시간 운행', '공중 급유', '지평선 거점', '응급상황 대비', '초고속 비행', '무료 면세점 확대'],
-            ['당일 답신', '면접비 지원', '졸업생 우대 입사', '회사 내 숙소', '탕비실', '빠른 결재', '매달 연봉 협상', '퇴직금 정산', '주3일제', '평생 직장'],
-            ['', '', '', '', '', '', '', '', '', ''],
-            ['', '', '', '', '', '', '', '', '', ''],
-            ['복제인간', '생명 재구성', '정체성 조작', '인체 재구성 프로젝트', '복사기', '이중 존재', '존재 변형', '새로운 쌍둥이', '유전자 조작', '복제 재활용 처리소'],
-            ['무중력 기지', '장기 체류', '우주선 환승', '냉동 서비스', '우주 관측소', '행성 전초기지', '인공위성 정박', '은하 연구소', '은하계 횡단', '궤도 관문'],
-            ['시공간 이동', '여행 서비스', '빠른 등하교', '포털 사이트', '연결 통로', '차원 간섭체', '포털건', '빛보다 빠르게', '전술 차원 도약', '포털 속 미지의 존재'], // 포털 사이트: 동음의어를 활용한 말장난 ||| 포털건: 게임 포탈 시리즈에 등장하는 장비 ||| 전술 차원 도약: 스타크래프트2 속 전투순양함 기술 패러디
-            ['어둠의 심연', '무한의 늪', '중력의 소용돌이', '왜곡의 영역', '빛 포식자', '가르강튀아', '사건의 지평선', '우주의 구멍', 'M87*', '화이트 홀'], // 가르강튀아: 영화 인터스텔라에 등장하는 블랙홀 ||| M87*: 인류 최초로 촬영된 블랙홀
-            ['과거와 미래', '시간 여행자', '시간 가속', '잃어버린 시계', '시간의 오버플로우', '시공간 여행선', '드로리언 DMC-12', '시간의 섬광', '타임 패러독스', '타디스'], // 시간 여행자: 소설 타임머신 패러디 ||| 시간의 오버플로우: 시간을 저장한 변수가 오버플로우가 나면 시간이 과거로 출력된다는 프로그래밍 현상 ||| 드로리언 DMC-12: 백 투더 퓨처 패러디 ||| 타디스: 닥터후 패러디
-            ['4차원', '다차원 우주', '현실과 비현실의 다리', '평행 세계 탐험소', '복잡한 연결망', '끝없는 개척', '양자역학', '무한 차원', '데우스 엑스 마키나', '서울로 가는 길'], // 데우스 엑스 마키나: 창작물에 개연성을 억지로 맞추기 위해 평행 세계 소재를 사용한데서 비롯 ||| 서울로 가는 길: 쿠키클리커 패러디, 선택한 언어 설정에 맞는 국가의 수도로 이름 변경
-            ['대체 자아', '그림자 존재', '정신질환 의심', '거울에 비친 나', '대면 세계', '철학적 주제', 'DNA 대조 결과 일치', '괴테의 일기장', '기억 동화', '도플갱어'], // 괴테의 일기장: 괴테는 일기장에 도플갱어를 만났다는 내용이 존재
-            ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
-        ],
-        upgradeDescription: [
-            ['학생의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
-            ['학교 시설의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
-            ['교통 시설의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
-            ['주거 시설의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
-            ['은행의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
-            ['공항의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
-            ['기업의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
-            ['정부의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
-            ['세계 정부의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
-            ['복제 실험실의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
-            ['우주정거장의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
-            ['차원 포털의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
-            ['블랙홀의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
-            ['타임머신의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
-            ['평행 세계의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
-            ['또 다른 나의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
-            ['클릭의 입학 효율 <b class="fcWhite fs110">SpS +1%</b>만큼 증가']
-        ],
-        memoryPrice: (value) => `기억 등급 ${value}`,
-        memoryName: ['기억 축적', '경험적 사고', '무의식', '초장기 기억력', '해마 2개', '머릿속 저장소', '절대 기억', '악마랑 기억력 시험보기', '천사랑 기억력 시험보기', '10', '11', '', '', '', '', '', '', '', '', ''],
-        memoryDescription: [
-            '기억 등급 1당 영구적으로 <b class="fcWhite fs110">SpS +1%</b>',
-            '입학 효율 배수 <b class="fcWhite fs110">+5%</b>',
-            '클릭 효율 <b class="fcWhite fs110">두 배</b> 증가',
-            '비접속 효율 <b class="fcWhite fs110">+10%로 상향</b>',
-            '금속 등급의 강화 비용 <b class="fcWhite fs110">-25%</b>',
-            '비접속 효율 <b class="fcWhite fs110">+20%로 상향</b>',
-            '학생의 효율 <b class="fcWhite fs110">+50%</b>',
-            '비접속 최대 시간을 <b class="fcWhite fs110">36시간으로 증가</b>',
-            '입학 효율 배수 <b class="fcWhite fs110">+5%</b>',
-            '학교 시설 효율 <b class="fcWhite fs110">+50%</b>',
-            '',
-            '111',
-            '112',
-            '113',
-            '114',
-            '115',
-            '',
-            '',
-            '',
-            ''
-        ],
-        memoryFlavorText: [
-            '123',
-            '11',
-            '1010',
-            '01010',
-            '101010',
-            '10101',
-            '10101',
-            '010',
-            '1010',
-            '10',
-            '10101',
-            '010',
-            '101',
-            '0101',
-            '0101',
-            '01010',
-            '101',
-            '010101',
-            '0101',
-            '010101'
-        ],
-        achievementName: [],
-        // achievementDescription: [
-        //     [`지금까지 ${value} 명의 학생이 입학했습니다.`],
-        //     [`한 번의 회귀에서 ${value} 명의 학생이 입학했습니다.`],
-        //     [`초당 ${value} 명의 학생이 입학했습니다.`],
-        //     [`지금까지 ${value} 번을 클릭합니다.`],
-        //     [`지금까지 클릭으로 ${value} 명의 학생이 입학했습니다.`],
-        //     [`한 번의 회귀에서 클릭으로 ${value} 명의 학생이 입학했습니다.`],
-        //     [`${translations[lang].arrProductName[0]}을(를) ${value}번 증축합니다.`],
-        //     [`${translations[lang].arrProductName[0]}(으)로부터 ${value} 명의 학생이 입학했습니다.`],
-        //     [`${translations[lang].arrProductName[0]}의 강화를 ${value}회 진행했습니다.`],
-        //     [`${translations[lang].arrProductName[0]}의 모든 강화를 진행했습니다.`],
-        //     [`지금까지 ${value}번 증축합니다.`],
-        //     [`모든 것을 최소 ${value}번 증축합니다.`],
-        //     [`특정 강화를 모두 진행합니다.`],
-        //     [`모든 것의 강화를 모두 진행합니다.`],
-        //     [`모든 강화를 모두 진행합니다.`],
-        //     [`${value}번 회귀합니다.`],
-        //     [`기억 등급 ${value}을 달성합니다.`],
-        //     [`기억 왜곡을 모두 해방합니다.`],
-
-        // ]
+    // <강화>
+    upgradeTooltipName: [ // 이름
+        ['학습의 경로', '10년제 대학교', '식사 지원', '인생 항해자', '지식 공유', '지혜의 서재', '원주율 끝까지 외우기 대회', '하루에 42시간 7분 공부', '고대의 마법서', '외계 학문 연구'],
+        ['교내 상가', '탐구실', '토론의 방', '창의력 공방', '비상 대응소', '1천 제곱 킬로미터 운동장', '연금술 실험실', '지식의 사원', '현실 조작', '미지의 지하실'],
+        ['교통비 무료', '땅굴망', '다인승차량', '교통공학', '전용 초고속도로', '초고속 환승', '해상 이동수단 도입', '친환경 교통 정책', '신속한 병목 현상 해소', '속도 규제 해제'],
+        ['1인 1채', '보금자리', '인프라 확대', '삶의 거처', '관리비 무료', '이중 내진 설계', '뿌리의 공간', '쾌적한 공간', '영혼의 안식처', '마천루'],
+        ['자산의 금고', '환율 고정', '이익의 전당', '신용카드', '인터넷 뱅킹 지원', '수업료 전액 대출', '부의 창고', '자본의 정원', '고리대금', '금전의 흐름'],
+        ['비상 연결지', '하늘 도로', '공중 교차로', '관제탑', '24시간 운행', '공중 급유', '지평선 거점', '응급상황 대비', '초고속 비행', '무료 면세점 확대'],
+        ['당일 답신', '면접비 지원', '졸업생 우대 입사', '회사 내 숙소', '탕비실', '빠른 결재', '매달 연봉 협상', '퇴직금 정산', '주3일제', '평생 직장'],
+        ['비서실의 철벽 방어', '정책 결정권', '국가 운영', '학생 소통', '대통령 특권', '은밀한 군대 주둔', '국정 브리핑', '비밀 회의실', '기밀 해제', '국가 비상상태 발동'],
+        ['국제 정치의 큰손', '비상 회의실', '학술 조약의 지배자', '학업 조정실', '세계 안보 총괄', '세계 정부의 비밀 전략실', '학생 우대 프로젝트', '지구 방어 연합', '세계 경제 조정실', '지구 방어 연합'],
+        ['복제인간', '생명 재구성', '정체성 조작', '인체 재구성 프로젝트', '복사기', '이중 존재', '존재 변형', '새로운 쌍둥이', '유전자 조작', '복제 재활용 처리소'],
+        ['무중력 기지', '장기 체류', '우주선 환승', '냉동 서비스', '우주 관측소', '행성 전초기지', '인공위성 정박', '은하 연구소', '은하계 횡단', '궤도 관문'],
+        ['시공간 이동', '여행 서비스', '빠른 등하교', '포털 사이트', '연결 통로', '차원 간섭체', '포털건', '빛보다 빠르게', '전술 차원 도약', '포털 속 미지의 존재'], // 포털 사이트: 동음의어를 활용한 말장난 ||| 포털건: 게임 포탈 시리즈에 등장하는 장비 ||| 전술 차원 도약: 스타크래프트2 속 전투순양함 기술 패러디
+        ['어둠의 심연', '무한의 늪', '중력의 소용돌이', '왜곡의 영역', '빛 포식자', '가르강튀아', '사건의 지평선', '우주의 구멍', 'M87*', '화이트 홀'], // 가르강튀아: 영화 인터스텔라에 등장하는 블랙홀 ||| M87*: 인류 최초로 촬영된 블랙홀
+        ['과거와 미래', '시간 여행자', '시간 가속', '잃어버린 시계', '시간의 오버플로우', '시공간 여행선', '드로리언 DMC-12', '시간의 섬광', '시간 여행', '타디스'], // 시간 여행자: 소설 타임머신 패러디 ||| 시간의 오버플로우: 시간을 저장한 변수가 오버플로우가 나면 시간이 과거로 출력된다는 프로그래밍 현상 ||| 드로리언 DMC-12: 백 투더 퓨처 패러디 ||| 타디스: 닥터후 패러디
+        ['4차원', '다차원 우주', '현실과 비현실의 다리', '평행 세계 탐험소', '복잡한 연결망', '끝없는 개척', '양자역학', '무한 차원', '데우스 엑스 마키나', '서울로 가는 길'], // 데우스 엑스 마키나: 창작물에 개연성을 억지로 맞추기 위해 평행 세계 소재를 사용한데서 비롯 ||| 서울로 가는 길: 쿠키클리커 패러디, 선택한 언어 설정에 맞는 국가의 수도로 이름 변경
+        ['대체 자아', '그림자 존재', '정신질환 의심', '거울에 비친 나', '대면 세계', '철학적 주제', 'DNA 대조 결과 일치', '괴테의 일기장', '기억 동화', '도플갱어'], // 괴테의 일기장: 괴테는 일기장에 도플갱어를 만났다는 내용이 존재
+        ['광속 클릭', '엄지의 진화', '손놀림 신공', '손끝의 마법', '집요한 클릭', '클릭 폭주', '마우스 신화', '클릭질 만렙', '무한 클릭지옥', '손가락의 전설']
+    ],
+    upgradeToolipDescription: [ // 설명
+        ['학생의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
+        ['학교 시설의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
+        ['교통수단의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
+        ['주거 시설의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
+        ['은행의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
+        ['공항의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
+        ['기업의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
+        ['정부의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
+        ['세계 정부의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
+        ['복제 실험실의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
+        ['우주정거장의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
+        ['차원 포털의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
+        ['블랙홀의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
+        ['타임머신의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
+        ['평행 세계의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
+        ['또 다른 나의 입학 효율 <b class="fcWhite fs110">두 배</b> 증가'],
+        ['클릭의 입학 효율 <b class="fcWhite fs110">SpS +2%</b>만큼 증가']
+    ],
+    // <시설>
+    productTooltipDescription: [ // 설명
+        '학생 한 명 한 명이 소중합니다.',
+        '학생을 위해서 못해줄 건 없는 법입니다.',
+        '세계 어디든 우리 학교로 쉽게 올 수 있는 다양한 교통 수단을 만듭니다.',
+        '우리 학교 학생이라면 재학하는 동안 한 채씩 무료로 거주할 수 있습니다.',
+        '이자 없이 필요한 비용을 반드시 대출할 수 있는 은행을 설립합니다.',
+        '각 국 나라에서 학교로 1시간마다 운행하는 공항을 세웁니다. 물론 재학생은 무료로 이용할 수 있습니다.',
+        '기업은 자기 회사로 데려올 재학생을 항상 눈여겨 보고 있습니다.',
+        '정부는 우리 학생과 학교를 위한 지원과 정책을 실시합니다.',
+        '세계는 앞으로 우리 학교만을 위해 움직입니다.',
+        '희망자를 선정해 더 많은 학생을 복제합니다.',
+        '우리 학교에서 가까운 행성까지 우주선을 통해 이동합니다. 재학생이라면 탑승료와 동면 서비스는 무료입니다.',
+        '상상할 수 없는 거리를 순식간에 이동할 수 있는 포털을 찾았습니다.',
+        '블랙홀이 위험하지 않다는 것은 이미 오래전에 증명된 내용입니다.',
+        '과거 혹은 미래로 가 더 많은 학생을 현재 시간대로 데려옵니다. 시대 차이 따위 극복 가능한 법이죠.',
+        '평행 세계를 횡단하는 비용은 많이 들지만 같은 홍보물을 반복해 쓸 수 있어 경제적이죠.',
+        '당신은 혼자가 아닙니다. 그리고 또 다른 당신도 혼자가 아니죠.'
+    ],
+    productTooltipStats: [ // 통계
+        (value) => `보유마다 <b class="fcWhite fs110">${value} 명</b> 입학`,
+        (value) => `초당 총 <b class="fcWhite fs110">${value} 명</b> 입학`,
+        (value) => `지금까지 <b class="fcWhite fs110">${value} 명</b> 입학`
+    ],
+    productTooltipUpgradeDone: '강화 완료 목록',
+    /*
+        기억 등급 관련
+    */
+    memoryPrice: (value) => `기억 등급 ${value}`,
+    // <이름>
+    memoryName: ['기억 축적', '경험적 사고', '무의식', '초장기 기억력', '해마 2개', '머릿속 저장소', '절대 기억', '악마랑 기억력 시험보기', '천사랑 기억력 시험보기', '회상', '데자뷰', '머슬 메모리', '추억 기록', '환생', '', '', '기억조작', '완전기억능력', '반복되는 기억', '윤회'],
+    // <설명>
+    memoryDescription: [
+        '기억 등급 1당 영구적으로 <b class="fcWhite fs110">SpS +1%</b>',
+        '입학 효율 배수 <b class="fcWhite fs110">+5%</b>',
+        '클릭 효율 <b class="fcWhite fs110">두 배</b> 증가',
+        '비접속 효율 <b class="fcWhite fs110">+10%로 상향</b>',
+        '금속 등급의 강화 비용 <b class="fcWhite fs110">-25%</b>',
+        '비접속 효율 <b class="fcWhite fs110">+20%로 상향</b>',
+        '학생의 효율 <b class="fcWhite fs110">+50%</b>',
+        '비접속 최대 시간을 <b class="fcWhite fs110">36시간으로 증가</b>',
+        '입학 효율 배수 <b class="fcWhite fs110">+5%</b>',
+        '학교 시설 효율 <b class="fcWhite fs110">+50%</b>'
+    ],
+    // <배경담>
+    memoryFlavorText: [
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        ''
+    ],
+    /*
+        도전과제 관련
+    */
+    // <이름>
+    achievementName: [
+        ['출석부의 주인공', '교실 채우기', '학교 탈주왕', '수업 땡땡이', '부족한 강의실', '유치원부터 대학까지', '교실을 빌딩으로', '학생 인구 밀도 100%', '책상 부족', '복도에 자리 펴기', '교실을 빌딩으로', '학교 통학 버스가 50대', '학생 수가 나라규모', '수업 중 인구 폭발', '학생이 우르르'], // 0 ~ 15
+        ['학생 수 조절하기', '반가운 얼굴들', '교실 한가득', '강의실에서 파티하기', '재회하는 학급의 기적', '친구들 소환', '과거의 영광', '퇴역한 학생?', '학생 집합소', '학급의 기적', '학과장 놀래키기', '강의실에 100명 몰어넣기', '수업보다 중요한 동아리 활동', '도서관 자리사수', '수업에 몰래 따라가기', '학생 식당에서 회식하기', '출석률 보고 놀란 교수님', '신입생 OT 폭주', '강의실 만석', '수강 신청의 신', '교수님과 한 판 토론', '대학 축제에서 무대 장악하기', '모두를 하나로', '우리 모두 힘을 합친다', '지배자'], // 100 ~ 124
+        ['낯선 입학', '바쁜 학사관리 사무소', '입학 폭주기관차 출발', '홍수 같은 새내기 물결', '강의실 증축', '미래의 주역', '축제같은 입학 행렬', '새로운 배움의 길 열림', '지식의 씨앗이 피는 학교', '환영의 입학 축포', '새로운 시대의 인재', '입학 폭풍 주의보', '신입생의 열정으로 배터리 충전', '전년 대비 입학율 1000%', '붐비는 강의실', '기대되는 입학식', '신입생과 교수의 면담', '조용한 듯 북적이는 명상', '후끈한 입학 열기', '너무 많은 듯한 신입생', '입학 전쟁 승리자', '묘한 기대와 희망', '변화의 조짐', '가득 찬 교실', '입학, 기묘한 설렘'], // 200 ~ 224
+        ['손끝의 반란', '엄지 봉기', '마우스의 숨겨진 능력', '클릭의 달인', '손가락 근육 단련하기', '손가락의 분노!', '마우스 AS 준비', '손가락 장인 등극', '마우스가 마모됨', '엄지로 세계 정복'], // 300 ~ 309
+        ['꽃 같은 신입생', '손가락에서 불어오는 지식', '학생 모으기, 클릭 한 번으로 끝', '클릭으로 왕국 세우기', '대규모 입학 절차', '클릭의 마법으로 인원 폭주', '클릭으로 인구 초과', '4 7', '인재로 넘실대는 학교', '등록금을 학생을 위해 투자', '신입생 유입량 폭발', '손끝으로 모은 대학의 꿈나무', '손가락으로 쌓아올린 학생의 성', '클릭으로 초대장 보내기', '한 줄기 희망', '학생 모으기: 클릭의 전투', '+= 99999999...', '손짓으로 신입생 대이동', 'function click() {', '클릭의 배움 대항해', '365일 24시간 60분 60초 100', '학생들이 걷는 ASMR', '클릭과 학생의 조화', '학생으로 지구 한 바퀴', '손끝에서 피어나는 학문의 꽃'], // 400 ~ 204
+        [], [], [], [], [], // 500 ~ 999
+        ['다다익선 1', '다다익선 2', '다다익선 3', '다다익선 4', '다다익선 5', '다다익선 6', '다다익선 7', '다다익선 8', '다다익선 9', '다다익선 10'], // 1000 ~ 1009
+        ['교육환경 개선 1', '교육환경 개선 2', '교육환경 개선 3', '교육환경 개선 4', '교육환경 개선 5', '교육환경 개선 6', '교육환경 개선 7', '교육환경 개선 8', '교육환경 개선 9', '교육환경 개선 10'], // 1100 ~ 1109
+        ['집결지 1', '집결지 2', '집결지 3', '집결지 4', '집결지 5', '집결지 6', '집결지 7', '집결지 8', '집결지 9', '집결지 10'], // 1200 ~ 1209
+        ['하늘궁전 1', '하늘궁전 2', '하늘궁전 3', '하늘궁전 4', '하늘궁전 5', '하늘궁전 6', '하늘궁전 7', '하늘궁전 8', '하늘궁전 9', '하늘궁전 10'], // 1300 ~ 1309
+        ['금고 1', '금고 2', '금고 3', '금고 4', '금고 5', '금고 6', '금고 7', '금고 8', '금고 9', '금고 10'], // 1400 ~ 1409
+        ['여객기 1', '여객기 2', '여객기 3', '여객기 4', '여객기 5', '여객기 6', '여객기 7', '여객기 8', '여객기 9', '여객기 10'], // 1500 ~ 1509
+        ['대림컴퍼니 1', '대림컴퍼니 2', '대림컴퍼니 3', '대림컴퍼니 4', '대림컴퍼니 5', '대림컴퍼니 6', '대림컴퍼니 7', '대림컴퍼니 8', '대림컴퍼니 9', '대림컴퍼니 10'], // 1600 ~ 1609
+        ['무궁화실 1', '무궁화실 2', '무궁화실 3', '무궁화실 4', '무궁화실 5', '무궁화실 6', '무궁화실 7', '무궁화실 8', '무궁화실 9', '무궁화실 10'], // 1700 ~ 1709
+        ['화이트 하우스 1', '화이트 하우스 2', '화이트 하우스 3', '화이트 하우스 4', '화이트 하우스 5', '화이트 하우스 6', '화이트 하우스 7', '화이트 하우스 8', '화이트 하우스 9', '화이트 하우스 10'], // 1800 ~ 1809
+        ['복제 인간 1', '복제 인간 2', '복제 인간 3', '복제 인간 4', '복제 인간 5', '복제 인간 6', '복제 인간 7', '복제 인간 8', '복제 인간 9', '복제 인간 10'], // 1900 ~ 1909
+        ['인공위성 1', '인공위성 2', '인공위성 3', '인공위성 4', '인공위성 5', '인공위성 6', '인공위성 7', '인공위성 8', '인공위성 9', '인공위성 10'], // 2000 ~ 2009
+        ['관문 1', '관문 2', '관문 3', '관문 4', '관문 5', '관문 6', '관문 7', '관문 8', '관문 9', '관문 10'], // 2100 ~ 2109
+        ['빅뱅 1', '빅뱅 2', '빅뱅 3', '빅뱅 4', '빅뱅 5', '빅뱅 6', '빅뱅 7', '빅뱅 8', '빅뱅 9', '빅뱅 10'], // 2200 ~ 2209
+        ['시간 이동 장치 1', '시간 이동 장치 2', '시간 이동 장치 3', '시간 이동 장치 4', '시간 이동 장치 5', '시간 이동 장치 6', '시간 이동 장치 7', '시간 이동 장치 8', '시간 이동 장치 9', '시간 이동 장치 10'], // 2300 ~ 2309
+        ['다중 우주 1', '다중 우주 2', '다중 우주 3', '다중 우주 4', '다중 우주 5', '다중 우주 6', '다중 우주 7', '다중 우주 8', '다중 우주 9', '다중 우주 10'], // 2400 ~ 2409
+        ['패러렐 월드 1', '패러렐 월드 2', '패러렐 월드 3', '패러렐 월드 4', '패러렐 월드 5', '패러렐 월드 6', '패러렐 월드 7', '패러렐 월드 8', '패러렐 월드 9', '패러렐 월드 10'], // 2500 ~ 2509
+        [], [], [], [], // 2600 ~ 2999
+        // 일정 학생이상 입학시켰을때
+        ['꿈꾸는 학생들 1', '꿈꾸는 학생들 2', '꿈꾸는 학생들 3', '꿈꾸는 학생들 4', '꿈꾸는 학생들 5'], // 3000 ~ 3004
+        ['배움의 공간 1', '배움의 공간 2', '배움의 공간 3', '배움의 공간 4', '배움의 공간 5'], // 3100 ~ 3104
+        ['스마트 교통 시스템 1', '스마트 교통 시스템 2', '스마트 교통 시스템 3', '스마트 교통 시스템 4', '스마트 교통 시스템 5'], // 3200 ~ 3204
+        ['주거 환경 조성 1', '주거 환경 조성 2', '주거 환경 조성 3', '주거 환경 조성 4', '주거 환경 조성 5'], // 3300 ~ 3304
+        ['재무 교육 제공 1', '재무 교육 제공 2', '재무 교육 제공 3', '재무 교육 제공 4', '재무 교육 제공 5'], // 3400 ~ 3404
+        ['스마트 공항 구축 1', '스마트 공항 구축 2', '스마트 공항 구축 3', '스마트 공항 구축 4', '스마트 공항 구축 5'], // 3500 ~ 3504
+        ['현장 실습 1', '현장 실습 2', '현장 실습 3', '현장 실습 4', '현장 실습 5'], // 3600 ~ 3604
+        ['외교 관계 강화 1', '외교 관계 강화 2', '외교 관계 강화 3', '외교 관계 강화 4', '외교 관계 강화 5'], // 3700 ~ 3704
+        ['경제 불평등 해소 1', '경제 불평등 해소 2', '경제 불평등 해소 3', '경제 불평등 해소 4', '경제 불평등 해소 5'], // 3800 ~ 3804
+        ['인위적인 일란성 쌍둥이 1', '인위적인 일란성 쌍둥이 2', '인위적인 일란성 쌍둥이 3', '인위적인 일란성 쌍둥이 4', '인위적인 일란성 쌍둥이 5'], // 3900 ~ 3904
+        ['첨단 우주 기술 개발 1', '첨단 우주 기술 개발 2', '첨단 우주 기술 개발 3', '첨단 우주 기술 개발 4', '첨단 우주 기술 개발 5'], // 4000 ~ 4004
+        ['비전의 문 1', '비전의 문 2', '비전의 문 3', '비전의 문 4', '비전의 문 5'], // 4100 ~ 4104
+        ['우주적 심연 1', '우주적 심연 2', '우주적 심연 3', '우주적 심연 4', '우주적 심연 5'], // 4200 ~ 4204
+        ['시간 여행 1', '시간 여행 2', '시간 여행 3', '시간 여행 4', '시간 여행 5'], // 4300 ~ 4304
+        ['다른 세계의 이야기 1', '다른 세계의 이야기 2', '다른 세계의 이야기 3', '다른 세계의 이야기 4', '다른 세계의 이야기 5'], // 4400 ~ 4404
+        ['영혼의 쌍둥이 1', '영혼의 쌍둥이 2', '영혼의 쌍둥이 3', '영혼의 쌍둥이 4', '영혼의 쌍둥이 5'], // 4500 ~ 4504
+        [], [], [], [], // 4600 ~ 4999
+        // 강화 구매했을때 <<
+        ['청출어람 1', '청출어람 2', '청출어람 3'], // 5000 ~ 5002
+        ['최첨단 교육 시설 도입 1', '최첨단 교육 시설 도입 2', '최첨단 교육 시설 도입 3'], // 5100 ~ 5102
+        ['대중교통 접근성 향상 1', '대중교통 접근성 향상 2', '대중교통 접근성 향상 3'], // 5200 ~ 5202
+        ['주거지 안전 강화 1', '주거지 안전 강화 2', '주거지 안전 강화 3'], // 5300 ~ 5302
+        ['자산 관리 서비스 1', '자산 관리 서비스 2', '자산 관리 서비스 3'], // 5400 ~ 5402
+        ['다국적 협력 강화 1', '다국적 협력 강화 2', '다국적 협력 강화 3'], // 5500 ~ 5502
+        ['시장 점유율 확대 1', '시장 점유율 확대 2', '시장 점유율 확대 3'], // 5600 ~ 5602
+        ['경제 성장 지원 1', '경제 성장 지원 2', '경제 성장 지원 3'], // 5700 ~ 5702
+        ['과학 연구 협력 1', '과학 연구 협력 2', '과학 연구 협력 3'], // 5800 ~ 5802
+        ['복제 기술 발전 1', '복제 기술 발전 2', '복제 기술 발전 3'], // 5900 ~ 5902
+        ['은하 연합 설립 1', '은하 연합 설립 2', '은하 연합 설립 3'], // 6000 ~ 6002
+        ['저 너머로 1', '저 너머로 2', '저 너머로 3'], // 6100 ~ 6102
+        ['금지 구역 1', '금지 구역 2', '금지 구역 3'], // 6200 ~ 6202
+        ['다시 쓰는 역사 1', '다시 쓰는 역사 2', '다시 쓰는 역사 3'], // 6300 ~ 6302
+        ['익숙한 세계 1', '익숙한 세계 2', '익숙한 세계 3'], // 6400 ~ 6402
+        ['나 자신 1', '나 자신 2', '나 자신 3'], // 6500 ~ 6502
+        [], [], [], [], // 6600 ~ 6999
+        ['학생 통달', '학교 시설 통달', '교통수단 통달', '주거지 통달', '은행 통달', '공항 통달', '기업 통달', '정부 통달', '세계 정부 통달', '복제 실험실 통달', '우주정거장 통달', '차원 포털 통달', '블랙홀 통달', '타임머신 통달', '평행 세계 통달', '또 다른 나 통달'], // 7000 ~ 7015
+        ['시설 수집가', '대량 구매', '건물 도장깨기', '시설 구매 끝판왕', '갯수로 승부보자', '확장과 확장, 그리고 확장', '건설의 신이 강림했다', '클릭 한 번으로 건설 제왕되기'], // 7100 ~ 7107
+        ['건물주 모드', '학교 한 바퀴 매입 완료', '다 모으면 뭐 주나요?', '한 번에 싹쓸이', '시설 완벽', '구매 본능 폭발', '구매왕 VIP', '전설의 건물 투자왕'], // 7200 ~ 7207
+        ['강화의 예술', '훌륭한 회귀와 강화', '최소 강화 필수', '강화 전설의 서막', '풀강 도전'], // 7300 ~ 7304
+        ['모든 게 완벽한'], // 7400
+        ['75 0'] // 7500
+    ],
+    // <설명>
+    achievementDescription: [
+        (value) => `총 <b class="fcWhite fs110">${value}</b> 명을 입학시킵니다.`,
+        (value) => `한 번의 회귀에서 <b class="fcWhite fs110">${value}</b> 명의 학생을 입학시킵니다.`,
+        (value) => `초당 <b class="fcWhite fs110">${value}</b> 명의 학생을 입학시킵니다.`,
+        (value) => `학사모를 총 <b class="fcWhite fs110">${value}</b> 번 클릭합니다.`,
+        (value) => `클릭으로 한 번의 회귀에서 <b class="fcWhite fs110">${value}</b> 명을 입학시킵니다.`,
+        '',
+        '',
+        '',
+        '',
+        '',
+        (value1, value2) => `<b class="fcWhite fs110">${translationsKO.arrProductName[value1]}</b>을(를) <b class="fcWhite fs110">${value2}</b>번 구매합니다.`,
+        (value1, value2) => `<b class="fcWhite fs110">${translationsKO.arrProductName[value1]}</b>(으)로부터 <b class="fcWhite fs110">${value2}</b> 명의 학생을 입학시킵니다.`,
+        (value1, value2) => `<b class="fcWhite fs110">${translationsKO.arrProductName[value1]}</b>의 강화를 <b class="fcWhite fs110">${value2}</b>개 구매합니다.`,
+        (value) => `<b class="fcWhite fs110">${translationsKO.arrProductName[value]}</b>의 모든 강화를 구매합니다.`,
+        (value) => `한 번의 회귀에서 시설을 <b class="fcWhite fs110">${value}</b>번 구매합니다.`,
+        (value) => `한 번의 회귀에서 모든 시설을 최소 <b class="fcWhite fs110">${value}</b>번 구매합니다.`,
+        (value) => `한 번의 회귀에서 모든 시설의 강화를 최소 <b class="fcWhite fs110">${value}</b>개 구매합니다.`,
+        `모든 시설의 강화를 <b class="fcWhite fs110">모두 구매</b>합니다.`,
+        (value1, value2) => `<b class="fcWhite fs110">${translationsKO.arrProductName[value1]}</b>의 <b class="fcWhite fs110">${translationsKO.upgradeTooltipName[value1][value2]}</b> 강화를 구매합니다.`,
+        // (value) => `강화를 총 ${value}개 구매합니다.`,
+        // `모든 강화를 모두 구매합니다.`,
+        // (value) => `총 ${value}번 회귀합니다.`,
+        // (value) => `기업 등급 ${value}에 도달합니다.`,
+        // `기억 왜곡을 모두 해방합니다.`,
+    ]
+    // <배경담>
 };
