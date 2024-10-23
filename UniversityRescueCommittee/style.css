@@ -107,6 +107,9 @@ body {
 	right: 0px;
 	width: 48px;
 	height: 48px;
+	background-image: url('img/icon_close.png');
+	background-size: cover;
+	object-fit: cover;
 	background-color: gray;
 	border-radius: 10px;
 	margin: 8px;
@@ -811,27 +814,29 @@ sectionMiddle
 #sectionMiddle #notification .img {
 	width: 48px;
 	height: 48px;
-	margin: 8px;
+	background-size: cover;
+	object-fit: cover;
+	margin: 4px;
 	filter: drop-shadow(0px 3px 2px #000000);
 }
 #sectionMiddle #notification .textBundle {
-	width: 95%;	
+	width: 80%;	
 }
 #sectionMiddle #notification .title {
 	text-shadow: 0px 0px 4px #FFFFFF;
-	margin: 4px;
+	margin: 6px;
 }
 
 #sectionMiddle #notification .textBundle .achievementLine {
 	width: 95%;
 	height: 2px;
-	background: linear-gradient(to right,#00000000,#FFFFFF,#00000000);
+	background: linear-gradient(to right,#FFFFFF 40%,#00000000);
 	border: 0px;
 	margin: 4px;
 }
 #sectionMiddle #notification .achievementName {
 	text-shadow: 0px 0px 2px #FFFFFF;
-	margin-left: 8px;
+	margin-left: 6px;
 }
 /* 
 sectionRight 
